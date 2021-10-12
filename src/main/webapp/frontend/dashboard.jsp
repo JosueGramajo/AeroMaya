@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Josue Gramajo
@@ -64,7 +65,7 @@
 			<div class="container-fluid">
 				<div class="header-mobile-inner">
 					<a class="logo" href="index.html">
-						<img src="../assets/images/icon/Logo.png" alt="CoolAdmin" />
+						<img src="../assets/images/icon/logo.png" alt="CoolAdmin" />
 					</a>
 					<button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -179,7 +180,7 @@
 	<aside class="menu-sidebar d-none d-lg-block">
 		<div class="logo">
 			<a href="#">
-				<img src="../assets/images/icon/Logo.png" alt="Cool Admin" />
+				<img src="../assets/images/icon/logo.png" alt="Cool Admin" />
 			</a>
 		</div>
 		<div class="menu-sidebar__content js-scrollbar1">

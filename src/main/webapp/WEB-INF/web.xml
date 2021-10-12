@@ -41,4 +41,13 @@
         <servlet-name>DashboardServlet</servlet-name>
         <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FlightsSevlet</servlet-name>
+        <servlet-class>servlets.FlightsSevlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FlightsSevlet</servlet-name>
+        <url-pattern>/flights</url-pattern>
+    </servlet-mapping>
 </web-app>

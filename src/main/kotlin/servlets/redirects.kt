@@ -1,10 +1,5 @@
 package servlets
 
-import firestore.FirestoreUtils
-import objects.Issue
-import objects.Project
-import objects.ProjectParsedData
-import objects.Role
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -24,5 +19,11 @@ class RegisterServlet : HttpServlet(){
 class DashboardServlet : HttpServlet(){
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
         req!!.getRequestDispatcher("/frontend/dashboard.jsp").forward(req, resp)
+    }
+}
+
+class FlightsSevlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        req!!.getRequestDispatcher("/frontend/flights.jsp").forward(req, resp)
     }
 }
