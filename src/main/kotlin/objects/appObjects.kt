@@ -10,91 +10,65 @@ data class User(
         constructor() : this("", "", 0)
 }
 
-data class Project(
+data class Airline(
         val name : String,
+        val status : String
+){
+        constructor() : this("", "")
+}
+
+data class Plane(
+        val airline : String,
+        val capacity : Int,
+        val businessSeats : Int,
+        val economicSeats : Int,
+        val firstClassSeats : Int,
+        val name : String,
+
+        @Exclude
+        val airlineObj : Airline?
+){
+        constructor() : this("", 0, 0, 0, 0, "", null)
+}
+
+data class planeSeat(
+        val classType : String,
+        val seat : String,
+        val section : String
+){
+        constructor() : this("", "", "")
+}
+
+data class Flight(
+        val arrivalDate : String,
+        val arrivalTime : String,
+        val departureDate : String,
+        val departureTime : String,
         val description : String,
-        var percentageFinished : Double,
-        val startDate : String,
-        val estimatedEndDate : String,
-        val endDate : String,
-        val cost : Double,
-        val personInCharge : String,
-
-        @Exclude var id : String
+        val destination : String,
+        val origin : String,
+        val flightNumber : Int,
+        val plane : String,
+        val price : Float,
+        val status : String
 ){
-        constructor() : this("", "", 0.00, "", "", "", 0.00, "", "")
+        constructor() : this("","","","","","","",0,"", 0f, "")
 }
 
-data class ProjectParsedData(
-        var baseProject : Project,
-        var remainingTime: Int,
-        var completedTasks: String
+data class FlightSeat(
+        val classType: String,
+        val seat : String,
+        val status : String
 ){
-        constructor() : this(Project(), 0, "")
+        constructor() : this("", "", "")
 }
 
-data class Issue(
-        val number : Int,
-        val title : String,
-        val description: String,
-        val projectId : String,
-        val startDate : String,
-        val estimatedEndDate : String,
-        val endDate : String,
-        val category : String,
-        val stage : String,
-        val technician : String,
-        val technicianId: String,
-        val tasks : List<Task>,
-        @Exclude var id : String,
-        @Exclude var image : String
+data class Ticket(
+        val classType : String,
+        val flight : String,
+        val seat : String,
+        val user : String
 ){
-        constructor() : this(0, "", "", "", "", "", "", "", "", "", "", arrayListOf(),"", "")
+        constructor() : this("", "","","")
 }
 
-data class IssueParsedData(
-        var baseIssue : Issue,
-        var completedTasks : String,
-        var percentageCompleted : Int,
-        var remainingTime : Int
-){
-        constructor() : this(Issue(), "", 0, 0)
-}
-
-data class Task(
-        val id: String,
-        val description: String,
-        var completed: Boolean
-){
-        constructor() : this("", "", false)
-}
-
-data class Role(
-        val id : Int,
-        val name : String
-){
-        constructor() : this(0, "")
-}
-
-data class Statistics(
-        val users : Int,
-        val projects : Int,
-        val issues : Int,
-        val issuesResolved : Int,
-
-        val usersIssues : List<UserIssue>
-){
-        constructor() : this(0,0,0,0, arrayListOf())
-
-        data class UserIssue(
-                val userName : String,
-                val totalIssues : Int,
-                val backlogIssues : Int,
-                val pendingIssues : Int,
-                val inProgressIssues : Int,
-                val qaIssues : Int,
-                val finishedIssues : Int
-        ){
-                constructor() : this("",0, 0, 0, 0, 0, 0)
-        }
-}
