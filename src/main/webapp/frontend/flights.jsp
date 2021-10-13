@@ -181,7 +181,7 @@
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
             <a href="#">
-                <img src="images/icon/Logo.png" alt="Cool Admin" />
+                <img src="../assets/images/icon/logo.png" alt="Cool Admin" />
             </a>
         </div>
         <div class="menu-sidebar__content js-scrollbar1">
@@ -259,16 +259,16 @@
                     </div>
                     <div class="row m-t-25">
                         <div class="col-10">
-                            <c:forEach items="${results}" var="item">
+                            <c:forEach items="${flights}" var="item">
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="row justify-content-end">
                                             <div class="col-sm">
-                                                Avianca
+                                                ${item.planeObj.airline}
                                             </div>
                                             <div class="col-sm">
                                                 <div class="float-right">
-                                                    <label class="price-label">$ 2,789</label>
+                                                    <label class="price-label">$ ${item.price}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -278,7 +278,7 @@
                                         <div class="container">
                                             <div class="row justify-content-end">
                                                 <div class="col-sm">
-                                                    Guatemala -> Suiza
+                                                    ${item.origin} -> ${item.destination}
                                                 </div>
                                                 <div class="col-sm">
 
@@ -289,10 +289,10 @@
                                             </div>
                                             <div class="row justify-content-end">
                                                 <div class="col-sm">
-                                                    Salida: 03/10/2021 (3:00AM)
+                                                    Salida: ${item.departureDate} (${item.departureTime})
                                                 </div>
                                                 <div class="col-sm">
-                                                    Llegada: 03/11/2021 (2:00PM )
+                                                    Llegada: ${item.arrivalDate} (${item.arrivalTime})
                                                 </div>
                                                 <div class="col-sm">
 
@@ -302,7 +302,7 @@
                                             <div class="row justify-content-end">
                                                 <div class="col-sm">
                                                     <div class="d-flex justify-content-center">
-                                                        <input type="button" name="select" class="btn btn-info" value="Seleccionar">
+                                                        <input type="button" name="select" class="btn btn-info select-flight" data-id="${item.id}" value="Seleccionar">
                                                     </div>
                                                 </div>
                                             </div>
@@ -355,7 +355,7 @@
 
     <!-- Main JS-->
     <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/index.js"></script>
+    <script src="../assets/js/flights.js"></script>
 
 </body>
 

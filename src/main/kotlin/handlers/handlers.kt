@@ -1,4 +1,5 @@
 import firestore.FirestoreUtils
+import objects.Flight
 import objects.User
 import utils.Companion
 
@@ -13,4 +14,7 @@ object UserHandler{
 
         return false
     }
+}
+object FlightsHandler{
+
 }

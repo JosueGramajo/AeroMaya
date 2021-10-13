@@ -9,7 +9,6 @@ import io.ktor.jackson.jackson
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import objects.Project
 import objects.User
 import java.text.DateFormat
 
@@ -66,10 +65,6 @@ fun Application.main() {
             FirestoreUtils.deleteDocumentWithId(FirestoreUtils.PROJECT_COLLECTION, id)
             call.respondText { "Operacion exitosa" }
         }
-        post("/getProjectWithId"){
-            val id = call.receiveParameters()["id"] ?: ""
-            val project = FirestoreUtils.getObject<Project>(FirestoreUtils.PROJECT_COLLECTION, id)
-            call.respondText { ObjectMapper().writeValueAsString(project) }
-        }
+
     }
 }

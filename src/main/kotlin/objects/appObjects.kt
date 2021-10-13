@@ -12,9 +12,9 @@ data class User(
 
 data class Airline(
         val name : String,
-        val status : String
+        val status : Boolean
 ){
-        constructor() : this("", "")
+        constructor() : this("", false)
 }
 
 data class Plane(
@@ -24,19 +24,21 @@ data class Plane(
         val economicSeats : Int,
         val firstClassSeats : Int,
         val name : String,
+        val seats : List<PlaneSeat>,
 
         @Exclude
         val airlineObj : Airline?
 ){
-        constructor() : this("", 0, 0, 0, 0, "", null)
+        constructor() : this("", 0, 0, 0, 0, "", arrayListOf(), null)
 }
 
-data class planeSeat(
+data class PlaneSeat(
         val classType : String,
-        val seat : String,
+        val name : String,
+        val seat : Int,
         val section : String
 ){
-        constructor() : this("", "", "")
+        constructor() : this("", "",0, "")
 }
 
 data class Flight(
@@ -50,17 +52,24 @@ data class Flight(
         val flightNumber : Int,
         val plane : String,
         val price : Float,
-        val status : String
+        val status : Boolean,
+
+        @Exclude
+        var planeObj : Plane?,
+
+        @Exclude
+        var id : String
 ){
-        constructor() : this("","","","","","","",0,"", 0f, "")
+        constructor() : this("","","","","","","",0,"", 0f, false, null, "")
 }
 
 data class FlightSeat(
+        val flight: String,
         val classType: String,
         val seat : String,
         val status : String
 ){
-        constructor() : this("", "", "")
+        constructor() : this("", "", "", "")
 }
 
 data class Ticket(
@@ -70,5 +79,13 @@ data class Ticket(
         val user : String
 ){
         constructor() : this("", "","","")
+}
+
+data class Country(
+        val name: String,
+        val code: String,
+        val status: Boolean
+){
+        constructor() : this("", "", false)
 }
 

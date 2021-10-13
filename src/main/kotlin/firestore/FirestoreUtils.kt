@@ -2,27 +2,28 @@ package firestore
 
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.firestore.Firestore
-import com.google.cloud.firestore.Query
-import com.google.cloud.firestore.QueryDocumentSnapshot
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.cloud.FirestoreClient
-import objects.Issue
-import objects.Project
+import objects.Flight
+import objects.Plane
 import objects.User
-import java.io.FileInputStream
 
 
 object FirestoreUtils {
     //gestionrequerimientos-d0480-6daae4c6546e.json
     val USER_COLLECTION = "users"
-    val PROJECT_COLLECTION = "projects"
-    val ISSUE_COLLECTION = "issues"
-    val ROLE_COLLECTION = "roles"
-    val CATALOG_COLLECTION = "catalogs"
+    val AIRLINES_COLLECTION = "airlines"
+    val FLIGHT_SEATS_COLLECTION = "flightSeats"
+    val FLIGHTS_COLLECTION = "flights"
+    val PLANE_SEATS_COLLECTION = "planeSeats"
+    val PLANES_COLLECTION = "planes"
+    val TICKETS_COLLECTION = "tickets"
+    val COUNTRIES_COLLECTION = "countries"
 
-    val DEPARTMENTS_DOCUMENT = "departments"
-    val ISSUE_CAT_DOCUMENT = "issue_categories"
+
+    val PROJECT_COLLECTION = "projects"
+    val CATALOG_COLLECTION = "catalogs"
 
     //val local = "src/main/webapp/"
     const val local = ""
@@ -41,10 +42,10 @@ object FirestoreUtils {
         return FirestoreClient.getFirestore()
     }
 
-    fun insertObjectWithRandomDocumentID(collection : String, obj : Any){
+    fun insertObjectWithRandomDocumentID(collection : String, obj : Any) : String{
         val db = initFirestore()
-        val future = db.collection(collection).document().set(obj)
-        println(future.get().updateTime)
+        val future = db.collection(collection).add(obj)
+        return future.get().id
     }
 
     fun deleteDocumentWithId(collection: String, documentID : String){
@@ -90,8 +91,37 @@ object FirestoreUtils {
 
         resp?.let {
             return it.toObject(User::class.java)
-        } ?: run {
-            return null
         }
+        return null
+    }
+
+    fun getFlights(origin : String, destination : String, departureDate : String?, arrivalDate : String?, classType : String) : List<Flight>{
+        val result = arrayListOf<Flight>()
+
+        val db = initFirestore()
+        val query = db.collection(FLIGHTS_COLLECTION)
+            .whereEqualTo("origin", origin)
+            .whereEqualTo("destination", destination)
+
+
+        if (!departureDate.isNullOrEmpty()){
+            query.whereEqualTo("departureDate", departureDate)
+        }
+
+        if (!departureDate.isNullOrEmpty() && !arrivalDate.isNullOrEmpty()){
+            query.whereEqualTo("arrivalDate", arrivalDate)
+        }
+
+        query.get().get().documents.map {
+            val flight = it.toObject(Flight::class.java)
+
+            val plane = db.collection(PLANES_COLLECTION).get().get().documents.first().toObject(Plane::class.java)
+            flight.planeObj = plane
+            flight.id = it.id
+
+            result.add(flight)
+        }
+
+        return result
     }
 }
