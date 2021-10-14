@@ -59,4 +59,13 @@
         <servlet-name>SeatSelectorServlet</servlet-name>
         <url-pattern>/seatSelector</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AirlinesServlet</servlet-name>
+        <servlet-class>servlets.AirlinesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AirlinesServlet</servlet-name>
+        <url-pattern>/airlines</url-pattern>
+    </servlet-mapping>
 </web-app>

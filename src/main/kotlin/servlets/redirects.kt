@@ -44,12 +44,25 @@ class FlightsSevlet : HttpServlet(){
         req.setAttribute("flights", list)
         req.getRequestDispatcher("/frontend/flights.jsp").forward(req, resp)
     }
+
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        doPost(req, resp)
+    }
 }
 
 class SeatSelectorServlet : HttpServlet(){
-    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+    override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
         val id = req!!.getParameter("id")
-
         req.getRequestDispatcher("/frontend/seatSelector.jsp").forward(req, resp);
+    }
+
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        doGet(req, resp)
+    }
+}
+
+class AirlinesServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        req!!.getRequestDispatcher("/frontend/airlines.jsp").forward(req, resp)
     }
 }

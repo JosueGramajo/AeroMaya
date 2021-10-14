@@ -1,13 +1,12 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%--
   Created by IntelliJ IDEA.
   User: josue
-  Date: 11/10/2021
-  Time: 21:36
+  Date: 13/10/2021
+  Time: 23:54
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -249,113 +248,98 @@
         <div class="main-content">
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="overview-wrap">
-                                <h2 class="title-1">Vuelos encontrados</h2>
 
+                    <div class="row m-t-25">
+                        <div class="col-sm-6 col-lg-3 col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    Aerolineas Afiliadas
+                                </div>
+                                <div class="card-body card-block">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Vuelos activos</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>Larry</td>
+                                            <td>the Bird</td>
+                                            <td>@twitter</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer d-flex flex-row-reverse">
+                                    <input id="btnContinueSearch" type="button" name="btnContinue" value="Buscar" class="au-btn au-btn-icon au-btn--green" >
+                                </div>
+
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <div class="row m-t-25">
-                        <div class="col-10">
-                            <c:forEach items="${flights}" var="item">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="row justify-content-end">
-                                            <div class="col-sm">
-                                                ${item.planeObj.airline}
-                                            </div>
-                                            <div class="col-sm">
-                                                <div class="float-right">
-                                                    <label class="price-label">$ ${item.price}</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="container">
-                                            <div class="row justify-content-end">
-                                                <div class="col-sm">
-                                                    ${item.origin} -> ${item.destination}
-                                                </div>
-                                                <div class="col-sm">
-
-                                                </div>
-                                                <div class="col-sm">
-
-                                                </div>
-                                            </div>
-                                            <div class="row justify-content-end">
-                                                <div class="col-sm">
-                                                    Salida: ${item.departureDate} (${item.departureTime})
-                                                </div>
-                                                <div class="col-sm">
-                                                    Llegada: ${item.arrivalDate} (${item.arrivalTime})
-                                                </div>
-                                                <div class="col-sm">
-
-                                                </div>
-                                            </div>
-                                            <br><br>
-                                            <div class="row justify-content-end">
-                                                <div class="col-sm">
-                                                    <div class="d-flex justify-content-center">
-                                                        <input type="button" name="select" class="btn btn-info select-flight" data-id="${item.id}" value="Seleccionar">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="copyright">
-                                    <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
         </div>
-        </div>
+        <!-- END MAIN CONTENT-->
+        <!-- END PAGE CONTAINER-->
     </div>
 
-    <!--Date-->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+</div>
 
-    <!-- Jquery JS-->
-    <script src="../assets/vendor/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap JS-->
-    <script src="../assets/vendor/bootstrap-4.1/popper.min.js"></script>
-    <script src="../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-    <!-- Vendor JS       -->
-    <script src="../assets/vendor/slick/slick.min.js">
-    </script>
-    <script src="../assets/vendor/wow/wow.min.js"></script>
-    <script src="../assets/vendor/animsition/animsition.min.js"></script>
-    <script src="../assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
-    <script src="../assets/vendor/counter-up/jquery.waypoints.min.js"></script>
-    <script src="../assets/vendor/counter-up/jquery.counterup.min.js">
-    </script>
-    <script src="../assets/vendor/circle-progress/circle-progress.min.js"></script>
-    <script src="../assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="../assets/vendor/chartjs/Chart.bundle.min.js"></script>
-    <script src="../assets/vendor/select2/select2.min.js">
-    </script>
+<!--Date-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-    <!-- Main JS-->
-    <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/flights.js"></script>
+<!-- Jquery JS-->
+<script src="../assets/vendor/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap JS-->
+<script src="../assets/vendor/bootstrap-4.1/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+<!-- Vendor JS       -->
+<script src="../assets/vendor/slick/slick.min.js">
+</script>
+<script src="../assets/vendor/wow/wow.min.js"></script>
+<script src="../assets/vendor/animsition/animsition.min.js"></script>
+<script src="../assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+</script>
+<script src="../assets/vendor/counter-up/jquery.waypoints.min.js"></script>
+<script src="../assets/vendor/counter-up/jquery.counterup.min.js">
+</script>
+<script src="../assets/vendor/circle-progress/circle-progress.min.js"></script>
+<script src="../assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="../assets/vendor/chartjs/Chart.bundle.min.js"></script>
+<script src="../assets/vendor/select2/select2.min.js">
+</script>
+
+<!-- Main JS-->
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/index.js"></script>
 
 </body>
 
