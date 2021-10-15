@@ -90,7 +90,7 @@
    animation-fill-mode: both;
 }
  .seat input[type=checkbox]:disabled + label {
-   background: #ddd;
+   background: #eb6f6f;
    text-indent: -9999px;
    overflow: hidden;
 }

@@ -53,13 +53,13 @@ class FlightsSevlet : HttpServlet(){
 class SeatSelectorServlet : HttpServlet(){
     override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
         val id = req!!.getParameter("id")
+        val ticketsAmount = req.getParameter("ticketsAmount")
 
-        val seats = PlaneHandler.getPlaneSeats(id)
+        val seats = FlightsHandler.getFlightSeats(id)
 
-        System.out.println(">>>>>>>>>>>>>>>>>" + seats.size)
-
+        req.setAttribute("amount", ticketsAmount)
         req.setAttribute("seats", seats)
-        req.getRequestDispatcher("/frontend/seatSelector.jsp").forward(req, resp);
+        req.getRequestDispatcher("/frontend/seatSelector.jsp").forward(req, resp)
     }
 
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {

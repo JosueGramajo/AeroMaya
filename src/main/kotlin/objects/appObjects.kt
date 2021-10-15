@@ -85,22 +85,24 @@ data class Flight(
         val plane : String,
         val price : Float,
         val status : Boolean,
+        val seats : List<FlightSeat>,
 
         @Exclude
         var planeObj : Plane?
 ){
-        constructor() : this("","","","","","","","",0,"", 0f, false, null)
+        constructor() : this("","","","","","","","",0,"", 0f, false, arrayListOf(),null)
 }
 
 data class FlightSeat(
         @DocumentId
         val id : String,
-        val flight: String,
-        val classType: String,
-        val seat : String,
-        val status : String
+
+        val classType : String,
+        val name : String,
+        val occupied : Boolean,
+        val level : Int
 ){
-        constructor() : this("","", "", "", "")
+        constructor() : this("","", "",false, 0)
 }
 
 data class Ticket(

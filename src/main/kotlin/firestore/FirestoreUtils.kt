@@ -26,6 +26,7 @@ object FirestoreUtils {
         val credentials = GoogleCredentials.getApplicationDefault()
         val options = FirebaseOptions.Builder()
             .setCredentials(credentials)
+            .setProjectId("aeromaya")
             .build()
 
         if (FirebaseApp.getApps().isEmpty()){

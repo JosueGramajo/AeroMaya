@@ -38,21 +38,23 @@ object FlightsHandler{
 
         return FirestoreUtils.getObjectListWithQuery(FirestoreUtils.FLIGHTS_COLLECTION, queries)
     }
-}
 
-object PlaneHandler{
-    fun getPlaneSeats(id : String) : List<List<PlaneSeat>>{
-        val result = arrayListOf<List<PlaneSeat>>()
+    fun getFlightSeats(id : String) : List<List<FlightSeat>>{
+        val result = arrayListOf<List<FlightSeat>>()
 
-        FirestoreUtils.getObjectWithId<Plane>(FirestoreUtils.PLANES_COLLECTION, id)?.let {
+        FirestoreUtils.getObjectWithId<Flight>(FirestoreUtils.FLIGHTS_COLLECTION, id)?.let {
             val seats = it.seats
-            val uniqueLevels = seats.map { it.seat }.distinct()
+            val uniqueLevels = seats.map { it.level }.distinct()
             uniqueLevels.map { l ->
-                result.add(seats.filter { it.seat == l })
+                result.add(seats.filter { it.level == l })
             }
         }
         return result
     }
+}
+
+object PlaneHandler{
+
 }
 
 object AirlinesHandler{

@@ -263,12 +263,20 @@
                   <div class="exit exit--front fuselage"></div>
 
                   <ol class="cabin fuselage">
-                    <c:forEach var="master" items="${seats}">
+                    <c:forEach var="master" items="${seats}" varStatus="loop">
                       <li class="">
                         <ol class="seats" type="A">
                           <c:forEach var="item" items="${master}">
                             <li class="seat">
-                              <input type="checkbox" id="${item.name}" />
+                              <c:choose>
+                                <c:when test="${item.occupied eq true}">
+                                  <input class="seatCheckbox" type="checkbox" id="${item.name}" disabled/>
+                                </c:when>
+                                <c:otherwise>
+                                  <input class="seatCheckbox" type="checkbox" id="${item.name}" data-index="${loop.index}" data-seat="${item.name}"/>
+                                </c:otherwise>
+                              </c:choose>
+
                               <label for="${item.name}">${item.name}</label>
                             </li>
                           </c:forEach>
@@ -295,7 +303,25 @@
     <!-- END MAIN CONTENT-->
     <!-- END PAGE CONTAINER-->
   </div>
+</div>
 
+<div id="genericModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modalTitle" class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="modalBody">Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="modalAcceptButton" type="button" class="btn btn-primary">Aceptar</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!--Date-->
@@ -326,7 +352,12 @@
 
 <!-- Main JS-->
 <script src="../assets/js/main.js"></script>
-<script src="../assets/js/index.js"></script>
+
+<script type="text/javascript">
+  var ticketsAmount = ${amount};
+</script>
+
+<script src="../assets/js/seatSelector.js"></script>
 
 </body>
 

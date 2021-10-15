@@ -51,10 +51,11 @@
     <!-- Include Bootstrap Datepicker -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
-    <script>
-        $("#startdate_datepicker").datepicker();
-        $("#enddate_datepicker").datepicker();
-    </script>
+
+    <!-- Jquery JS-->
+    <script src="../assets/vendor/jquery-3.2.1.min.js"></script>
+
+    <script src="../assets/vendor/bootstrap-4.1/bootstrap-input-spinner.js"></script>
 
 </head>
 
@@ -259,7 +260,7 @@
                     </div>
                     <div class="row m-t-25">
                         <div class="col-10">
-                            <c:forEach items="${flights}" var="item">
+                            <c:forEach items="${flights}" var="item" varStatus="loop">
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="row justify-content-end">
@@ -302,7 +303,26 @@
                                             <div class="row justify-content-end">
                                                 <div class="col-sm">
                                                     <div class="d-flex justify-content-center">
-                                                        <input type="button" name="select" class="btn btn-info select-flight" data-id="${item.plane}" value="Seleccionar">
+                                                        <div id="seat-amount-selector">
+                                                            <input id="seatAmountSelector${loop.index}" data-index="${loop.index}" data-price="${item.price}" class="seatAmountSelector" type="number" value="0" min="0" max="10" step="1"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm">
+                                                    <div class="d-flex justify-content-center">
+                                                        <label id="totalLabel${loop.index}" class="total-label"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br><br>
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm">
+                                                    <div class="d-flex justify-content-center">
+                                                        <div id="continue-button${loop.index}" hidden>
+                                                            <input type="button" name="select" class="btn btn-info select-flight" data-id="${item.id}" data-index="${loop.index}" value="Continuar con la compra">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -327,13 +347,6 @@
         </div>
     </div>
 
-    <!--Date-->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-    <!-- Jquery JS-->
-    <script src="../assets/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
     <script src="../assets/vendor/bootstrap-4.1/popper.min.js"></script>
     <script src="../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
@@ -356,6 +369,10 @@
     <!-- Main JS-->
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/flights.js"></script>
+
+    <script>
+        $("input[type='number']").inputSpinner();
+    </script>
 
 </body>
 
