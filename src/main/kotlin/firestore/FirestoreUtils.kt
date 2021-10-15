@@ -3,32 +3,26 @@ package firestore
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.firestore.Firestore
 import com.google.cloud.firestore.Query
-import com.google.cloud.firestore.QueryDocumentSnapshot
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.cloud.FirestoreClient
-import objects.Issue
-import objects.Project
-import objects.User
-import java.io.FileInputStream
+import objects.*
 
 
 object FirestoreUtils {
     //gestionrequerimientos-d0480-6daae4c6546e.json
     val USER_COLLECTION = "users"
+    val AIRLINES_COLLECTION = "airlines"
+    val FLIGHT_SEATS_COLLECTION = "flightSeats"
+    val FLIGHTS_COLLECTION = "flights"
+    val PLANES_COLLECTION = "planes"
+    val TICKETS_COLLECTION = "tickets"
+    val COUNTRIES_COLLECTION = "countries"
+
     val PROJECT_COLLECTION = "projects"
-    val ISSUE_COLLECTION = "issues"
-    val ROLE_COLLECTION = "roles"
     val CATALOG_COLLECTION = "catalogs"
 
-    val DEPARTMENTS_DOCUMENT = "departments"
-    val ISSUE_CAT_DOCUMENT = "issue_categories"
-
-    //val local = "src/main/webapp/"
-    const val local = ""
-
-    //GENERAL METHODS
-    fun initFirestore() : Firestore {
+    val db : Firestore by lazy {
         val credentials = GoogleCredentials.getApplicationDefault()
         val options = FirebaseOptions.Builder()
             .setCredentials(credentials)
@@ -38,29 +32,25 @@ object FirestoreUtils {
             FirebaseApp.initializeApp(options)
         }
 
-        return FirestoreClient.getFirestore()
+        FirestoreClient.getFirestore()
     }
 
-    fun insertObjectWithRandomDocumentID(collection : String, obj : Any){
-        val db = initFirestore()
-        val future = db.collection(collection).document().set(obj)
-        println(future.get().updateTime)
+    fun insertObjectWithRandomDocumentID(collection : String, obj : Any) : String{
+        val future = db.collection(collection).add(obj)
+        return future.get().id
     }
 
     fun deleteDocumentWithId(collection: String, documentID : String){
-        val db = initFirestore()
         db.collection(collection).document(documentID).delete()
     }
 
     fun getCatalog(document : String) : List<String>{
-        val db = initFirestore()
         val categories = db.collection(CATALOG_COLLECTION).document(document)
         val res = categories.get().get()
         return res["catalog"] as List<String>
     }
 
     inline fun <reified T : Any> getObjectList(collection  : String) : List<T>{
-        val db = initFirestore()
         val future = db.collection(collection).get()
         val documents = future.get().documents
         val responseList = arrayListOf<T>()
@@ -68,30 +58,26 @@ object FirestoreUtils {
         return responseList
     }
 
-    inline fun <reified T : Any> getObject(collectionId  : String, documentId: String) : T?{
-        val db = initFirestore()
+    inline fun <reified T : Any> getObjectWithId(collectionId  : String, documentId: String) : T?{
         val document = db.collection(collectionId).document(documentId).get().get()
         return document.toObject(T::class.java)
     }
 
-    fun updateDocumentWithObject(collection: String, documentId: String, obj : Any){
-        val db = initFirestore()
-        db.collection(collection).document(documentId).set(obj)
-    }
-
-    //CASE SPECIFIC METHODS
-    fun getUserWithCredentials(email : String, password : String) : User?{
-        val db = initFirestore()
-        val querySnapshot = db.collection(USER_COLLECTION)
-            .whereEqualTo("email", email)
-            .whereEqualTo("password", password).get()
-
-        val resp = querySnapshot.get().documents.firstOrNull()
-
-        resp?.let {
-            return it.toObject(User::class.java)
-        } ?: run {
-            return null
+    inline fun <reified T : Any> getObjectListWithQuery(collectionId: String, queryList : List<FirestoreQuery>) : List<T>{
+        val result = arrayListOf<T>()
+        var collection : Query = db.collection(collectionId)
+        queryList.map { collection = collection.whereEqualTo(it.firestoreKey, it.expectedValue) }
+        collection.get().get().documents.map {
+            result.add(it.toObject(T::class.java))
         }
+        return result
     }
+
+    inline fun <reified T : Any> getObjectWithQuery(collectionId  : String, queryList : List<FirestoreQuery>) : T?{
+        var collection : Query = db.collection(collectionId)
+        queryList.map { collection = collection.whereEqualTo(it.firestoreKey, it.expectedValue) }
+        return collection.get().get().documents.firstOrNull()?.toObject(T::class.java)
+    }
+
+    fun updateDocumentWithObject(collection: String, documentId: String, obj : Any) = db.collection(collection).document(documentId).set(obj)
 }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Josue Gramajo
@@ -64,7 +65,7 @@
 			<div class="container-fluid">
 				<div class="header-mobile-inner">
 					<a class="logo" href="index.html">
-						<img src="../assets/images/icon/Logo.png" alt="CoolAdmin" />
+						<img src="../assets/images/icon/logo.png" alt="CoolAdmin" />
 					</a>
 					<button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -179,7 +180,7 @@
 	<aside class="menu-sidebar d-none d-lg-block">
 		<div class="logo">
 			<a href="#">
-				<img src="../assets/images/icon/Logo.png" alt="Cool Admin" />
+				<img src="../assets/images/icon/logo.png" alt="Cool Admin" />
 			</a>
 		</div>
 		<div class="menu-sidebar__content js-scrollbar1">
@@ -192,7 +193,7 @@
 					</li>
 
 					<li>
-						<a href="#">
+						<a href="/airlines">
 							<i class="fas fa-plane"></i>Aerolineas Afiliadas</a>
 					</li>
 					<li>
@@ -262,14 +263,14 @@
 									<strong>¡Escoja sus Vuelos con Nosotros!</strong> Seleccione su origen y destino:
 								</div>
 								<div class="card-body card-block">
-									<form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+									<form action="/flights" method="POST" class="form-horizontal">
 
 										<div class="row form-group">
 											<div class="col col-md-3">
-												<label for="select" class=" form-control-label">Tipo de Pasaje</label>
+												<label for="selectClassType" class=" form-control-label">Tipo de Pasaje</label>
 											</div>
 											<div class="col-12 col-md-9">
-												<select name="select" id="select" class="form-control">
+												<select name="classType" id="selectClassType" class="form-control">
 													<option value="0">Seleccionar...</option>
 													<option value="1">Clase Economica</option>
 													<option value="2">Clase de Negocios</option>
@@ -281,28 +282,28 @@
 
 										<div class="row form-group">
 											<div class="col col-md-3">
-												<label for="select" class=" form-control-label">Origen</label>
+												<label for="origin" class=" form-control-label">Origen</label>
 											</div>
 											<div class="col-12 col-md-9">
-												<select name="select" id="select" class="form-control">
-													<option value="0">Seleccionar...</option>
-													<option value="1">Origen #1</option>
-													<option value="2">Origen #2</option>
-													<option value="3">Origen #3</option>
+												<select name="origin" id="origin" class="form-control">
+													<option value="-1">Seleccionar...</option>
+													<c:forEach items="${countries}" var="item">
+														<option value="${item.name}">${item.name}</option>
+													</c:forEach>
 												</select>
 											</div>
 										</div>
 
 										<div class="row form-group">
 											<div class="col col-md-3">
-												<label for="select" class=" form-control-label">Destino</label>
+												<label for="selectDestination" class=" form-control-label">Destino</label>
 											</div>
 											<div class="col-12 col-md-9">
-												<select name="select" id="select" class="form-control">
+												<select name="destination" id="selectDestination" class="form-control">
 													<option value="0">Seleccionar...</option>
-													<option value="1">Destino #1</option>
-													<option value="2">Destino #2</option>
-													<option value="3">Destino #3</option>
+													<c:forEach items="${countries}" var="item">
+														<option value="${item.name}">${item.name}</option>
+													</c:forEach>
 												</select>
 											</div>
 										</div>
@@ -313,7 +314,7 @@
 											</div>
 											<div class="col-12 col-md-9">
 												<div class="input-group date" data-provide="datepicker">
-													<input type="text" class="form-control">
+													<input name="departureDate" type="text" class="form-control">
 													<div class="input-group-addon">
 														<span class="glyphicon glyphicon-th"></span>
 													</div>
@@ -327,7 +328,7 @@
 											</div>
 											<div class="col-12 col-md-9">
 												<div class="input-group date" data-provide="datepicker">
-													<input type="text" class="form-control">
+													<input name="arrivalDate" type="text" class="form-control">
 													<div class="input-group-addon">
 														<span class="glyphicon glyphicon-th"></span>
 													</div>
@@ -335,7 +336,7 @@
 											</div>
 										</div>
 										<div class="d-flex flex-row-reverse">
-											<input id="btnContinueSearch" type="button" name="btnContinue" value="Buscar" class="au-btn au-btn-icon au-btn--green" >
+											<input id="btnContinueSearch" type="submit" name="btnContinue" value="Buscar" class="au-btn au-btn-icon au-btn--green" >
 										</div>
 
 									</form>
@@ -355,7 +356,25 @@
 			<!-- END MAIN CONTENT-->
 			<!-- END PAGE CONTAINER-->
 		</div>
+	</div>
 
+	<div id="genericModal" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="modalTitle" class="modal-title">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p id="modalBody">Modal body text goes here.</p>
+				</div>
+				<div class="modal-footer">
+					<button id="modalAcceptButton" type="button" class="btn btn-primary">Aceptar</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<!--Date-->
@@ -386,7 +405,6 @@
 
 	<!-- Main JS-->
 	<script src="../assets/js/main.js"></script>
-	<script src="../assets/js/index.js"></script>
 
 </body>
 

@@ -41,4 +41,31 @@
         <servlet-name>DashboardServlet</servlet-name>
         <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FlightsSevlet</servlet-name>
+        <servlet-class>servlets.FlightsSevlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FlightsSevlet</servlet-name>
+        <url-pattern>/flights</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SeatSelectorServlet</servlet-name>
+        <servlet-class>servlets.SeatSelectorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SeatSelectorServlet</servlet-name>
+        <url-pattern>/seatSelector</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AirlinesServlet</servlet-name>
+        <servlet-class>servlets.AirlinesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AirlinesServlet</servlet-name>
+        <url-pattern>/airlines</url-pattern>
+    </servlet-mapping>
 </web-app>
