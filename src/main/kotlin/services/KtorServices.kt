@@ -54,7 +54,7 @@ fun Application.main() {
         }
         post("/getUserWithId") {
             val id = call.receiveParameters()["id"] ?: ""
-            val user = FirestoreUtils.getObject<User>(FirestoreUtils.USER_COLLECTION, id)
+            val user = FirestoreUtils.getObjectWithId<User>(FirestoreUtils.USER_COLLECTION, id)
             call.respondText { ObjectMapper().writeValueAsString(user) }
         }
 

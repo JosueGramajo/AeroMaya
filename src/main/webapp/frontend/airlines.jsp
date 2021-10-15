@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: josue
@@ -262,28 +264,20 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Vuelos activos</th>
-                                            <th scope="col"></th>
+                                            <th scope="col">Aviones activos</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
+                                        <c:forEach items="${airlines}" var="item" varStatus="loop">
+                                            <tr>
+                                                <th scope="row">${loop.index}</th>
+                                                <td>${item.name}</td>
+                                                <td>${item.flightsNumber}</td>
+                                                <td>${item.planesNumber}</td>
+                                                <td><input type="button" class="btn btn-info select-airline" value="Vuelos disponibles" data-id="${item.id}"></td>
+                                            </tr>
+                                        </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>

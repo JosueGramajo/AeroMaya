@@ -39,7 +39,7 @@ class FlightsSevlet : HttpServlet(){
         val arrivalDate : String? = req.getParameter("arrivalDate") ?: null
         val classType = req.getParameter("classType")
 
-        val list = FirestoreUtils.getFlights(origin, destination, departureDate, arrivalDate, classType)
+        val list = FlightsHandler.searchFlights(origin, destination, departureDate, arrivalDate, classType)
 
         req.setAttribute("flights", list)
         req.getRequestDispatcher("/frontend/flights.jsp").forward(req, resp)
@@ -53,6 +53,12 @@ class FlightsSevlet : HttpServlet(){
 class SeatSelectorServlet : HttpServlet(){
     override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
         val id = req!!.getParameter("id")
+
+        val seats = PlaneHandler.getPlaneSeats(id)
+
+        System.out.println(">>>>>>>>>>>>>>>>>" + seats.size)
+
+        req.setAttribute("seats", seats)
         req.getRequestDispatcher("/frontend/seatSelector.jsp").forward(req, resp);
     }
 
@@ -63,6 +69,9 @@ class SeatSelectorServlet : HttpServlet(){
 
 class AirlinesServlet : HttpServlet(){
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        req!!.getRequestDispatcher("/frontend/airlines.jsp").forward(req, resp)
+        val airlines = AirlinesHandler.getAirlinesPrintData()
+
+        req!!.setAttribute("airlines", airlines)
+        req.getRequestDispatcher("/frontend/airlines.jsp").forward(req, resp)
     }
 }

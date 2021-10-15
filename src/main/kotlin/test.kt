@@ -1,8 +1,12 @@
+import com.google.cloud.firestore.QuerySnapshot
 import firestore.FirestoreUtils
 import objects.*
 import utils.isBetween
 
 fun main() {
+    val usr = PlaneHandler.getPlaneSeats("N90kpD9MTk3yC30iB9Jm")
+
+    println("")
     /*val airline = Airline("JetBlue Airways", true)
     val airline2 = Airline("American Airlines", true)
     val airline3 = Airline("United Airlines", true)

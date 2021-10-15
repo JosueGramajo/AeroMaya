@@ -302,7 +302,7 @@
                                             <div class="row justify-content-end">
                                                 <div class="col-sm">
                                                     <div class="d-flex justify-content-center">
-                                                        <input type="button" name="select" class="btn btn-info select-flight" data-id="${item.id}" value="Seleccionar">
+                                                        <input type="button" name="select" class="btn btn-info select-flight" data-id="${item.plane}" value="Seleccionar">
                                                     </div>
                                                 </div>
                                             </div>
