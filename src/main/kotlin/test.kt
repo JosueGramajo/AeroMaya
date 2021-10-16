@@ -1,10 +1,15 @@
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.cloud.firestore.QuerySnapshot
 import firestore.FirestoreUtils
 import objects.*
 import utils.isBetween
 
 fun main() {
+    val l = "[\"hola\",\"como\",\"le\",\"va\"]"
 
+    val hola = ObjectMapper().readValue(l, List::class.java) as List<String>
+
+    println("")
 }
 
 

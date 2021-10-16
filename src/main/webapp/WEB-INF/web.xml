@@ -68,4 +68,13 @@
         <servlet-name>AirlinesServlet</servlet-name>
         <url-pattern>/airlines</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PaymentServlet</servlet-name>
+        <servlet-class>servlets.PaymentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/paymentForm</url-pattern>
+    </servlet-mapping>
 </web-app>

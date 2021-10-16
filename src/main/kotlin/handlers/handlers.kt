@@ -1,6 +1,7 @@
 import firestore.FirestoreUtils
 import objects.*
 import utils.Companion
+import utils.DateUtils
 
 object UserHandler{
     fun authenticateUser(email : String, password : String) : Boolean{
@@ -30,10 +31,12 @@ object FlightsHandler{
             queries.add(FirestoreQuery("destination", destination))
         }
         if (!departureDate.isNullOrEmpty()){
-            queries.add(FirestoreQuery("departureDate", departureDate))
+            val parsedDate = DateUtils.changeDateFormat("MM/dd/yyyy", "dd/MM/yyyy", departureDate)
+            queries.add(FirestoreQuery("departureDate", parsedDate))
         }
         if (!departureDate.isNullOrEmpty() && !arrivalDate.isNullOrEmpty()){
-            queries.add(FirestoreQuery("arrivalDate", arrivalDate))
+            val parsedDate = DateUtils.changeDateFormat("MM/dd/yyyy", "dd/MM/yyyy", arrivalDate)
+            queries.add(FirestoreQuery("arrivalDate", parsedDate))
         }
 
         return FirestoreUtils.getObjectListWithQuery(FirestoreUtils.FLIGHTS_COLLECTION, queries)
@@ -53,8 +56,31 @@ object FlightsHandler{
     }
 }
 
-object PlaneHandler{
+object TicketHandler{
+    fun addTickets(flight: String, seats : List<String>) : String{
+        val response = arrayListOf<String>()
 
+        seats.map { s ->
+            val ticket = Ticket("","", flight, s, Companion.currentUser.id)
+            val newTicketId = FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.TICKETS_COLLECTION, ticket)
+
+            response.add(newTicketId)
+
+            val originalFlight = FirestoreUtils.getObjectWithId<Flight>(FirestoreUtils.FLIGHTS_COLLECTION, flight)
+
+            originalFlight!!.seats.map { seat ->
+                if (seat.name == s){
+                    seat.occupied = true
+                }
+            }
+
+            FirestoreUtils.updateDocumentWithObject(FirestoreUtils.FLIGHTS_COLLECTION, flight, originalFlight)
+        }
+
+        val buyId = FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.GROUP_TICKET_BUY, GroupTicketBuy("", response))
+
+        return buyId
+    }
 }
 
 object AirlinesHandler{

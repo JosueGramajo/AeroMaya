@@ -99,7 +99,7 @@ data class FlightSeat(
 
         val classType : String,
         val name : String,
-        val occupied : Boolean,
+        var occupied : Boolean,
         val level : Int
 ){
         constructor() : this("","", "",false, 0)
@@ -108,6 +108,7 @@ data class FlightSeat(
 data class Ticket(
         @DocumentId
         val id : String,
+
         val classType : String,
         val flight : String,
         val seat : String,
@@ -115,6 +116,13 @@ data class Ticket(
 ){
         constructor() : this("","", "","","")
 }
+
+data class GroupTicketBuy(
+        @DocumentId
+        val id : String,
+
+        val tickets : List<String>
+)
 
 data class Country(
         val name: String,

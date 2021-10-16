@@ -1,5 +1,7 @@
 package servlets
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import firestore.FirestoreUtils
 import objects.Country
 import javax.servlet.http.HttpServlet
@@ -54,16 +56,19 @@ class SeatSelectorServlet : HttpServlet(){
     override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
         val id = req!!.getParameter("id")
         val ticketsAmount = req.getParameter("ticketsAmount")
+        val total = req.getParameter("total")
 
         val seats = FlightsHandler.getFlightSeats(id)
 
+        req.setAttribute("id", id)
         req.setAttribute("amount", ticketsAmount)
         req.setAttribute("seats", seats)
+        req.setAttribute("total", total)
         req.getRequestDispatcher("/frontend/seatSelector.jsp").forward(req, resp)
     }
 
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        doGet(req, resp)
+        doPost(req, resp)
     }
 }
 
@@ -73,5 +78,25 @@ class AirlinesServlet : HttpServlet(){
 
         req!!.setAttribute("airlines", airlines)
         req.getRequestDispatcher("/frontend/airlines.jsp").forward(req, resp)
+    }
+}
+
+class PaymentServlet : HttpServlet(){
+    override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        val flightId = req!!.getParameter("flightId")
+        val seats = req.getParameter("seatsSelected")
+        val total = req.getParameter("total")
+
+        val ticketsNumber = ObjectMapper().readValue(seats, List::class.java).size
+
+        req.setAttribute("list", seats)
+        req.setAttribute("id", flightId)
+        req.setAttribute("number",ticketsNumber)
+        req.setAttribute("total", total)
+        req.getRequestDispatcher("/frontend/payment.jsp").forward(req, resp)
+    }
+
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        doPost(req, resp)
     }
 }

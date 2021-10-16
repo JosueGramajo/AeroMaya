@@ -355,7 +355,11 @@
 
 <script type="text/javascript">
   var ticketsAmount = ${amount};
+  var flightId = "${id}";
+  var total = ${total};
 </script>
+
+<script src="../assets/vendor/jquery-redirect.js"></script>
 
 <script src="../assets/js/seatSelector.js"></script>
 

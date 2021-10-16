@@ -48,22 +48,16 @@ fun Application.main() {
             }
         }
 
-        delete("/deleteUser") {
-            FirestoreUtils.deleteDocumentWithId(FirestoreUtils.USER_COLLECTION, call.receiveParameters()["id"] ?: "")
-            call.respondText { "Documento eliminado exitosamente" }
-        }
-        post("/getUserWithId") {
-            val id = call.receiveParameters()["id"] ?: ""
-            val user = FirestoreUtils.getObjectWithId<User>(FirestoreUtils.USER_COLLECTION, id)
-            call.respondText { ObjectMapper().writeValueAsString(user) }
-        }
+        post("/addTickets"){
+            val parameters = call.receiveParameters()
+            val flightId = parameters["id"]
+            val seats = parameters["seats"]
 
-        //ISSUE OPERATIONS
+            val seatsList = ObjectMapper().readValue(seats, List::class.java) as List<String>
 
-        delete("/deleteProject"){
-            val id = call.receiveParameters()["id"] ?: ""
-            FirestoreUtils.deleteDocumentWithId(FirestoreUtils.PROJECT_COLLECTION, id)
-            call.respondText { "Operacion exitosa" }
+            val id = TicketHandler.addTickets(flightId!!, seatsList)
+
+            call.respondText { id }
         }
 
     }
