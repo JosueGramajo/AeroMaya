@@ -289,7 +289,7 @@ section {
 }
 }
 .page-container {
-    background: #e5e5e5;
+    background: #ffffff;
     padding-left: 300px;
 }
 
@@ -1599,6 +1599,11 @@ section {
     bottom: 0;
     background: #fff;
     overflow-y: auto;
+}
+
+.header-logo{
+    max-height: 125px;
+    max-width: 200px;
 }
 
 .menu-sidebar .logo {
@@ -2936,12 +2941,12 @@ section {
 
 .account-item--style2 .content a {
     font-size: 16px;
-    color: #ccc;
+    color: #575757;
     font-weight: 500;
 }
 
 .account-item--style2 .content a:hover {
-    color: #fff;
+    color: #59BD60;
 }
 
 .account-item--style2 .account-dropdown {

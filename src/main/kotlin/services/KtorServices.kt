@@ -30,7 +30,7 @@ fun Application.main() {
 
     routing {
         get("/") {
-            call.respondRedirect("/login")
+            call.respondRedirect("/dashboard")
         }
 
         //USER OPERATIONS
@@ -48,22 +48,27 @@ fun Application.main() {
             }
         }
 
-        delete("/deleteUser") {
-            FirestoreUtils.deleteDocumentWithId(FirestoreUtils.USER_COLLECTION, call.receiveParameters()["id"] ?: "")
-            call.respondText { "Documento eliminado exitosamente" }
-        }
-        post("/getUserWithId") {
-            val id = call.receiveParameters()["id"] ?: ""
-            val user = FirestoreUtils.getObjectWithId<User>(FirestoreUtils.USER_COLLECTION, id)
-            call.respondText { ObjectMapper().writeValueAsString(user) }
+        post("/doRegister"){
+            val parameters = call.receiveParameters()
+            val name = parameters["name"] ?: ""
+            val email = parameters["email"] ?: ""
+            val password = parameters["password"] ?: ""
+
+            UserHandler.registerUser(email, password, name)
+
+            call.respondText { "Registro exitoso" }
         }
 
-        //ISSUE OPERATIONS
+        post("/addTickets"){
+            val parameters = call.receiveParameters()
+            val flightId = parameters["id"]
+            val seats = parameters["seats"]
 
-        delete("/deleteProject"){
-            val id = call.receiveParameters()["id"] ?: ""
-            FirestoreUtils.deleteDocumentWithId(FirestoreUtils.PROJECT_COLLECTION, id)
-            call.respondText { "Operacion exitosa" }
+            val seatsList = ObjectMapper().readValue(seats, List::class.java) as List<String>
+
+            val id = TicketHandler.addTickets(flightId!!, seatsList)
+
+            call.respondText { id }
         }
 
     }

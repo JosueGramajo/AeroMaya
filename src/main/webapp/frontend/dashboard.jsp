@@ -7,406 +7,120 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%--
+  Created by IntelliJ IDEA.
+  User: Josue Gramajo
+  Date: 11/10/21
+  Time: 15:52
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<!-- Required meta tags-->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="au theme template">
-	<meta name="author" content="Hau Nguyen">
-	<meta name="keywords" content="au theme template">
-
-	<!-- Title Page-->
-	<title>Dashboard</title>
-
-	<!-- Fontfaces CSS-->
-	<link href="../assets/css/font-face.css" rel="stylesheet" media="all">
-	<link href="../assets/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-	<link href="../assets/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
-	<link href="../assets/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-
-	<!-- Bootstrap CSS-->
-	<link href="../assets/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
-
-	<!-- Vendor CSS-->
-	<link href="../assets/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
-	<link href="../assets/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
-	<link href="../assets/vendor/wow/animate.css" rel="stylesheet" media="all">
-	<link href="../assets/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
-	<link href="../assets/vendor/slick/slick.css" rel="stylesheet" media="all">
-	<link href="../assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-	<link href="../assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-
-	<!-- Main CSS-->
-	<link href="../assets/css/theme.css" rel="stylesheet" media="all">
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-
-	<!-- Include Bootstrap Datepicker -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
-	<script>
-        $("#startdate_datepicker").datepicker();
-        $("#enddate_datepicker").datepicker();
-	</script>
-
-</head>
-
-<body class="animsition">
-<div class="page-wrapper">
-	<!-- HEADER MOBILE-->
-	<header class="header-mobile d-block d-lg-none">
-		<div class="header-mobile__bar">
-			<div class="container-fluid">
-				<div class="header-mobile-inner">
-					<a class="logo" href="index.html">
-						<img src="../assets/images/icon/logo.png" alt="CoolAdmin" />
-					</a>
-					<button class="hamburger hamburger--slider" type="button">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-					</button>
-				</div>
-			</div>
-		</div>
-		<nav class="navbar-mobile">
-			<div class="container-fluid">
-				<ul class="navbar-mobile__list list-unstyled">
-					<li class="has-sub">
-						<a class="js-arrow" href="#">
-							<i class="fas fa-tachometer-alt"></i>Dashboard</a>
-						<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-							<li>
-								<a href="index.html">Dashboard 1</a>
-							</li>
-							<li>
-								<a href="index2.html">Dashboard 2</a>
-							</li>
-							<li>
-								<a href="index3.html">Dashboard 3</a>
-							</li>
-							<li>
-								<a href="index4.html">Dashboard 4</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="chart.html">
-							<i class="fas fa-chart-bar"></i>Charts</a>
-					</li>
-					<li>
-						<a href="table.html">
-							<i class="fas fa-table"></i>Tables</a>
-					</li>
-					<li>
-						<a href="form.html">
-							<i class="far fa-check-square"></i>Forms</a>
-					</li>
-					<li>
-						<a href="calendar.html">
-							<i class="fas fa-calendar-alt"></i>Calendar</a>
-					</li>
-					<li>
-						<a href="map.html">
-							<i class="fas fa-map-marker-alt"></i>Maps</a>
-					</li>
-					<li class="has-sub">
-						<a class="js-arrow" href="#">
-							<i class="fas fa-copy"></i>Pages</a>
-						<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-							<li>
-								<a href="login.html">Login</a>
-							</li>
-							<li>
-								<a href="register.html">Register</a>
-							</li>
-							<li>
-								<a href="forget-pass.html">Forget Password</a>
-							</li>
-						</ul>
-					</li>
-					<li class="has-sub">
-						<a class="js-arrow" href="#">
-							<i class="fas fa-desktop"></i>UI Elements</a>
-						<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-							<li>
-								<a href="button.html">Button</a>
-							</li>
-							<li>
-								<a href="badge.html">Badges</a>
-							</li>
-							<li>
-								<a href="tab.html">Tabs</a>
-							</li>
-							<li>
-								<a href="card.html">Cards</a>
-							</li>
-							<li>
-								<a href="alert.html">Alerts</a>
-							</li>
-							<li>
-								<a href="progress-bar.html">Progress Bars</a>
-							</li>
-							<li>
-								<a href="modal.html">Modals</a>
-							</li>
-							<li>
-								<a href="switch.html">Switchs</a>
-							</li>
-							<li>
-								<a href="grid.html">Grids</a>
-							</li>
-							<li>
-								<a href="fontawesome.html">Fontawesome Icon</a>
-							</li>
-							<li>
-								<a href="typo.html">Typography</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</nav>
-	</header>
-	<!-- END HEADER MOBILE-->
-
-	<!-- MENU SIDEBAR-->
-	<aside class="menu-sidebar d-none d-lg-block">
-		<div class="logo">
-			<a href="#">
-				<img src="../assets/images/icon/logo.png" alt="Cool Admin" />
-			</a>
-		</div>
-		<div class="menu-sidebar__content js-scrollbar1">
-			<nav class="navbar-sidebar">
-				<ul class="list-unstyled navbar__list">
-
-					<li>
-						<a href="#">
-							<i class="fas fa-home"></i>Home</a>
-					</li>
-
-					<li>
-						<a href="/airlines">
-							<i class="fas fa-plane"></i>Aerolineas Afiliadas</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="fas fa-calendar-alt"></i>Calendario</a>
-					</li>
-
-					<li>
-						<a href="#">
-							<i class="fas fa-question"></i>Preguntas</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="fas  fa-bullhorn"></i>Sobre Nosotros</a>
-					</li>
-
-
-				</ul>
-			</nav>
-		</div>
-	</aside>
-	<!-- END MENU SIDEBAR-->
-
-	<!-- PAGE CONTAINER-->
-	<div class="page-container">
-		<!-- HEADER DESKTOP-->
-		<header class="header-desktop">
-			<div class="section__content section__content--p30">
-				<div class="container-fluid">
-					<div class="header-wrap">
-						<form class="form-header" action="" method="POST">
-							<input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
-							<button class="au-btn--submit" type="submit">
-								<i class="zmdi zmdi-search"></i>
-							</button>
-						</form>
-						<div class="header-button">
-
-							<div class="account-wrap"> </div>
-						</div>
-						<button id="btnRegister" class="au-btn au-btn-icon au-btn--green">
-							<i class="zmdi"></i>Registrarse</button>
-						<button id="btnLogin" class="au-btn au-btn-icon au-btn--blue">
-							<i class="zmdi"></i>Iniciar Sesion</button>
-					</div>
-				</div>
-			</div>
-		</header>
-		<!-- HEADER DESKTOP-->
-
-		<!-- MAIN CONTENT-->
-		<div class="main-content">
-			<div class="section__content section__content--p30">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="overview-wrap">
-								<h2 class="title-1">Selección De Boletos</h2>
-
-							</div>
-						</div>
-					</div>
-					<div class="row m-t-25">
-						<div class="col-sm-6 col-lg-3 col-xl-12">
-							<div class="card">
-								<div class="card-header">
-									<strong>¡Escoja sus Vuelos con Nosotros!</strong> Seleccione su origen y destino:
-								</div>
-								<div class="card-body card-block">
-									<form action="/flights" method="POST" class="form-horizontal">
-
-										<div class="row form-group">
-											<div class="col col-md-3">
-												<label for="selectClassType" class=" form-control-label">Tipo de Pasaje</label>
-											</div>
-											<div class="col-12 col-md-9">
-												<select name="classType" id="selectClassType" class="form-control">
-													<option value="0">Seleccionar...</option>
-													<option value="1">Clase Economica</option>
-													<option value="2">Clase de Negocios</option>
-													<option value="3">Primera Clase</option>
-												</select>
-											</div>
-										</div>
-
-
-										<div class="row form-group">
-											<div class="col col-md-3">
-												<label for="origin" class=" form-control-label">Origen</label>
-											</div>
-											<div class="col-12 col-md-9">
-												<select name="origin" id="origin" class="form-control">
-													<option value="-1">Seleccionar...</option>
-													<c:forEach items="${countries}" var="item">
-														<option value="${item.name}">${item.name}</option>
-													</c:forEach>
-												</select>
-											</div>
-										</div>
-
-										<div class="row form-group">
-											<div class="col col-md-3">
-												<label for="selectDestination" class=" form-control-label">Destino</label>
-											</div>
-											<div class="col-12 col-md-9">
-												<select name="destination" id="selectDestination" class="form-control">
-													<option value="0">Seleccionar...</option>
-													<c:forEach items="${countries}" var="item">
-														<option value="${item.name}">${item.name}</option>
-													</c:forEach>
-												</select>
-											</div>
-										</div>
-
-										<div class="row form-group">
-											<div class="col col-md-3">
-												<label for="select" class=" form-control-label">Fecha de Salida</label>
-											</div>
-											<div class="col-12 col-md-9">
-												<div class="input-group date" data-provide="datepicker">
-													<input name="departureDate" type="text" class="form-control">
-													<div class="input-group-addon">
-														<span class="glyphicon glyphicon-th"></span>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row form-group">
-											<div class="col col-md-3">
-												<label for="select" class=" form-control-label">Fecha de Regreso</label>
-											</div>
-											<div class="col-12 col-md-9">
-												<div class="input-group date" data-provide="datepicker">
-													<input name="arrivalDate" type="text" class="form-control">
-													<div class="input-group-addon">
-														<span class="glyphicon glyphicon-th"></span>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="d-flex flex-row-reverse">
-											<input id="btnContinueSearch" type="submit" name="btnContinue" value="Buscar" class="au-btn au-btn-icon au-btn--green" >
-										</div>
-
-									</form>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="copyright">
-									<p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- END MAIN CONTENT-->
-			<!-- END PAGE CONTAINER-->
-		</div>
-	</div>
-
-	<div id="genericModal" class="modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 id="modalTitle" class="modal-title">Modal title</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<p id="modalBody">Modal body text goes here.</p>
-				</div>
-				<div class="modal-footer">
-					<button id="modalAcceptButton" type="button" class="btn btn-primary">Aceptar</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--Date-->
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Aeromaya</title>
+	<link rel="icon" type="image/x-icon" href="../assets/fav.ico" />
+	<!-- Font Awesome icons (free version)-->
+	<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+	<!-- Google fonts-->
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
+	<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&amp;display=swap" rel="stylesheet" />
+	<!-- Core theme CSS (includes Bootstrap)-->
+	<link href="../assets/css/dashboard/styles.css" rel="stylesheet" />
 
 	<!-- Jquery JS-->
 	<script src="../assets/vendor/jquery-3.2.1.min.js"></script>
 	<!-- Bootstrap JS-->
 	<script src="../assets/vendor/bootstrap-4.1/popper.min.js"></script>
 	<script src="../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-	<!-- Vendor JS       -->
-	<script src="../assets/vendor/slick/slick.min.js">
-	</script>
-	<script src="../assets/vendor/wow/wow.min.js"></script>
-	<script src="../assets/vendor/animsition/animsition.min.js"></script>
-	<script src="../assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-	</script>
-	<script src="../assets/vendor/counter-up/jquery.waypoints.min.js"></script>
-	<script src="../assets/vendor/counter-up/jquery.counterup.min.js">
-	</script>
-	<script src="../assets/vendor/circle-progress/circle-progress.min.js"></script>
-	<script src="../assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-	<script src="../assets/vendor/chartjs/Chart.bundle.min.js"></script>
-	<script src="../assets/vendor/select2/select2.min.js">
-	</script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-	<!-- Main JS-->
-	<script src="../assets/js/main.js"></script>
+	<link rel="stylesheet" href="../assets/vendor/air-datepicker/datepicker.css">
+	<script src="../assets/vendor/air-datepicker/datepicker.js"></script>
+	<script src="../assets/vendor/air-datepicker/datepicker.es.js"></script>
+
+	<link rel="stylesheet" href="../assets/css/loader.css">
+</head>
+<body>
+<!-- Background Video-->
+<video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"><source src="../assets/media/bg.mp4" type="video/mp4" /></video>
+<!-- Masthead-->
+<div class="masthead">
+	<div class="masthead-content text-white">
+		<div class="container-fluid px-4 px-lg-0">
+			<h1 class="fst-italic lh-1 mb-4">Viaja con nosotros!</h1>
+			<p class="mb-5">Con AeroMaya puedes encontrar los boletos aereos con las aereolineas mas prestigiosas del mundo. Solo basta con escribir tu luegar de destino ¿A donde deseas viajar ahora?</p>
+			<!-- Email address input-->
+			<div class="row input-group-newsletter">
+				<div class="col">
+					<input class="form-control" id="destinationPlaceText" type="text" placeholder="Escribe un destino..." aria-label="Enter email address..." />
+				</div>
+				<div id="search-container" class="col-auto">
+					<button class="btn btn-primary" id="submitButton" type="submit">Buscar vuelos</button>
+				</div>
+				<div id="loader" class="col-auto">
+					<svg class="spinner" width="45px" height="45px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+						<circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+					</svg>
+				</div>
+				<script>
+					$("#loader").hide();
+				</script>
+			</div>
+			<div id="date-section">
+				<br>
+				<hr>
+				<div class="row justify-content-center">
+					<div class="">
+						<label>Opcional</label>
+					</div>
+				</div>
+				<br>
+				<div class="row input-group-newsletter">
+					<div class="col">
+						<input id="startDate" type="text" name="test" class="form-control" placeholder="Fecha inicial" />
+					</div>
+					<div class="col">
+						<input id="endDate" type="text" name="test" class="form-control" placeholder="Fecha final" />
+					</div>
+				</div>
+			</div>
+			<script>
+				$("#date-section").hide();
+			</script>
+		</div>
+	</div>
+</div>
+<!-- Social Icons-->
+<!-- For more icon options, visit https://fontawesome.com/icons?d=gallery&p=2&s=brands-->
+
+<c:if test="${user.loggedIn eq false}">
+	<div class="social-icons">
+		<div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
+			<a class="btn btn-dark m-3" href="/login"><i class="fas fa-user"></i></a>
+		</div>
+	</div>
+</c:if>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/dashboard/scripts.js"></script>
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+<script type="application/javascript">
+	var countries = ${countries}
+</script>
+
+<script src="../assets/vendor/jquery-redirect.js"></script>
+
+<script src="../assets/js/dashboard.js"></script>
 
 </body>
-
 </html>
-<!-- end document-->

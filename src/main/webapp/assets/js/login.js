@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $("#loginButton").click(function () {
-        $("#loader").modal('show');
+        $("#loader").show();
+        $("#login-button").hide();
 
         $.ajax({
             method: "POST",
@@ -10,12 +11,14 @@ $(document).ready(function(){
                 "password": $("#passwordInput").val()
             },
             success: function (data) {
-                $("#loader").modal('hide');
+                $("#loader").hide();
+                $("#login-button").show();
 
                 window.location.href = "/dashboard";
             },
             error: function (xhr) {
-                $("#loader").modal('hide');
+                $("#loader").hide();
+                $("#login-button").show();
 
                 $("#modalTitle").html("Error");
                 $("#modalBody").html(xhr.responseText);

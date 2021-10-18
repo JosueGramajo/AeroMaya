@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    var totalTickets = 0;
+
     $(".select-flight").click(function (e) {
         let flightId = $(this).data("id");
         let index = $(this).data("index");
@@ -9,7 +11,8 @@ $(document).ready(function () {
             "/seatSelector",
             {
                 id: flightId,
-                ticketsAmount: ticketsAmount
+                ticketsAmount: ticketsAmount,
+                total: totalTickets.toString()
             }, function(data) {});
 
     });
@@ -21,6 +24,7 @@ $(document).ready(function () {
         let selectedValue = $(this).val();
 
         let result = selectedValue * price;
+        totalTickets = result;
 
         $("#totalLabel"+index).html("Total de esta compra: $ " + result);
 

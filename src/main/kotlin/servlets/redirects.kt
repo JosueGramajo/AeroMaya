@@ -1,7 +1,10 @@
 package servlets
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import firestore.FirestoreUtils
 import objects.Country
+import utils.Companion
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -20,9 +23,10 @@ class RegisterServlet : HttpServlet(){
 
 class DashboardServlet : HttpServlet(){
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        val countries = FirestoreUtils.getObjectList<Country>(FirestoreUtils.COUNTRIES_COLLECTION).sortedBy { it.name }
+        val countries = CountryHandler.getCountries()
 
         req!!.setAttribute("countries", countries)
+        req.setAttribute("user", Companion.currentUser)
         req.getRequestDispatcher("/frontend/dashboard.jsp").forward(req, resp)
     }
 
@@ -33,15 +37,14 @@ class DashboardServlet : HttpServlet(){
 
 class FlightsSevlet : HttpServlet(){
     override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        val origin = req!!.getParameter("origin")
-        val destination = req.getParameter("destination")
+        val destination = req!!.getParameter("destination")
         val departureDate : String? = req.getParameter("departureDate") ?: null
         val arrivalDate : String? = req.getParameter("arrivalDate") ?: null
-        val classType = req.getParameter("classType")
 
-        val list = FlightsHandler.searchFlights(origin, destination, departureDate, arrivalDate, classType)
+        val list = FlightsHandler.searchFlights(destination, departureDate, arrivalDate)
 
         req.setAttribute("flights", list)
+        req.setAttribute("user", Companion.currentUser)
         req.getRequestDispatcher("/frontend/flights.jsp").forward(req, resp)
     }
 
@@ -54,16 +57,20 @@ class SeatSelectorServlet : HttpServlet(){
     override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
         val id = req!!.getParameter("id")
         val ticketsAmount = req.getParameter("ticketsAmount")
+        val total = req.getParameter("total")
 
         val seats = FlightsHandler.getFlightSeats(id)
 
+        req.setAttribute("id", id)
         req.setAttribute("amount", ticketsAmount)
         req.setAttribute("seats", seats)
+        req.setAttribute("total", total)
+        req.setAttribute("user", Companion.currentUser)
         req.getRequestDispatcher("/frontend/seatSelector.jsp").forward(req, resp)
     }
 
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        doGet(req, resp)
+        doPost(req, resp)
     }
 }
 
@@ -72,6 +79,28 @@ class AirlinesServlet : HttpServlet(){
         val airlines = AirlinesHandler.getAirlinesPrintData()
 
         req!!.setAttribute("airlines", airlines)
+        req.setAttribute("user", Companion.currentUser)
         req.getRequestDispatcher("/frontend/airlines.jsp").forward(req, resp)
+    }
+}
+
+class PaymentServlet : HttpServlet(){
+    override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        val flightId = req!!.getParameter("flightId")
+        val seats = req.getParameter("seatsSelected")
+        val total = req.getParameter("total")
+
+        val ticketsNumber = ObjectMapper().readValue(seats, List::class.java).size
+
+        req.setAttribute("list", seats)
+        req.setAttribute("id", flightId)
+        req.setAttribute("number",ticketsNumber)
+        req.setAttribute("total", total)
+        req.setAttribute("user", Companion.currentUser)
+        req.getRequestDispatcher("/frontend/payment.jsp").forward(req, resp)
+    }
+
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        doPost(req, resp)
     }
 }

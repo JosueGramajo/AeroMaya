@@ -1,10 +1,16 @@
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.cloud.firestore.QuerySnapshot
 import firestore.FirestoreUtils
 import objects.*
 import utils.isBetween
 
 fun main() {
+    FirestoreUtils.getObjectList<Flight>(FirestoreUtils.FLIGHTS_COLLECTION).map { f->
+        f.origin = f.origin.lowercase()
+        f.destination = f.destination.lowercase()
 
+        FirestoreUtils.updateDocumentWithObject(FirestoreUtils.FLIGHTS_COLLECTION, f.id, f)
+    }
 }
 
 

@@ -1,6 +1,9 @@
+import com.fasterxml.jackson.databind.ObjectMapper
 import firestore.FirestoreUtils
 import objects.*
 import utils.Companion
+import utils.DateUtils
+import utils.capitalizeWords
 
 object UserHandler{
     fun authenticateUser(email : String, password : String) : Boolean{
@@ -13,21 +16,28 @@ object UserHandler{
         )
 
         user?.let {
+            it.loggedIn = true
             Companion.currentUser = it
             return true
         }
 
         return false
     }
+
+    fun registerUser(email: String, password: String, name : String){
+        val user = User("", email, password, 2, name,false)
+
+        FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.USER_COLLECTION, user)
+    }
 }
 
 object FlightsHandler{
-    fun searchFlights(origin : String, destination : String?, departureDate : String?, arrivalDate : String?, classType : String) : List<Flight>{
+    fun searchFlights(destination : String?, departureDate : String?, arrivalDate : String?) : List<Flight>{
         val queries = arrayListOf<FirestoreQuery>()
-        queries.add(FirestoreQuery("origin", origin))
+        queries.add(FirestoreQuery("origin", "guatemala"))
 
         if (!destination.isNullOrEmpty()){
-            queries.add(FirestoreQuery("destination", destination))
+            queries.add(FirestoreQuery("destination", destination.lowercase()))
         }
         if (!departureDate.isNullOrEmpty()){
             queries.add(FirestoreQuery("departureDate", departureDate))
@@ -53,8 +63,31 @@ object FlightsHandler{
     }
 }
 
-object PlaneHandler{
+object TicketHandler{
+    fun addTickets(flight: String, seats : List<String>) : String{
+        val response = arrayListOf<String>()
 
+        seats.map { s ->
+            val ticket = Ticket("","", flight, s, Companion.currentUser.id)
+            val newTicketId = FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.TICKETS_COLLECTION, ticket)
+
+            response.add(newTicketId)
+
+            val originalFlight = FirestoreUtils.getObjectWithId<Flight>(FirestoreUtils.FLIGHTS_COLLECTION, flight)
+
+            originalFlight!!.seats.map { seat ->
+                if (seat.name == s){
+                    seat.occupied = true
+                }
+            }
+
+            FirestoreUtils.updateDocumentWithObject(FirestoreUtils.FLIGHTS_COLLECTION, flight, originalFlight)
+        }
+
+        val buyId = FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.GROUP_TICKET_BUY, GroupTicketBuy("", response))
+
+        return buyId
+    }
 }
 
 object AirlinesHandler{
@@ -80,5 +113,16 @@ object AirlinesHandler{
         }
 
         return result
+    }
+}
+
+object CountryHandler{
+    fun getCountries() : String{
+        val countries = FirestoreUtils.getObjectList<Country>(FirestoreUtils.COUNTRIES_COLLECTION).sortedBy { it.name }
+        countries.map { country ->
+            country.name = country.name.capitalizeWords()
+        }
+        val countriesStringList = countries.map { it.name }
+        return ObjectMapper().writeValueAsString(countriesStringList)
     }
 }

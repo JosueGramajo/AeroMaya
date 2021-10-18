@@ -11,7 +11,13 @@ $(document).ready(function () {
             return;
         }
 
-        console.log("continue");
+        let seatsJson = JSON.stringify(selectedSeats);
+
+        $.redirect('/paymentForm', {
+            flightId: flightId,
+            seatsSelected: seatsJson,
+            total: total.toString()
+        })
     });
 
     $(".seatCheckbox").change(function () {
@@ -37,3 +43,16 @@ $(document).ready(function () {
         $("#genericModal").modal('hide');
     });
 });
+
+$.extend(
+    {
+        redirectPost: function(location, args)
+        {
+            var form = '';
+            $.each( args, function( key, value ) {
+                value = value.split('"').join('\"')
+                form += '<input type="hidden" name="'+key+'" value="'+value+'">';
+            });
+            $('<form action="' + location + '" method="POST">' + form + '</form>').appendTo($(document.body)).submit();
+        }
+    });

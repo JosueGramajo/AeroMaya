@@ -42,6 +42,7 @@
 
     <!-- Main CSS-->
     <link href="../assets/css/theme.css" rel="stylesheet" media="all">
+    <link href="../assets/css/header.css" rel="stylesheet" media="all">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -61,191 +62,85 @@
 
 <body class="animsition">
 <div class="page-wrapper">
-    <!-- HEADER MOBILE-->
-    <header class="header-mobile d-block d-lg-none">
-        <div class="header-mobile__bar">
-            <div class="container-fluid">
-                <div class="header-mobile-inner">
-                    <a class="logo" href="index.html">
-                        <img src="../assets/images/icon/logo.png" alt="CoolAdmin" />
-                    </a>
-                    <button class="hamburger hamburger--slider" type="button">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                    </button>
-                </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+        <div class="container px-5">
+            <div>
+                <a href="#">
+                    <img src="../assets/images/icon/logo.png" alt="Cool Admin" class="header-logo" />
+                </a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="bi-list"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                    <li class="nav-item"><a class="nav-link me-lg-3" href="/dashboard">Home</a></li>
+                    <li class="nav-item"><a class="nav-link me-lg-3" href="">Aerolineas</a></li>
+                    <li class="nav-item"><a class="nav-link me-lg-3" href="">Calendario</a></li>
+                    <li class="nav-item"><a class="nav-link me-lg-3" href="">Preguntas</a></li>
+                    <li class="nav-item"><a class="nav-link me-lg-3" href="">Sobre Nosotros</a></li>
+                </ul>
+
+                <c:choose>
+                    <c:when test="${user.loggedIn eq true}">
+                        <div class="account-wrap">
+                            <div class="account-item account-item--style2 clearfix js-item-menu">
+                                <div class="image">
+                                    <img src="../assets/images/icon/avatar-01.jpg" alt="${user.name}" />
+                                </div>
+                                <div class="content">
+                                    <a class="js-acc-btn" href="#">${user.name}</a>
+                                </div>
+                                <div class="account-dropdown js-dropdown">
+                                    <div class="info clearfix">
+                                        <div class="image">
+                                            <a href="#">
+                                                <img src="../assets/images/icon/avatar-01.jpg" alt="${user.name}" />
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <h5 class="name">
+                                                <a href="#">${user.name}</a>
+                                            </h5>
+                                            <span class="email">${user.email}</span>
+                                        </div>
+                                    </div>
+                                    <div class="account-dropdown__body">
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="zmdi zmdi-account"></i>Mis boletos</a>
+                                        </div>
+                                    </div>
+                                    <div class="account-dropdown__footer">
+                                        <a href="#">
+                                            <i class="zmdi zmdi-power"></i>Cerrar Sesión</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <form action="/login" method="get">
+                            <button type="submit" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
+								<span class="d-flex align-items-center">
+									<i class="bi-chat-text-fill me-2"></i>
+									<span class="small">Iniciar Sesión</span>
+								</span>
+                            </button>
+                        </form>
+
+                    </c:otherwise>
+                </c:choose>
+
+
             </div>
         </div>
-        <nav class="navbar-mobile">
-            <div class="container-fluid">
-                <ul class="navbar-mobile__list list-unstyled">
-                    <li class="has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                        <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                            <li>
-                                <a href="index.html">Dashboard 1</a>
-                            </li>
-                            <li>
-                                <a href="index2.html">Dashboard 2</a>
-                            </li>
-                            <li>
-                                <a href="index3.html">Dashboard 3</a>
-                            </li>
-                            <li>
-                                <a href="index4.html">Dashboard 4</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="chart.html">
-                            <i class="fas fa-chart-bar"></i>Charts</a>
-                    </li>
-                    <li>
-                        <a href="table.html">
-                            <i class="fas fa-table"></i>Tables</a>
-                    </li>
-                    <li>
-                        <a href="form.html">
-                            <i class="far fa-check-square"></i>Forms</a>
-                    </li>
-                    <li>
-                        <a href="calendar.html">
-                            <i class="fas fa-calendar-alt"></i>Calendar</a>
-                    </li>
-                    <li>
-                        <a href="map.html">
-                            <i class="fas fa-map-marker-alt"></i>Maps</a>
-                    </li>
-                    <li class="has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-copy"></i>Pages</a>
-                        <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                            <li>
-                                <a href="login.html">Login</a>
-                            </li>
-                            <li>
-                                <a href="register.html">Register</a>
-                            </li>
-                            <li>
-                                <a href="forget-pass.html">Forget Password</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-desktop"></i>UI Elements</a>
-                        <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                            <li>
-                                <a href="button.html">Button</a>
-                            </li>
-                            <li>
-                                <a href="badge.html">Badges</a>
-                            </li>
-                            <li>
-                                <a href="tab.html">Tabs</a>
-                            </li>
-                            <li>
-                                <a href="card.html">Cards</a>
-                            </li>
-                            <li>
-                                <a href="alert.html">Alerts</a>
-                            </li>
-                            <li>
-                                <a href="progress-bar.html">Progress Bars</a>
-                            </li>
-                            <li>
-                                <a href="modal.html">Modals</a>
-                            </li>
-                            <li>
-                                <a href="switch.html">Switchs</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grids</a>
-                            </li>
-                            <li>
-                                <a href="fontawesome.html">Fontawesome Icon</a>
-                            </li>
-                            <li>
-                                <a href="typo.html">Typography</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <!-- END HEADER MOBILE-->
-
-    <!-- MENU SIDEBAR-->
-    <aside class="menu-sidebar d-none d-lg-block">
-        <div class="logo">
-            <a href="#">
-                <img src="../assets/images/icon/logo.png" alt="Cool Admin" />
-            </a>
-        </div>
-        <div class="menu-sidebar__content js-scrollbar1">
-            <nav class="navbar-sidebar">
-                <ul class="list-unstyled navbar__list">
-
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-home"></i>Home</a>
-                    </li>
-
-                    <li>
-                        <a href="/airlines">
-                            <i class="fas fa-plane"></i>Aerolineas Afiliadas</a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-calendar-alt"></i>Calendario</a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-question"></i>Preguntas</a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas  fa-bullhorn"></i>Sobre Nosotros</a>
-                    </li>
-
-
-                </ul>
-            </nav>
-        </div>
-    </aside>
-    <!-- END MENU SIDEBAR-->
+    </nav>
 
     <!-- PAGE CONTAINER-->
     <div class="page-container">
-        <!-- HEADER DESKTOP-->
-        <header class="header-desktop">
-            <div class="section__content section__content--p30">
-                <div class="container-fluid">
-                    <div class="header-wrap">
-                        <form class="form-header" action="" method="POST">
-                            <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
-                            <button class="au-btn--submit" type="submit">
-                                <i class="zmdi zmdi-search"></i>
-                            </button>
-                        </form>
-                        <div class="header-button">
-
-                            <div class="account-wrap"> </div>
-                        </div>
-                        <button id="btnRegister" class="au-btn au-btn-icon au-btn--green">
-                            <i class="zmdi"></i>Registrarse</button>
-                        <button id="btnLogin" class="au-btn au-btn-icon au-btn--blue">
-                            <i class="zmdi"></i>Iniciar Sesion</button>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- HEADER DESKTOP-->
-
         <!-- MAIN CONTENT-->
         <div class="main-content">
             <div class="section__content section__content--p30">
@@ -260,6 +155,10 @@
                     </div>
                     <div class="row m-t-25">
                         <div class="col-10">
+                            <c:if test="${empty flights}">
+                                <h4>Ningun vuelo encontrado :c</h4>
+                            </c:if>
+
                             <c:forEach items="${flights}" var="item" varStatus="loop">
                                 <div class="card">
                                     <div class="card-header">

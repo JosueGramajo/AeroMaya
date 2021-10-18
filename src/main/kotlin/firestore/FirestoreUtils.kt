@@ -18,6 +18,7 @@ object FirestoreUtils {
     val PLANES_COLLECTION = "planes"
     val TICKETS_COLLECTION = "tickets"
     val COUNTRIES_COLLECTION = "countries"
+    val GROUP_TICKET_BUY = "groupTicketBuy"
 
     val PROJECT_COLLECTION = "projects"
     val CATALOG_COLLECTION = "catalogs"
