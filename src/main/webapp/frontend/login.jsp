@@ -42,6 +42,10 @@
 	<!-- Main CSS-->
 	<link href="../assets/css/theme.css" rel="stylesheet" media="all">
 
+	<link href="../assets/css/loader.css" rel="stylesheet" media="all">
+
+	<!-- Jquery JS-->
+	<script src="../assets/vendor/jquery-3.2.1.min.js"></script>
 </head>
 
 <body class="animsition">
@@ -73,7 +77,21 @@
 									<a href="#">¿Olvidaste Tu Contraseña?</a>
 								</label>
 							</div>
-							<button id="loginButton" class="au-btn au-btn--block au-btn--lightblue m-b-20" type="submit">Iniciar Sesión</button>
+
+							<div id="login-button">
+								<button id="loginButton" class="au-btn au-btn--block au-btn--lightblue m-b-20" type="submit">Iniciar Sesión</button>
+							</div>
+
+						<div class="row justify-content-md-center">
+							<div id="loader" class="col-xs-6">
+								<svg class="spinner" width="45px" height="45px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+									<circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+								</svg>
+							</div>
+							<script>
+								$("#loader").hide();
+							</script>
+						</div>
 
 						<div class="register-link">
 							<p>
@@ -107,8 +125,6 @@
 	</div>
 </div>
 
-<!-- Jquery JS-->
-<script src="../assets/vendor/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap JS-->
 <script src="../assets/vendor/bootstrap-4.1/popper.min.js"></script>
 <script src="../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>

@@ -5,11 +5,12 @@ import objects.*
 import utils.isBetween
 
 fun main() {
-    val l = "[\"hola\",\"como\",\"le\",\"va\"]"
+    FirestoreUtils.getObjectList<Flight>(FirestoreUtils.FLIGHTS_COLLECTION).map { f->
+        f.origin = f.origin.lowercase()
+        f.destination = f.destination.lowercase()
 
-    val hola = ObjectMapper().readValue(l, List::class.java) as List<String>
-
-    println("")
+        FirestoreUtils.updateDocumentWithObject(FirestoreUtils.FLIGHTS_COLLECTION, f.id, f)
+    }
 }
 
 

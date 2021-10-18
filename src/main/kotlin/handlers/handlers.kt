@@ -1,7 +1,9 @@
+import com.fasterxml.jackson.databind.ObjectMapper
 import firestore.FirestoreUtils
 import objects.*
 import utils.Companion
 import utils.DateUtils
+import utils.capitalizeWords
 
 object UserHandler{
     fun authenticateUser(email : String, password : String) : Boolean{
@@ -14,29 +16,34 @@ object UserHandler{
         )
 
         user?.let {
+            it.loggedIn = true
             Companion.currentUser = it
             return true
         }
 
         return false
     }
+
+    fun registerUser(email: String, password: String, name : String){
+        val user = User("", email, password, 2, name,false)
+
+        FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.USER_COLLECTION, user)
+    }
 }
 
 object FlightsHandler{
-    fun searchFlights(origin : String, destination : String?, departureDate : String?, arrivalDate : String?, classType : String) : List<Flight>{
+    fun searchFlights(destination : String?, departureDate : String?, arrivalDate : String?) : List<Flight>{
         val queries = arrayListOf<FirestoreQuery>()
-        queries.add(FirestoreQuery("origin", origin))
+        queries.add(FirestoreQuery("origin", "guatemala"))
 
         if (!destination.isNullOrEmpty()){
-            queries.add(FirestoreQuery("destination", destination))
+            queries.add(FirestoreQuery("destination", destination.lowercase()))
         }
         if (!departureDate.isNullOrEmpty()){
-            val parsedDate = DateUtils.changeDateFormat("MM/dd/yyyy", "dd/MM/yyyy", departureDate)
-            queries.add(FirestoreQuery("departureDate", parsedDate))
+            queries.add(FirestoreQuery("departureDate", departureDate))
         }
         if (!departureDate.isNullOrEmpty() && !arrivalDate.isNullOrEmpty()){
-            val parsedDate = DateUtils.changeDateFormat("MM/dd/yyyy", "dd/MM/yyyy", arrivalDate)
-            queries.add(FirestoreQuery("arrivalDate", parsedDate))
+            queries.add(FirestoreQuery("arrivalDate", arrivalDate))
         }
 
         return FirestoreUtils.getObjectListWithQuery(FirestoreUtils.FLIGHTS_COLLECTION, queries)
@@ -106,5 +113,16 @@ object AirlinesHandler{
         }
 
         return result
+    }
+}
+
+object CountryHandler{
+    fun getCountries() : String{
+        val countries = FirestoreUtils.getObjectList<Country>(FirestoreUtils.COUNTRIES_COLLECTION).sortedBy { it.name }
+        countries.map { country ->
+            country.name = country.name.capitalizeWords()
+        }
+        val countriesStringList = countries.map { it.name }
+        return ObjectMapper().writeValueAsString(countriesStringList)
     }
 }

@@ -30,7 +30,7 @@ fun Application.main() {
 
     routing {
         get("/") {
-            call.respondRedirect("/login")
+            call.respondRedirect("/dashboard")
         }
 
         //USER OPERATIONS
@@ -46,6 +46,17 @@ fun Application.main() {
                 call.response.status(HttpStatusCode.Unauthorized)
                 call.respondText { "Usuario o contraseña incorrecta" }
             }
+        }
+
+        post("/doRegister"){
+            val parameters = call.receiveParameters()
+            val name = parameters["name"] ?: ""
+            val email = parameters["email"] ?: ""
+            val password = parameters["password"] ?: ""
+
+            UserHandler.registerUser(email, password, name)
+
+            call.respondText { "Registro exitoso" }
         }
 
         post("/addTickets"){

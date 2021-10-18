@@ -18,11 +18,16 @@ data class FirestoreQuery(
 data class User(
         @DocumentId
         val id : String,
+
         val email : String,
         val password : String,
-        val role : Int
+        val role : Int,
+        val name : String,
+
+        @Exclude
+        var loggedIn : Boolean
 ){
-        constructor() : this("","", "", 0)
+        constructor() : this("","", "", 0, "", false)
 }
 
 data class Airline(
@@ -79,8 +84,8 @@ data class Flight(
         val departureDate : String,
         val departureTime : String,
         val description : String,
-        val destination : String,
-        val origin : String,
+        var destination : String,
+        var origin : String,
         val flightNumber : Int,
         val plane : String,
         val price : Float,
@@ -112,7 +117,7 @@ data class Ticket(
         val classType : String,
         val flight : String,
         val seat : String,
-        val user : String
+        val user : String,
 ){
         constructor() : this("","", "","","")
 }
@@ -125,10 +130,13 @@ data class GroupTicketBuy(
 )
 
 data class Country(
-        val name: String,
+        @DocumentId
+        val id: String,
+
+        var name: String,
         val code: String,
         val status: Boolean
 ){
-        constructor() : this("", "", false)
+        constructor() : this("","", "", false)
 }
 
