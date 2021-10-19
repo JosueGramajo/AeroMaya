@@ -8,8 +8,9 @@ $(document).ready(function () {
                 "seats": JSON.stringify(list)
             },
             success: function (data) {
-                $("#modalBody2").html("Se a realizado su compra exitosamente. \n\nId de compra: " + data.toString());
-                $("#succesModal").modal('show');
+                $.redirect("/ticketSuccess", {
+                    confirmation: data.toString()
+                });
             },
             error: function (xhr) {
                 $("#modalTitle").html("Error");

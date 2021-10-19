@@ -77,4 +77,13 @@
         <servlet-name>PaymentServlet</servlet-name>
         <url-pattern>/paymentForm</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>TicketSuccessServlet</servlet-name>
+        <servlet-class>servlets.TicketSuccessServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TicketSuccessServlet</servlet-name>
+        <url-pattern>/ticketSuccess</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -104,3 +104,19 @@ class PaymentServlet : HttpServlet(){
         doPost(req, resp)
     }
 }
+
+class TicketSuccessServlet : HttpServlet(){
+    override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        val id = req!!.getParameter("confirmation")
+
+        val groupTicket = TicketHandler.getTicketInfo(id)
+
+        req.setAttribute("confirmation", id)
+        req.setAttribute("groupTicket", groupTicket)
+        req.getRequestDispatcher("/frontend/ticketSuccess.jsp").forward(req, resp)
+    }
+
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        doPost(req, resp)
+    }
+}

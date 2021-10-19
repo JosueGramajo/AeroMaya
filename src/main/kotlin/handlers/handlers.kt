@@ -88,6 +88,27 @@ object TicketHandler{
 
         return buyId
     }
+    fun getTicketInfo(groupId : String) : TicketPrintObject{
+        val tickets = arrayListOf<Ticket>()
+
+        var user : User? = null
+        var flight : Flight? = null
+
+        FirestoreUtils.getObjectWithId<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, groupId)?.let { it.tickets.map { s->
+            FirestoreUtils.getObjectWithId<Ticket>(FirestoreUtils.TICKETS_COLLECTION, s)?.let { ticket ->
+                tickets.add(ticket)
+
+                if (user == null){
+                    user = FirestoreUtils.getObjectWithId(FirestoreUtils.USER_COLLECTION, ticket.user)
+                }
+                if (flight == null){
+                    flight = FirestoreUtils.getObjectWithId(FirestoreUtils.FLIGHTS_COLLECTION, ticket.flight)
+                }
+            }
+        } }
+
+        return TicketPrintObject(user!!, flight!!, tickets)
+    }
 }
 
 object AirlinesHandler{

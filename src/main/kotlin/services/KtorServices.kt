@@ -28,7 +28,7 @@ fun Application.main() {
         }
     }
 
-    routing {
+    val routing = routing {
         get("/") {
             call.respondRedirect("/dashboard")
         }
@@ -71,5 +71,10 @@ fun Application.main() {
             call.respondText { id }
         }
 
+        get("/generateTicket/{id}"){
+            val id = call.parameters["id"]
+
+            print(id)
+        }
     }
 }

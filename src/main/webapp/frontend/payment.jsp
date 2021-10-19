@@ -310,6 +310,8 @@
         var list = ${list};
     </script>
 
+    <script src="../assets/vendor/jquery-redirect.js"></script>
+
     <!-- Main JS-->
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/payment.js"></script>
