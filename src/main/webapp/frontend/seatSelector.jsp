@@ -161,7 +161,7 @@
 
                                     <ol class="cabin fuselage">
                                         <c:forEach var="master" items="${seats}" varStatus="loop">
-                                            <li class="">
+                                            <li class="row row--1">
                                                 <ol class="seats" type="A">
                                                     <c:forEach var="item" items="${master}">
                                                         <li class="seat">

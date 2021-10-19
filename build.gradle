@@ -70,6 +70,10 @@ dependencies {
     //JODA TIME
     implementation group: 'joda-time', name: 'joda-time', version: '2.10.10'
 
+    //OPEN PDF
+    implementation group: 'com.itextpdf', name: 'html2pdf', version: '3.0.5'
+
+
 }
 
 compileKotlin {
