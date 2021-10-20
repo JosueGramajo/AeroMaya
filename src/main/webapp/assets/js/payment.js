@@ -1,5 +1,10 @@
 $(document).ready(function () {
     $("#btnPay").click(function () {
+        if (!loggedIn){
+            $("#loginModal").modal('show');
+            return;
+        }
+
         $.ajax({
             method: "POST",
             url: "/addTickets",

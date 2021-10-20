@@ -126,6 +126,7 @@
     <script type="application/javascript">
         var id = "${id}";
         var list = ${list};
+        var loggedIn = ${user.loggedIn};
     </script>
 </body>
 

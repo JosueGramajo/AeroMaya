@@ -156,10 +156,56 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				<div id="user-message">
+					<p>Es necesario que ingrese con una cuenta antes de comprar los boletos</p>
+				</div>
+				<div id="login-form" class="login-form">
+
+					<div class="form-group">
+						<label>Correo Electrónico</label>
+						<input id="modalEmailInput" class="au-input au-input--full" type="email" name="email" placeholder="Correo Electrónico">
+					</div>
+					<div class="form-group">
+						<label>Contraseña</label>
+						<input id="modalPasswordInput" class="au-input au-input--full" type="password" name="password" placeholder="Contraseña">
+					</div>
+					<div class="register-link">
+						<p>
+							¿No tienes una Cuenta?
+							<a href="/register"> Registrate Aquí</a>
+						</p>
+					</div>
+					<br>
+					<div id="errorLabelContainer" class="form-group">
+						<label id="errorLabel" style="color: red;"></label>
+					</div>
+					<script>
+                        $("#errorLabelContainer").hide();
+					</script>
+				</div>
+				<script>
+                    $("#login-form").hide();
+				</script>
 
 			</div>
-			<div class="modal-footer">
-				<button id="modalLoginButton" type="button" class="btn btn-primary">Ingresar</button>
+			<div id="login-accept-modal-footer" class="modal-footer">
+				<button id="modalLoginAcceptButton" type="button" class="btn btn-primary">Aceptar</button>
+			</div>
+			<div id="login-modal-footer" class="modal-footer">
+				<button id="modalLoginButton" type="button" class="btn btn-primary">Iniciar Sesión</button>
+			</div>
+			<script>
+                $("#login-modal-footer").hide();
+			</script>
+			<div class="row justify-content-md-center">
+				<div id="loader" class="col-xs-6">
+					<svg class="spinner" width="45px" height="45px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+						<circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+					</svg>
+				</div>
+				<script>
+                    $("#loader").hide();
+				</script>
 			</div>
 		</div>
 	</div>
@@ -208,6 +254,8 @@
 <script src="../assets/vendor/select2/select2.min.js"></script>
 
 <script src="../assets/vendor/jquery-redirect.js"></script>
+
+<script src="../assets/js/general.js"></script>
 
 <!-- Main JS-->
 <script src="../assets/js/main.js"></script>

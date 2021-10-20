@@ -39,9 +39,6 @@ $(document).ready(function () {
         }
     });
 
-    $("#modalAcceptButton").click(function () {
-        $("#genericModal").modal('hide');
-    });
 });
 
 $.extend(
