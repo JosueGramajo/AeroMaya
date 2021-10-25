@@ -30,7 +30,8 @@
 							<div class="map-data m-b-40">
 								<h3 class="title-3 m-b-30">Compra realizada exitosamente!</h3>
 								<br>
-								<button class="btn btn-danger"><i class="fas fa-file-pdf"></i> Descargar PDF</button>
+								<a id="pdfVisualizationButton" href="/downloadPdf?confirmation=${confirmation}" type="submit" class="btn btn-danger"><i class="far fa-file-pdf"></i>&nbsp;Descargar PDF</a>
+
 
 								<c:forEach items="${groupTicket.seats}" var="item">
 									<div class="ticket">
@@ -80,7 +81,7 @@
 
 								<br/><br/><br/>
 								<div class="d-flex justify-content-center">
-									<input id="btnContinueToPayment" type="button" name="btn" class="btn btn-info" value="Continuar">
+									<a class="btn btn-info" href="/dashboard" role="button">Finalizar</a>
 								</div>
 							</div>
 							<!-- END MAP DATA-->
@@ -90,8 +91,6 @@
 			</div>
 		</div>
 	</t:base-page>
-
-	<script src="../assets/js/seatSelector.js"></script>
 </body>
 </html>
 

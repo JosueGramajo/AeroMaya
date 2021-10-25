@@ -43,6 +43,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>IndexServlet</servlet-name>
+        <servlet-class>servlets.IndexServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IndexServlet</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>FlightsSevlet</servlet-name>
         <servlet-class>servlets.FlightsSevlet</servlet-class>
     </servlet>
@@ -85,5 +94,34 @@
     <servlet-mapping>
         <servlet-name>TicketSuccessServlet</servlet-name>
         <url-pattern>/ticketSuccess</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MyTicketServlet</servlet-name>
+        <servlet-class>servlets.MyTicketServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyTicketServlet</servlet-name>
+        <url-pattern>/myTickets</url-pattern>
+    </servlet-mapping>
+
+    <!-- ADMIN -->
+    <servlet>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <servlet-class>servlets.AdminDashboardServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <url-pattern>/adminDashboard</url-pattern>
+    </servlet-mapping>
+
+    <!-- OPERATIONS -->
+    <servlet>
+        <servlet-name>DownloadPdfServlet</servlet-name>
+        <servlet-class>servlets.DownloadPdfServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DownloadPdfServlet</servlet-name>
+        <url-pattern>/downloadPdf</url-pattern>
     </servlet-mapping>
 </web-app>

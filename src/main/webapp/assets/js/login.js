@@ -5,7 +5,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: "/doLogin",
+            url: "/loginRedirect",
             data: {
                 "email": $("#emailInput").val(),
                 "password": $("#passwordInput").val()
@@ -14,7 +14,7 @@ $(document).ready(function(){
                 $("#loader").hide();
                 $("#login-button").show();
 
-                window.location.href = "/dashboard";
+                window.location.href = data;
             },
             error: function (xhr) {
                 $("#loader").hide();

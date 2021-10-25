@@ -8,15 +8,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%--
-  Created by IntelliJ IDEA.
-  User: Josue Gramajo
-  Date: 11/10/21
-  Time: 15:52
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,13 +93,22 @@
 <!-- Social Icons-->
 <!-- For more icon options, visit https://fontawesome.com/icons?d=gallery&p=2&s=brands-->
 
-<c:if test="${user.loggedIn eq false}">
-	<div class="social-icons">
-		<div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
-			<a class="btn btn-dark m-3" href="/login"><i class="fas fa-user"></i></a>
+<c:choose>
+	<c:when test="${user.loggedIn eq false}">
+		<div class="social-icons">
+			<div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
+				<a class="btn btn-dark m-3" href="/login"><i class="fas fa-user"></i></a>
+			</div>
 		</div>
-	</div>
-</c:if>
+	</c:when>
+	<c:otherwise>
+		<div class="social-icons">
+			<div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
+				<a class="btn btn-dark m-3" href="/dashboard"><i class="fas fa-arrow-right"></i></a>
+			</div>
+		</div>
+	</c:otherwise>
+</c:choose>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/dashboard/scripts.js"></script>

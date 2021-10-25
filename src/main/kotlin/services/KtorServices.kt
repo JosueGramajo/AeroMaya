@@ -10,6 +10,7 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import objects.User
+import utils.Companion
 import java.text.DateFormat
 
 
@@ -30,7 +31,7 @@ fun Application.main() {
 
     val routing = routing {
         get("/") {
-            call.respondRedirect("/dashboard")
+            call.respondRedirect("/index")
         }
 
         //USER OPERATIONS
@@ -42,6 +43,24 @@ fun Application.main() {
             if(UserHandler.authenticateUser(email, password)){
                 call.response.status(HttpStatusCode.OK)
                 call.respondText { "Login exitoso" }
+            }else{
+                call.response.status(HttpStatusCode.Unauthorized)
+                call.respondText { "Usuario o contraseña incorrecta" }
+            }
+        }
+
+        post("/loginRedirect") {
+            val parameters = call.receiveParameters()
+            val email = parameters["email"] ?: ""
+            val password = parameters["password"] ?: ""
+
+            if(UserHandler.authenticateUser(email, password)){
+                call.response.status(HttpStatusCode.OK)
+                if (Companion.currentUser.role == 1){
+                    call.respondText{ "/adminDashboard" }
+                }else{
+                    call.respondText{ "/dashboard" }
+                }
             }else{
                 call.response.status(HttpStatusCode.Unauthorized)
                 call.respondText { "Usuario o contraseña incorrecta" }
@@ -75,6 +94,11 @@ fun Application.main() {
             val id = call.parameters["id"]
 
             print(id)
+        }
+
+        get("/logout"){
+            Companion.currentUser = User()
+            call.respondRedirect("/login")
         }
     }
 }

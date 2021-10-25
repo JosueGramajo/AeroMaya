@@ -84,7 +84,7 @@ object TicketHandler{
             FirestoreUtils.updateDocumentWithObject(FirestoreUtils.FLIGHTS_COLLECTION, flight, originalFlight)
         }
 
-        val buyId = FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.GROUP_TICKET_BUY, GroupTicketBuy("", response))
+        val buyId = FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.GROUP_TICKET_BUY, GroupTicketBuy("", response, Companion.currentUser.id))
 
         return buyId
     }
@@ -108,6 +108,33 @@ object TicketHandler{
         } }
 
         return TicketPrintObject(user!!, flight!!, tickets)
+    }
+
+    fun getCurrentUserTickets() : List<TicketGroupResume>{
+        val response = arrayListOf<TicketGroupResume>()
+
+        FirestoreUtils.getObjectListWithQuery<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, listOf(FirestoreQuery("userId", Companion.currentUser.id))).map { group ->
+            val current = TicketGroupResume()
+            current.amount = group.tickets.size
+            current.id = group.id
+
+            var currentFlight : Flight? = null
+
+            group.tickets.forEach { t ->
+                val ticket = FirestoreUtils.getObjectWithId<Ticket>(FirestoreUtils.TICKETS_COLLECTION, t)!!
+                if (currentFlight == null){
+                    currentFlight = FirestoreUtils.getObjectWithId(FirestoreUtils.FLIGHTS_COLLECTION, ticket.flight)
+                    return@forEach
+                }
+            }
+
+            current.flightDesc = currentFlight!!.origin + " -> " + currentFlight!!.destination
+            current.price = current.amount * currentFlight!!.price
+
+            response.add(current)
+        }
+
+        return response
     }
 }
 
@@ -138,12 +165,15 @@ object AirlinesHandler{
 }
 
 object CountryHandler{
-    fun getCountries() : String{
+    fun getCountriesJson() : String{
+        val countriesStringList = getCountries()
+        return ObjectMapper().writeValueAsString(countriesStringList)
+    }
+    fun getCountries() : List<String>{
         val countries = FirestoreUtils.getObjectList<Country>(FirestoreUtils.COUNTRIES_COLLECTION).sortedBy { it.name }
         countries.map { country ->
             country.name = country.name.capitalizeWords()
         }
-        val countriesStringList = countries.map { it.name }
-        return ObjectMapper().writeValueAsString(countriesStringList)
+        return countries.map { it.name }
     }
 }

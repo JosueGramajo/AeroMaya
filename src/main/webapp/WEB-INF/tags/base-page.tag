@@ -44,6 +44,10 @@
 
 	<!-- Jquery JS-->
 	<script src="../assets/vendor/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	<link rel="stylesheet" href="../assets/css/loader.css">
 </head>
 
 <body class="animsition">
@@ -53,7 +57,7 @@
 		<nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
 			<div class="container px-5">
 				<div>
-					<a href="#">
+					<a href="/dashboard">
 						<img src="../assets/images/icon/logo.png" alt="Cool Admin" class="header-logo" />
 					</a>
 				</div>
@@ -64,7 +68,7 @@
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
 						<li class="nav-item"><a class="nav-link me-lg-3" href="/dashboard">Home</a></li>
-						<li class="nav-item"><a class="nav-link me-lg-3" href="">Aerolineas</a></li>
+						<li class="nav-item"><a class="nav-link me-lg-3" href="/airlines">Aerolineas</a></li>
 						<li class="nav-item"><a class="nav-link me-lg-3" href="">Calendario</a></li>
 						<li class="nav-item"><a class="nav-link me-lg-3" href="">Preguntas</a></li>
 						<li class="nav-item"><a class="nav-link me-lg-3" href="">Sobre Nosotros</a></li>
@@ -96,12 +100,12 @@
 										</div>
 										<div class="account-dropdown__body">
 											<div class="account-dropdown__item">
-												<a href="#">
+												<a href="/myTickets">
 													<i class="zmdi zmdi-account"></i>Mis boletos</a>
 											</div>
 										</div>
 										<div class="account-dropdown__footer">
-											<a href="#">
+											<a href="/logout">
 												<i class="zmdi zmdi-power"></i>Cerrar Sesión</a>
 										</div>
 									</div>
@@ -109,14 +113,16 @@
 							</div>
 						</c:when>
 						<c:otherwise>
-							<form action="/login" method="get">
-								<button type="submit" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
+							<div id="login-general-div">
+								<form action="/login" method="get">
+									<button type="submit" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
 								<span class="d-flex align-items-center">
 									<i class="bi-chat-text-fill me-2"></i>
 									<span class="small">Iniciar Sesión</span>
 								</span>
-								</button>
-							</form>
+									</button>
+								</form>
+							</div>
 						</c:otherwise>
 					</c:choose>
 				</div>

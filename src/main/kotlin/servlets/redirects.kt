@@ -1,9 +1,6 @@
 package servlets
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
-import firestore.FirestoreUtils
-import objects.Country
 import utils.Companion
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
@@ -21,13 +18,27 @@ class RegisterServlet : HttpServlet(){
     }
 }
 
-class DashboardServlet : HttpServlet(){
+class IndexServlet : HttpServlet(){
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        val countries = CountryHandler.getCountries()
+        val countries = CountryHandler.getCountriesJson()
 
         req!!.setAttribute("countries", countries)
         req.setAttribute("user", Companion.currentUser)
         req.getRequestDispatcher("/frontend/dashboard.jsp").forward(req, resp)
+    }
+
+    override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        doGet(req, resp)
+    }
+}
+
+class DashboardServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        val countries = CountryHandler.getCountriesJson()
+
+        req!!.setAttribute("countries", countries)
+        req.setAttribute("user", Companion.currentUser)
+        req.getRequestDispatcher("/frontend/dashboard2.jsp").forward(req, resp)
     }
 
     override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
@@ -113,10 +124,21 @@ class TicketSuccessServlet : HttpServlet(){
 
         req.setAttribute("confirmation", id)
         req.setAttribute("groupTicket", groupTicket)
+        req.setAttribute("user", Companion.currentUser)
         req.getRequestDispatcher("/frontend/ticketSuccess.jsp").forward(req, resp)
     }
 
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
         doPost(req, resp)
+    }
+}
+
+class MyTicketServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        val list = TicketHandler.getCurrentUserTickets()
+
+        req!!.setAttribute("list", list)
+        req.setAttribute("user", Companion.currentUser)
+        req.getRequestDispatcher("/frontend/myTickets.jsp").forward(req, resp)
     }
 }

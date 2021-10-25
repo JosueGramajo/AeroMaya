@@ -22,6 +22,8 @@ $(document).ready(function () {
                 $("#loader").hide();
                 $("#login-modal-footer").show();
 
+                $("#login-general-div").hide();
+
                 $("#loginModal").modal('hide');
 
                 loggedIn = true;

@@ -126,9 +126,11 @@ data class GroupTicketBuy(
         @DocumentId
         val id : String,
 
-        val tickets : List<String>
+        val tickets : List<String>,
+
+        val userId : String
 ){
-        constructor() : this("", arrayListOf())
+        constructor() : this("", arrayListOf(), "")
 }
 
 data class Country(
@@ -147,4 +149,13 @@ data class TicketPrintObject(
         val flight : Flight,
         val seats: List<Ticket>
 )
+
+data class TicketGroupResume(
+        var flightDesc : String,
+        var amount : Int,
+        var price : Float,
+        var id : String
+){
+        constructor() : this("", 0, 0f, "")
+}
 

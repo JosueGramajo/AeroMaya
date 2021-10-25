@@ -119,7 +119,7 @@
      flex-direction: column;
      position: relative;
 }
-}
+
  .ticket--end:before {
      content: '';
      width: 32px;
