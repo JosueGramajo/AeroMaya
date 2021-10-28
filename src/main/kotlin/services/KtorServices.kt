@@ -1,6 +1,7 @@
 package services
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.google.gson.Gson
 import firestore.FirestoreUtils
 import io.ktor.application.*
 import io.ktor.features.*
@@ -73,7 +74,7 @@ fun Application.main() {
             val email = parameters["email"] ?: ""
             val password = parameters["password"] ?: ""
 
-            UserHandler.registerUser(email, password, name)
+            UserHandler.registerUser(email, password, name, 2)
 
             call.respondText { "Registro exitoso" }
         }
@@ -100,5 +101,62 @@ fun Application.main() {
             Companion.currentUser = User()
             call.respondRedirect("/login")
         }
+
+        //=======USER CRUD=======
+        post("/createUser"){
+            val params = call.receiveParameters()
+            val name = params["name"] ?: ""
+            val email = params["email"] ?: ""
+            val password = params["password"] ?: ""
+            val role = params["role"]?.toIntOrNull() ?: -1
+
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || role == -1){
+                call.response.status(HttpStatusCode.BadRequest)
+                call.respondText { "Datos erroneos" }
+                return@post
+            }
+
+            UserHandler.registerUser(email, password, name, role)
+
+            call.respondText { "Usuario creado exitosamente" }
+        }
+
+        post("/getUser"){
+            val id = call.receiveParameters()["id"] ?: ""
+            val user = FirestoreUtils.getObjectWithId<User>(FirestoreUtils.USER_COLLECTION, id)
+            user?.let {
+                call.respondText { Gson().toJson(it) }
+            } ?: kotlin.run {
+                call.response.status(HttpStatusCode.BadRequest)
+                call.respondText { "Usuario no encontrado" }
+                return@post
+            }
+        }
+
+        put("/updateUser"){
+            val params = call.receiveParameters()
+            val id = params["id"] ?: ""
+            val name = params["name"] ?: ""
+            val email = params["email"] ?: ""
+            val password = params["password"] ?: ""
+            val role = params["role"]?.toIntOrNull() ?: -1
+
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || role == -1){
+                call.response.status(HttpStatusCode.BadRequest)
+                call.respondText { "Datos erroneos" }
+                return@put
+            }
+
+            UserHandler.updateUser(id, email, password, name, role)
+
+            call.respondText { "Usuario actualizado exitosamente" }
+        }
+
+        delete("/deleteUser") {
+            val id = call.receiveParameters()["id"] ?: ""
+            FirestoreUtils.deleteDocumentWithId(FirestoreUtils.USER_COLLECTION, id)
+            call.respondText { "Usuario eliminado exitosamente" }
+        }
+        //==============
     }
 }

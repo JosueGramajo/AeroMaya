@@ -24,10 +24,16 @@ object UserHandler{
         return false
     }
 
-    fun registerUser(email: String, password: String, name : String){
-        val user = User("", email, password, 2, name,false)
+    fun registerUser(email: String, password: String, name : String, role : Int){
+        val user = User("", email, password, role, name,false)
 
         FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.USER_COLLECTION, user)
+    }
+
+    fun updateUser(id : String, email: String, password: String, name : String, role : Int){
+        val user = User("", email, password, role, name,false)
+
+        FirestoreUtils.updateDocumentWithObject(FirestoreUtils.USER_COLLECTION, id, user)
     }
 }
 

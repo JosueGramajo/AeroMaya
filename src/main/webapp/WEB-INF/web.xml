@@ -115,6 +115,15 @@
         <url-pattern>/adminDashboard</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UserManagementServlet</servlet-name>
+        <servlet-class>servlets.UserManagementServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserManagementServlet</servlet-name>
+        <url-pattern>/userManagement</url-pattern>
+    </servlet-mapping>
+
     <!-- OPERATIONS -->
     <servlet>
         <servlet-name>DownloadPdfServlet</servlet-name>
