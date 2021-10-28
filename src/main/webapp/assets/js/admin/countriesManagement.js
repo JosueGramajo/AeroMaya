@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $("#countriesTable").DataTable();
+
     $(".enableSwitch").on('change', function () {
        let id = $(this).data("id");
         updateCountryStatus(id, true);

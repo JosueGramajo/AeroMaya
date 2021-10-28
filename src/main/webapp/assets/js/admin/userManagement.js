@@ -3,6 +3,8 @@ $(document).ready(function () {
 
     var editionMode = false;
 
+    $("#userTable").DataTable();
+
     $("#addUserButton").click(function () {
         $("#nameInput").val("");
         $("#emailInput").val("");

@@ -43,7 +43,6 @@
 
 	<!-- Main CSS-->
 	<link href="../../assets/css/admin/theme.css" rel="stylesheet" media="all">
-
 </head>
 
 <body class="animsition">
@@ -240,7 +239,7 @@
 								</div>
 								<div class="card-body">
 									<div class="container">
-										<table class="table table-striped">
+										<table id="countriesTable" class="table table-striped">
 											<thead>
 											<tr>
 												<th scope="col">ID</th>
@@ -328,6 +327,9 @@
 <script src="../../assets/vendor/chartjs/Chart.bundle.min.js"></script>
 <script src="../../assets/vendor/select2/select2.min.js">
 </script>
+
+<link rel="stylesheet" type="text/css" href="../../assets/vendor/data-tables/datatables.min.css"/>
+<script type="text/javascript" src="../../assets/vendor/data-tables/datatables.min.js"></script>
 
 <!-- Main JS-->
 <script src="../../assets/js/main.js"></script>

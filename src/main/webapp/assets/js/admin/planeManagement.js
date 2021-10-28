@@ -3,6 +3,8 @@ $(document).ready(function () {
 
     var editionMode = false;
 
+    $("#planeTable").DataTable();
+
     $("#addPlaneButton").click(function () {
         $("#nameInput").val("");
         $("#airlineSelect").val("");
