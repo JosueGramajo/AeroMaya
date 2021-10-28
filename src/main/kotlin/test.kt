@@ -9,6 +9,7 @@ import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.servlet.*
+import objects.Country
 import objects.Flight
 import objects.User
 import java.io.ByteArrayOutputStream
@@ -17,11 +18,9 @@ import java.io.FileOutputStream
 
 
 fun main() {
+    val c = CountryHandler.getCountries()
 
-
-
-
-
+    print("")
 }
 
 fun startLocalServer(){

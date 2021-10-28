@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: promerica
@@ -219,13 +221,81 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12">
-
+							<div class="overview-wrap">
+								<h2 class="title-1">Manejo de paises</h2>
+							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="copyright">
-								<p>Copyright © 2021 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+					<hr>
+					<div class="row m-t-25">
+						<div class="col-10">
+							<div class="card">
+								<div class="card-header">
+									<div class="row justify-content-end">
+										<div class="col-sm">
+											Paises existentes
+										</div>
+									</div>
+
+								</div>
+								<div class="card-body">
+									<div class="container">
+										<table class="table table-striped">
+											<thead>
+											<tr>
+												<th scope="col">ID</th>
+												<th scope="col">Nombre</th>
+												<th scope="col">Codigo</th>
+												<th scope="col">Estatus</th>
+												<th></th>
+											</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${countries}" var="item">
+													<tr>
+														<td>${item.id}</td>
+														<td>${item.name}</td>
+														<td>${item.code}</td>
+														<td>
+															<c:choose>
+																<c:when test="${item.status eq true}">
+																	<span class="badge badge-success">Activo</span>
+																</c:when>
+																<c:otherwise>
+																	<span class="badge badge-danger">Inactivo</span>
+																</c:otherwise>
+															</c:choose>
+														</td>
+														<td>
+															<c:choose>
+																<c:when test="${item.status eq true}">
+																	<div class="custom-control custom-switch">
+																		<input type="checkbox" class="custom-control-input disableSwitch" id="disableSwitch" data-id="${item.id}" checked>
+																		<label class="custom-control-label" for="disableSwitch">Deshabilitar</label>
+																	</div>
+																</c:when>
+																<c:otherwise>
+																	<div class="custom-control custom-switch">
+																		<input type="checkbox" class="custom-control-input enableSwitch" id="enableSwitch" data-id="${item.id}">
+																		<label class="custom-control-label" for="enableSwitch">Habilitar</label>
+																	</div>
+																</c:otherwise>
+															</c:choose>
+
+														</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="copyright">
+									<p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -261,6 +331,8 @@
 
 <!-- Main JS-->
 <script src="../../assets/js/main.js"></script>
+
+<script src="../../assets/js/admin/countriesManagement.js"></script>
 
 </body>
 

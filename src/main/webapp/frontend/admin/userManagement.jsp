@@ -98,7 +98,7 @@
 								<a href="/userManagement">Usuarios</a>
 							</li>
 							<li>
-								<a href="crudPaises.php">Paises</a>
+								<a href="/countryManagement">Paises</a>
 							</li>
 							<li>
 								<a href="crudAerolineas.php">Aerolineas</a>
@@ -155,7 +155,7 @@
 								<a href="/userManagement">Usuarios</a>
 							</li>
 							<li>
-								<a href="crudPaises.php">Paises</a>
+								<a href="/countryManagement">Paises</a>
 							</li>
 							<li>
 								<a href="crudAerolineas.php">Aerolineas</a>

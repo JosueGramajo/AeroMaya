@@ -68,7 +68,19 @@ object FirestoreUtils {
     inline fun <reified T : Any> getObjectListWithQuery(collectionId: String, queryList : List<FirestoreQuery>) : List<T>{
         val result = arrayListOf<T>()
         var collection : Query = db.collection(collectionId)
-        queryList.map { collection = collection.whereEqualTo(it.firestoreKey, it.expectedValue) }
+        queryList.map { query ->
+            query.expectedStringValue?.let {
+                collection = collection.whereEqualTo(query.firestoreKey, it)
+            }
+
+            query.expectedBooleanValue?.let {
+                collection = collection.whereEqualTo(query.firestoreKey, it)
+            }
+
+            query.expectedNumericValue?.let {
+                collection = collection.whereEqualTo(query.firestoreKey, it)
+            }
+        }
         collection.get().get().documents.map {
             result.add(it.toObject(T::class.java))
         }
@@ -77,7 +89,19 @@ object FirestoreUtils {
 
     inline fun <reified T : Any> getObjectWithQuery(collectionId  : String, queryList : List<FirestoreQuery>) : T?{
         var collection : Query = db.collection(collectionId)
-        queryList.map { collection = collection.whereEqualTo(it.firestoreKey, it.expectedValue) }
+        queryList.map { query ->
+            query.expectedStringValue?.let {
+                collection = collection.whereEqualTo(query.firestoreKey, it)
+            }
+
+            query.expectedBooleanValue?.let {
+                collection = collection.whereEqualTo(query.firestoreKey, it)
+            }
+
+            query.expectedNumericValue?.let {
+                collection = collection.whereEqualTo(query.firestoreKey, it)
+            }
+        }
         return collection.get().get().documents.firstOrNull()?.toObject(T::class.java)
     }
 

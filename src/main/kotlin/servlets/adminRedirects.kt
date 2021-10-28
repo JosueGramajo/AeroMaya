@@ -2,6 +2,7 @@ package servlets
 
 import firestore.FirestoreUtils
 import objects.Airline
+import objects.Country
 import objects.Plane
 import objects.User
 import utils.Companion
@@ -56,6 +57,28 @@ class PlaneManagementServlet : HttpServlet(){
             req!!.setAttribute("planes", planes)
             req.setAttribute("airlines", airlines)
             req.getRequestDispatcher("/frontend/admin/planeManagement.jsp").forward(req, resp)
+        }else{
+            resp!!.contentType = "text/html"
+            val out: PrintWriter = resp.getWriter()
+            out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+        }
+    }
+}
+
+class CountriesManagementServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        if (Companion.currentUser.loggedIn){
+            if (Companion.currentUser.role != 1){
+                resp!!.contentType = "text/html"
+                val out: PrintWriter = resp.getWriter()
+                out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+                return
+            }
+
+            val countries = CountryHandler.getAllCountries()
+
+            req!!.setAttribute("countries", countries)
+            req.getRequestDispatcher("/frontend/admin/countriesManagement.jsp").forward(req, resp)
         }else{
             resp!!.contentType = "text/html"
             val out: PrintWriter = resp.getWriter()

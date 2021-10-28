@@ -236,10 +236,27 @@ object CountryHandler{
         return ObjectMapper().writeValueAsString(countriesStringList)
     }
     fun getCountries() : List<String>{
-        val countries = FirestoreUtils.getObjectList<Country>(FirestoreUtils.COUNTRIES_COLLECTION).sortedBy { it.name }
+        val countries = FirestoreUtils.getObjectListWithQuery<Country>(FirestoreUtils.COUNTRIES_COLLECTION, listOf(
+            FirestoreQuery("status", true)
+        )).sortedBy { it.name }
         countries.map { country ->
             country.name = country.name.capitalizeWords()
         }
         return countries.map { it.name }
+    }
+
+    fun getAllCountries() : List<Country>{
+        val countries = FirestoreUtils.getObjectList<Country>(FirestoreUtils.COUNTRIES_COLLECTION).sortedBy { it.name }
+        countries.map { country ->
+            country.name = country.name.capitalizeWords()
+        }
+        return countries
+    }
+
+    fun updateCountryStatus(id : String, status : Boolean){
+        val country = FirestoreUtils.getObjectWithId<Country>(FirestoreUtils.COUNTRIES_COLLECTION, id)
+        country!!.status = status
+
+        FirestoreUtils.updateDocumentWithObject(FirestoreUtils.COUNTRIES_COLLECTION, id, country)
     }
 }

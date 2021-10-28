@@ -1,5 +1,6 @@
 package services
 
+import CountryHandler
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.gson.Gson
 import firestore.FirestoreUtils
@@ -225,5 +226,17 @@ fun Application.main() {
             }
         }
         //============
+
+        //======Countries======
+        put("/changeCountryStatus") {
+            val params = call.receiveParameters()
+            val id = params["id"] ?: ""
+            val status = params["status"]?.toBooleanStrictOrNull() ?: false
+
+            CountryHandler.updateCountryStatus(id, status)
+
+            call.respondText { "Estado actualizado exitosamente" }
+        }
+        //====================
     }
 }

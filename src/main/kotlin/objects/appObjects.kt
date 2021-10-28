@@ -12,8 +12,18 @@ open class BaseObject(
 
 data class FirestoreQuery(
         val firestoreKey : String,
-        val expectedValue : String
-)
+        val expectedStringValue : String?,
+        val expectedBooleanValue : Boolean?,
+        val expectedNumericValue : Float?
+){
+        constructor() : this("", null, null, null)
+
+        constructor(key : String, value : String) : this(key, value, null, null)
+
+        constructor(key : String, value : Boolean) : this(key, null, value, null)
+
+        constructor(key : String, value : Float) : this(key, null, null, value)
+}
 
 data class User(
         @DocumentId
@@ -139,7 +149,7 @@ data class Country(
 
         var name: String,
         val code: String,
-        val status: Boolean
+        var status: Boolean
 ){
         constructor() : this("","", "", false)
 }
