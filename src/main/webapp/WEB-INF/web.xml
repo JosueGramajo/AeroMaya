@@ -124,6 +124,15 @@
         <url-pattern>/userManagement</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PlaneManagementServlet</servlet-name>
+        <servlet-class>servlets.PlaneManagementServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PlaneManagementServlet</servlet-name>
+        <url-pattern>/planeManagement</url-pattern>
+    </servlet-mapping>
+
     <!-- OPERATIONS -->
     <servlet>
         <servlet-name>DownloadPdfServlet</servlet-name>

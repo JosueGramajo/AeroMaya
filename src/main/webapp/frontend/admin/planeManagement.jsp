@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: promerica
@@ -219,13 +221,66 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12">
-
+							<div class="overview-wrap">
+								<h2 class="title-1">Manejo de aviones</h2>
+							</div>
 						</div>
 					</div>
+					<br>
 					<div class="row">
 						<div class="col-md-12">
-							<div class="copyright">
-								<p>Copyright © 2021 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+							<button class="btn btn-success" id="addPlaneButton"><i class="fas fa-plus"></i> Agregar avion</button>
+						</div>
+					</div>
+					<hr>
+					<div class="row m-t-25">
+						<div class="col-10">
+							<div class="card">
+								<div class="card-header">
+									<div class="row justify-content-end">
+										<div class="col-sm">
+											Aviones existentes
+										</div>
+									</div>
+
+								</div>
+								<div class="card-body">
+									<div class="container">
+										<table class="table table-striped">
+											<thead>
+											<tr>
+												<th scope="col">ID</th>
+												<th scope="col">Nombre</th>
+												<th scope="col">Aerolinea</th>
+												<th scope="col">Capacidad</th>
+												<th></th>
+												<th></th>
+												<th></th>
+											</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${planes}" var="item">
+													<tr>
+														<td>${item.id}</td>
+														<td>${item.name}</td>
+														<td>${item.airline}</td>
+														<td>${item.capacity}</td>
+														<td><button class="btn btn-info infoPlane">Detalles</button></td>
+														<td><button class="btn btn-info editPlane" data-id="${item.id}"><i class="fas fa-edit"></i></button></td>
+														<td><button class="btn btn-danger deletePlane" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="copyright">
+									<p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -236,6 +291,82 @@
 		<!-- END PAGE CONTAINER-->
 	</div>
 
+</div>
+
+<div id="confirmationModal" class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Eliminar usuario</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>Esta seguro que desea eliminar a este usuario?</p>
+			</div>
+			<div class="modal-footer">
+				<button id="deleteUserConfirmation" type="button" class="btn btn-primary">Aceptar</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="planeCreationModal" class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div id="login-form" class="login-form">
+					<div class="form-group">
+						<label>Nombre</label>
+						<input id="nameInput" class="au-input au-input--full" type="text" placeholder="Nombre">
+					</div>
+					<div class="form-group">
+						<label for="airlineSelect">Aereolinea</label>
+						<select id="airlineSelect" class="form-control">
+							<c:forEach items="${airlines}" var="item">
+								<option value="${item}">${item}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="capacitySelect">Capacidad</label>
+						<select id="capacitySelect" class="form-control">
+							<option value="54">Estandar - 54 asientos</option>
+						</select>
+					</div>
+
+					<br>
+					<div id="errorLabelContainer" class="form-group">
+						<label id="errorLabel" style="color: red;"></label>
+					</div>
+					<script>
+						$("#errorLabelContainer").hide();
+					</script>
+				</div>
+			</div>
+			<div id="creationOptions" class="modal-footer">
+				<button id="planeCreationAccept" type="button" class="btn btn-primary">Aceptar</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+			</div>
+			<div class="row justify-content-md-center">
+				<div id="loader" class="col-xs-6">
+					<svg class="spinner" width="45px" height="45px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+						<circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+					</svg>
+				</div>
+				<script>
+					$("#loader").hide();
+				</script>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Jquery JS-->
@@ -261,6 +392,8 @@
 
 <!-- Main JS-->
 <script src="../../assets/js/main.js"></script>
+
+<script src="../../assets/js/admin/planeManagement.js"></script>
 
 </body>
 

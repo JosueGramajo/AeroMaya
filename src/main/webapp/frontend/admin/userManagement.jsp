@@ -92,7 +92,7 @@
 					</li>
 					<li class="has-sub">
 						<a class="js-arrow" href="#">
-							<i class="fas fa-pencil-square"></i>Datos</a>
+							<i class="fas fa-pencil-square"></i>Mantenimientos</a>
 						<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
 							<li>
 								<a href="/userManagement">Usuarios</a>
@@ -104,7 +104,7 @@
 								<a href="crudAerolineas.php">Aerolineas</a>
 							</li>
 							<li>
-								<a href="crudAviones.php">Aviones</a>
+								<a href="/planeManagement">Aviones</a>
 							</li>
 						</ul>
 					</li>
@@ -149,7 +149,7 @@
 					</li>
 					<li class="has-sub">
 						<a class="js-arrow" href="#">
-							<i class="fas fa-pencil-square"></i>Datos</a>
+							<i class="fas fa-pencil-square"></i>Mantenimientos</a>
 						<ul class="list-unstyled navbar__sub-list js-sub-list">
 							<li>
 								<a href="/userManagement">Usuarios</a>
@@ -161,7 +161,7 @@
 								<a href="crudAerolineas.php">Aerolineas</a>
 							</li>
 							<li>
-								<a href="crudAviones.php">Aviones</a>
+								<a href="/planeManagement">Aviones</a>
 							</li>
 						</ul>
 					</li>

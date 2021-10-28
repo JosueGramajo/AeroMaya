@@ -4,6 +4,7 @@ import objects.*
 import utils.Companion
 import utils.DateUtils
 import utils.capitalizeWords
+import utils.isBetween
 
 object UserHandler{
     fun authenticateUser(email : String, password : String) : Boolean{
@@ -34,6 +35,65 @@ object UserHandler{
         val user = User("", email, password, role, name,false)
 
         FirestoreUtils.updateDocumentWithObject(FirestoreUtils.USER_COLLECTION, id, user)
+    }
+}
+
+object PlaneHandler{
+    fun createPlane(name : String, airline : String, capacity : Int){
+        val plane = generatePlane(name, airline, capacity)
+
+        FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.PLANES_COLLECTION, plane)
+    }
+
+    fun updatePlane(id : String, name : String, airline : String, capacity : Int) : Boolean{
+        val flights = FirestoreUtils.getObjectList<Flight>(FirestoreUtils.FLIGHTS_COLLECTION)
+        if (flights.map { it.plane }.contains(id)){
+            return false
+        }
+
+        val plane = generatePlane(name, airline, capacity)
+
+        FirestoreUtils.updateDocumentWithObject(FirestoreUtils.PLANES_COLLECTION, id, plane)
+
+        return true
+    }
+
+    fun deletePlane(id : String) : Boolean{
+        val flights = FirestoreUtils.getObjectList<Flight>(FirestoreUtils.FLIGHTS_COLLECTION)
+        if (flights.map { it.plane }.contains(id)){
+            return false
+        }
+
+        FirestoreUtils.deleteDocumentWithId(FirestoreUtils.PLANES_COLLECTION, id)
+
+        return true
+    }
+
+    private fun generatePlane(name : String, airline : String, capacity : Int) : Plane{
+        val seats = arrayListOf<PlaneSeat>()
+        var firstClassAmount = 0
+        var businessClassAmount = 0
+        var economicClassAmount = 0
+
+        val rows = capacity / 6
+        for (e in 1 until rows){
+            "ABCDEF".forEach { c ->
+                val classType = if (e.isBetween(1, 3)){
+                    firstClassAmount++
+                    "Primera clase"
+                }else if(e.isBetween(4, 6)){
+                    businessClassAmount++
+                    "Clase negocios"
+                }else{
+                    economicClassAmount++
+                    "Clase economica"
+                }
+
+                seats.add(PlaneSeat("",classType,"$e$c", e, c.toString()))
+            }
+        }
+
+        return Plane("", airline, capacity, businessClassAmount, economicClassAmount, firstClassAmount, name, seats, null)
     }
 }
 
