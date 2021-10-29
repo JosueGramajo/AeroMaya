@@ -11,6 +11,7 @@ import io.ktor.server.netty.*
 import io.ktor.server.servlet.*
 import objects.Country
 import objects.Flight
+import objects.Plane
 import objects.User
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -18,9 +19,7 @@ import java.io.FileOutputStream
 
 
 fun main() {
-    val c = CountryHandler.getCountries()
 
-    print("")
 }
 
 fun startLocalServer(){

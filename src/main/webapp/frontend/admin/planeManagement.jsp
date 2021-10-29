@@ -44,6 +44,8 @@
 	<!-- Main CSS-->
 	<link href="../../assets/css/admin/theme.css" rel="stylesheet" media="all">
 
+	<!-- Jquery JS-->
+	<script src="../../assets/vendor/jquery-3.2.1.min.js"></script>
 </head>
 
 <body class="animsition">
@@ -263,7 +265,7 @@
 													<tr>
 														<td>${item.id}</td>
 														<td>${item.name}</td>
-														<td>${item.airline}</td>
+														<td>${item.airlineName}</td>
 														<td>${item.capacity}</td>
 														<td><button class="btn btn-info infoPlane">Detalles</button></td>
 														<td><button class="btn btn-info editPlane" data-id="${item.id}"><i class="fas fa-edit"></i></button></td>
@@ -297,16 +299,24 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Eliminar usuario</h5>
+				<h5 class="modal-title">Eliminar avion</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<p>Esta seguro que desea eliminar a este usuario?</p>
+				<p>Esta seguro que desea eliminar a este avion?</p>
 			</div>
+			<br>
+			<div id="errorLabelContainer-Confirmation" class="form-group">
+				<label id="errorLabel-Confirmation" style="color: red;"></label>
+			</div>
+			<script>
+				$("#errorLabelContainer-Confirmation").hide();
+			</script>
+
 			<div class="modal-footer">
-				<button id="deleteUserConfirmation" type="button" class="btn btn-primary">Aceptar</button>
+				<button id="deletePlaneConfirmation" type="button" class="btn btn-primary">Aceptar</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 			</div>
 		</div>
@@ -331,7 +341,7 @@
 						<label for="airlineSelect">Aereolinea</label>
 						<select id="airlineSelect" class="form-control">
 							<c:forEach items="${airlines}" var="item">
-								<option value="${item}">${item}</option>
+								<option value="${item.id}">${item.name}</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -369,8 +379,6 @@
 	</div>
 </div>
 
-<!-- Jquery JS-->
-<script src="../../assets/vendor/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap JS-->
 <script src="../../assets/vendor/bootstrap-4.1/popper.min.js"></script>
 <script src="../../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>

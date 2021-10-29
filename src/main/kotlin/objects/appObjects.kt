@@ -69,9 +69,9 @@ data class Plane(
         val seats : List<PlaneSeat>,
 
         @Exclude
-        val airlineObj : Airline?
+        var airlineName : String
 ){
-        constructor() : this("","", 0, 0, 0, 0, "", arrayListOf(), null)
+        constructor() : this("","", 0, 0, 0, 0, "", arrayListOf(), "")
 }
 
 data class PlaneSeat(
@@ -103,7 +103,7 @@ data class Flight(
         val seats : List<FlightSeat>,
 
         @Exclude
-        var planeObj : Plane?
+        var airlineName: String?
 ){
         constructor() : this("","","","","","","","",0,"", 0f, false, arrayListOf(),null)
 }

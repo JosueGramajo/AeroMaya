@@ -229,7 +229,7 @@
 					<br>
 					<div class="row">
 						<div class="col-md-12">
-							<button class="btn btn-success" id="addUserButton"><i class="fas fa-plus"></i> Agregar aerolinea</button>
+							<button class="btn btn-success" id="addAirlineButton"><i class="fas fa-plus"></i> Agregar aerolinea</button>
 						</div>
 					</div>
 					<hr>
@@ -249,10 +249,10 @@
 										<table id="userTable" class="table table-striped">
 											<thead>
 											<tr>
+												<th></th>
 												<th scope="col">ID</th>
 												<th scope="col">Nombre</th>
-												<th scope="col">Correo</th>
-												<th scope="col">Rol</th>
+												<th scope="col">Estado</th>
 												<th></th>
 												<th></th>
 											</tr>
@@ -260,12 +260,23 @@
 											<tbody>
 												<c:forEach items="${users}" var="item">
 													<tr>
+														<td>
+															<img src="../../assets/images/airlines/${item.id}.png" style="max-height: 100px; max-width: 100px">
+														</td>
 														<td>${item.id}</td>
 														<td>${item.name}</td>
-														<td>${item.email}</td>
-														<td>${item.role}</td>
-														<td><button class="btn btn-info editUser" data-id="${item.id}"><i class="fas fa-edit"></i></button></td>
-														<td><button class="btn btn-danger deleteUser" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button></td>
+														<td>
+															<c:choose>
+																<c:when test="${item.status eq true}">
+																	<span class="badge badge-success">Activo</span>
+																</c:when>
+																<c:otherwise>
+																	<span class="badge badge-danger">Inactivo</span>
+																</c:otherwise>
+															</c:choose>
+														</td>
+														<td><button class="btn btn-info editAirline" data-id="${item.id}"><i class="fas fa-edit"></i></button></td>
+														<td><button class="btn btn-danger deleteAirline" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button></td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -311,7 +322,7 @@
 	</div>
 </div>
 
-<div id="userCreationModal" class="modal" tabindex="-1" role="dialog">
+<div id="airlineCreationModal" class="modal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -325,21 +336,6 @@
 						<label>Nombre</label>
 						<input id="nameInput" class="au-input au-input--full" type="text" placeholder="Nombre">
 					</div>
-					<div class="form-group">
-						<label>Email</label>
-						<input id="emailInput" class="au-input au-input--full" type="email" name="email" placeholder="Correo Electrónico">
-					</div>
-					<div class="form-group">
-						<label>Contraseña</label>
-						<input id="passwordInput" class="au-input au-input--full" type="password" name="password" placeholder="Contraseña">
-					</div>
-					<div class="form-group">
-						<label for="rolSelect">Rol</label>
-						<select id="rolSelect" class="form-control">
-							<option value="2" selected>Operador</option>
-							<option value="1">Administrador</option>
-						</select>
-					</div>
 
 					<br>
 					<div id="errorLabelContainer" class="form-group">
@@ -351,8 +347,8 @@
 				</div>
 			</div>
 			<div id="creationOptions" class="modal-footer">
-				<button id="userCreationAccept" type="button" class="btn btn-primary">Aceptar</button>
-				<button id="userCreationCancel" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				<button id="airlineCreationAccept" type="button" class="btn btn-primary">Aceptar</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 
 			</div>
 			<div class="row justify-content-md-center">
@@ -396,7 +392,7 @@
 <!-- Main JS-->
 <script src="../../assets/js/main.js"></script>
 
-<script src="../../assets/js/admin/userManagement.js"></script>
+<script src="../../assets/js/admin/airlineManagement.js"></script>
 
 </body>
 

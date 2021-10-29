@@ -5,22 +5,22 @@ $(document).ready(function () {
 
     $("#planeTable").DataTable();
 
-    $("#addPlaneButton").click(function () {
+    $("#addAirlineButton").click(function () {
         $("#nameInput").val("");
         $("#airlineSelect").val("");
         $("#capacitySelect").val("");
 
         editionMode = false;
 
-        $("#planeCreationModal").modal('show');
+        $("#airlineCreationModal").modal('show');
     });
 
-    $(".deletePlane").click(function () {
+    $(".deleteAirline").click(function () {
         currentId = $(this).data("id");
         $("#confirmationModal").modal('show');
     });
 
-    $(".editPlane").click(function () {
+    $(".editAirline").click(function () {
         let id = $(this).data("id");
         currentId = id;
 
@@ -37,32 +37,29 @@ $(document).ready(function () {
 
                 editionMode = true;
 
-                $("#planeCreationModal").modal('show');
+                $("#airlineCreationModal").modal('show');
             }
         });
     });
 
-    $("#deletePlaneConfirmation").click(function () {
+    $("#deleteUserConfirmation").click(function () {
         $.ajax({
-            url: "/deletePlane",
+            url: "/deleteUser",
             method: "DELETE",
             data: { id : currentId },
             success: function (data) {
                 window.location.href = "/planeManagement";
             },
             error: function (xhr) {
-                $("#errorLabel-Confirmation").html(xhr.responseText);
-                $("#errorLabelContainer-Confirmation").show();
+
             }
         });
     });
 
-    $("#planeCreationAccept").click(function () {
+    $("#airlineCreationAccept").click(function () {
         let name = $("#nameInput").val();
-        let airline = $("#airlineSelect").val();
-        let capacity = $("#capacitySelect").val();
 
-        if (name == "" || airline == "" || capacity == ""){
+        if (name == ""){
             $("#errorLabel").html("Favor complete todos los campos");
             $("#errorLabelContainer").show();
             return;

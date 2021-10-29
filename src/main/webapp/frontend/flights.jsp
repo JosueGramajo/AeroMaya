@@ -44,7 +44,7 @@
                                     <div class="card-header">
                                         <div class="row justify-content-end">
                                             <div class="col-sm">
-                                                    ${item.planeObj.airline}
+                                                    ${item.airlineName}
                                             </div>
                                             <div class="col-sm">
                                                 <div class="float-right">

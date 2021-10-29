@@ -10,10 +10,8 @@ object UserHandler{
     fun authenticateUser(email : String, password : String) : Boolean{
         val user = FirestoreUtils.getObjectWithQuery<User>(
             FirestoreUtils.USER_COLLECTION,
-            listOf(
-                FirestoreQuery("email", email),
-                FirestoreQuery("password", password)
-            )
+            FirestoreQuery("email", email),
+            FirestoreQuery("password", password)
         )
 
         user?.let {
@@ -39,6 +37,16 @@ object UserHandler{
 }
 
 object PlaneHandler{
+    fun getPlanes() : List<Plane>{
+        val planes = FirestoreUtils.getObjectList<Plane>(FirestoreUtils.PLANES_COLLECTION)
+        planes.forEach { plane ->
+            val airline = FirestoreUtils.getObjectWithId<Airline>(FirestoreUtils.AIRLINES_COLLECTION, plane.airline)
+            plane.airlineName = airline?.name ?: ""
+        }
+
+        return planes
+    }
+
     fun createPlane(name : String, airline : String, capacity : Int){
         val plane = generatePlane(name, airline, capacity)
 
@@ -93,7 +101,7 @@ object PlaneHandler{
             }
         }
 
-        return Plane("", airline, capacity, businessClassAmount, economicClassAmount, firstClassAmount, name, seats, null)
+        return Plane("", airline, capacity, businessClassAmount, economicClassAmount, firstClassAmount, name, seats, "")
     }
 }
 
@@ -112,7 +120,18 @@ object FlightsHandler{
             queries.add(FirestoreQuery("arrivalDate", arrivalDate))
         }
 
-        return FirestoreUtils.getObjectListWithQuery(FirestoreUtils.FLIGHTS_COLLECTION, queries)
+        val flights = FirestoreUtils.getObjectListWithQuery<Flight>(FirestoreUtils.FLIGHTS_COLLECTION, *queries.toTypedArray())
+        flights.forEach {
+            val plane = FirestoreUtils.getObjectWithId<Plane>(FirestoreUtils.PLANES_COLLECTION, it.plane)
+            val planeAirline = plane?.airline ?: ""
+
+            val airline = FirestoreUtils.getObjectWithId<Airline>(FirestoreUtils.AIRLINES_COLLECTION, planeAirline)
+            val airlineName = airline?.name ?: ""
+
+            it.airlineName = airlineName
+        }
+
+        return flights
     }
 
     fun getFlightSeats(id : String) : List<List<FlightSeat>>{
@@ -179,7 +198,7 @@ object TicketHandler{
     fun getCurrentUserTickets() : List<TicketGroupResume>{
         val response = arrayListOf<TicketGroupResume>()
 
-        FirestoreUtils.getObjectListWithQuery<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, listOf(FirestoreQuery("userId", Companion.currentUser.id))).map { group ->
+        FirestoreUtils.getObjectListWithQuery<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, FirestoreQuery("userId", Companion.currentUser.id)).map { group ->
             val current = TicketGroupResume()
             current.amount = group.tickets.size
             current.id = group.id
@@ -212,14 +231,14 @@ object AirlinesHandler{
         var airlinePlanes = listOf<Plane>()
 
         val airlines = FirestoreUtils.getObjectList<Airline>(FirestoreUtils.AIRLINES_COLLECTION)
-        airlines.map { airline ->
+        airlines.forEach { airline ->
             airlinePlanes = FirestoreUtils.getObjectListWithQuery<Plane>(
-                FirestoreUtils.PLANES_COLLECTION, listOf(FirestoreQuery("airline",airline.name))
+                FirestoreUtils.PLANES_COLLECTION, FirestoreQuery("airline",airline.id)
             )
 
-            airlinePlanes.map { plane ->
+            airlinePlanes.forEach { plane ->
                 planeFlights = FirestoreUtils.getObjectListWithQuery<Flight>(
-                    FirestoreUtils.FLIGHTS_COLLECTION, listOf(FirestoreQuery("plane", plane.id))
+                    FirestoreUtils.FLIGHTS_COLLECTION, FirestoreQuery("plane", plane.id)
                 )
             }
 
@@ -228,6 +247,31 @@ object AirlinesHandler{
 
         return result
     }
+
+    fun createAirline(name : String){
+        val airline = Airline("", name, true)
+        FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.AIRLINES_COLLECTION, airline)
+    }
+
+    fun deleteAirline(id : String) : Boolean{
+
+        val airlinePlanes = FirestoreUtils.getObjectListWithQuery<Plane>(FirestoreUtils.PLANES_COLLECTION, FirestoreQuery("airline", id))
+
+        if (airlinePlanes.isNotEmpty()){
+            return false
+        }
+
+        FirestoreUtils.deleteDocumentWithId(FirestoreUtils.AIRLINES_COLLECTION, id)
+
+        return true
+    }
+
+    fun updateAirline(id : String, name : String, status: Boolean){
+        val airline = Airline("", name, status)
+        FirestoreUtils.updateDocumentWithObject(FirestoreUtils.AIRLINES_COLLECTION, id, airline)
+    }
+
+
 }
 
 object CountryHandler{
@@ -236,9 +280,9 @@ object CountryHandler{
         return ObjectMapper().writeValueAsString(countriesStringList)
     }
     fun getCountries() : List<String>{
-        val countries = FirestoreUtils.getObjectListWithQuery<Country>(FirestoreUtils.COUNTRIES_COLLECTION, listOf(
+        val countries = FirestoreUtils.getObjectListWithQuery<Country>(FirestoreUtils.COUNTRIES_COLLECTION,
             FirestoreQuery("status", true)
-        )).sortedBy { it.name }
+        ).sortedBy { it.name }
         countries.map { country ->
             country.name = country.name.capitalizeWords()
         }

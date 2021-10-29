@@ -65,10 +65,10 @@ object FirestoreUtils {
         return document.toObject(T::class.java)
     }
 
-    inline fun <reified T : Any> getObjectListWithQuery(collectionId: String, queryList : List<FirestoreQuery>) : List<T>{
+    inline fun <reified T : Any> getObjectListWithQuery(collectionId: String, vararg queryList : FirestoreQuery) : List<T>{
         val result = arrayListOf<T>()
         var collection : Query = db.collection(collectionId)
-        queryList.map { query ->
+        queryList.forEach { query ->
             query.expectedStringValue?.let {
                 collection = collection.whereEqualTo(query.firestoreKey, it)
             }
@@ -87,9 +87,9 @@ object FirestoreUtils {
         return result
     }
 
-    inline fun <reified T : Any> getObjectWithQuery(collectionId  : String, queryList : List<FirestoreQuery>) : T?{
+    inline fun <reified T : Any> getObjectWithQuery(collectionId  : String, vararg queryList : FirestoreQuery) : T?{
         var collection : Query = db.collection(collectionId)
-        queryList.map { query ->
+        queryList.forEach { query ->
             query.expectedStringValue?.let {
                 collection = collection.whereEqualTo(query.firestoreKey, it)
             }

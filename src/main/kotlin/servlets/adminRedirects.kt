@@ -51,8 +51,8 @@ class PlaneManagementServlet : HttpServlet(){
                 return
             }
 
-            val planes = FirestoreUtils.getObjectList<Plane>(FirestoreUtils.PLANES_COLLECTION)
-            val airlines = FirestoreUtils.getObjectList<Airline>(FirestoreUtils.AIRLINES_COLLECTION).map { it.name }
+            val planes = PlaneHandler.getPlanes()
+            val airlines = FirestoreUtils.getObjectList<Airline>(FirestoreUtils.AIRLINES_COLLECTION)
 
             req!!.setAttribute("planes", planes)
             req.setAttribute("airlines", airlines)
