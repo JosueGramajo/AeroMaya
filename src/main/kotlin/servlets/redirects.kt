@@ -142,3 +142,15 @@ class MyTicketServlet : HttpServlet(){
         req.getRequestDispatcher("/frontend/myTickets.jsp").forward(req, resp)
     }
 }
+
+class ReprintTicketServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        val id = req!!.getParameter("confirmation")
+
+        val groupTicket = TicketHandler.getTicketInfo(id)
+
+        req.setAttribute("confirmation", id)
+        req.setAttribute("groupTicket", groupTicket)
+        req.getRequestDispatcher("/frontend/ticketReprint.jsp").forward(req, resp)
+    }
+}

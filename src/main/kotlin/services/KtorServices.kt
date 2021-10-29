@@ -93,12 +93,6 @@ fun Application.main() {
             call.respondText { id }
         }
 
-        get("/generateTicket/{id}"){
-            val id = call.parameters["id"]
-
-            print(id)
-        }
-
         get("/logout"){
             Companion.currentUser = User()
             call.respondRedirect("/login")

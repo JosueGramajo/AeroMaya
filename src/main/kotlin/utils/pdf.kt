@@ -24,7 +24,7 @@ object PdfUtilities {
     private fun generateItem(info : TicketPrintObject, seat : String, id : String) : String{
         return  "    <div class=\"ticket\">" +
                 "    <div class=\"ticket--end\">" +
-                "                <div><img id='barcode' src=\"https://api.qrserver.com/v1/create-qr-code/?data=https:%2f%2faeromaya.appspot.com/generateTicket/alskdjf&amp;size=100x100\" alt=\"\" title=\"HELLO\" width=\"50\" height=\"50\" /></div>" +
+                "                <div><img id='barcode' src=\"https://api.qrserver.com/v1/create-qr-code/?data=https:%2f%2faeromaya.appspot.com/generateTicket?confirmation=$id&amp;size=100x100\" alt=\"\" title=\"HELLO\" width=\"50\" height=\"50\" /></div>" +
                 "            </div>" +
                 "    <div class=\"ticket--center\">" +
                 "    <div class=\"ticket--center--row\">" +

@@ -151,6 +151,15 @@
         <url-pattern>/airlineManagement</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ReprintTicketServlet</servlet-name>
+        <servlet-class>servlets.ReprintTicketServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReprintTicketServlet</servlet-name>
+        <url-pattern>/generateTicket</url-pattern>
+    </servlet-mapping>
+
     <!-- OPERATIONS -->
     <servlet>
         <servlet-name>DownloadPdfServlet</servlet-name>
