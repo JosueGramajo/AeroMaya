@@ -160,6 +160,15 @@
         <url-pattern>/generateTicket</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>FlightsManagementServlet</servlet-name>
+        <servlet-class>servlets.FlightsManagementServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FlightsManagementServlet</servlet-name>
+        <url-pattern>/flightsManagement</url-pattern>
+    </servlet-mapping>
+
     <!-- OPERATIONS -->
     <servlet>
         <servlet-name>DownloadPdfServlet</servlet-name>

@@ -1,10 +1,7 @@
 package servlets
 
 import firestore.FirestoreUtils
-import objects.Airline
-import objects.Country
-import objects.Plane
-import objects.User
+import objects.*
 import utils.Companion
 import java.io.PrintWriter
 import javax.servlet.http.HttpServlet
@@ -101,6 +98,32 @@ class AirlinesManagementServlet : HttpServlet(){
 
             req!!.setAttribute("airlines", airlines)
             req.getRequestDispatcher("/frontend/admin/airlineManagement.jsp").forward(req, resp)
+        }else{
+            resp!!.contentType = "text/html"
+            val out: PrintWriter = resp.getWriter()
+            out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+        }
+    }
+}
+
+class FlightsManagementServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        if (Companion.currentUser.loggedIn){
+            if (Companion.currentUser.role != 1){
+                resp!!.contentType = "text/html"
+                val out: PrintWriter = resp.getWriter()
+                out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+                return
+            }
+
+            val flights = FirestoreUtils.getObjectList<Flight>(FirestoreUtils.FLIGHTS_COLLECTION)
+            val planes = PlaneHandler.getPlanes()
+            val countries = CountryHandler.getCountries()
+
+            req!!.setAttribute("flights", flights)
+            req.setAttribute("planes", planes)
+            req.setAttribute("countries", countries)
+            req.getRequestDispatcher("/frontend/admin/flightsManagement.jsp").forward(req, resp)
         }else{
             resp!!.contentType = "text/html"
             val out: PrintWriter = resp.getWriter()

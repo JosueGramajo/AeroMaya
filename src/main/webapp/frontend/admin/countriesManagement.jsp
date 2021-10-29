@@ -105,6 +105,9 @@
 							<li>
 								<a href="/planeManagement">Aviones</a>
 							</li>
+							<li>
+								<a href="/flightsManagement">Vuelos</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -161,6 +164,9 @@
 							</li>
 							<li>
 								<a href="/planeManagement">Aviones</a>
+							</li>
+							<li>
+								<a href="/flightsManagement">Vuelos</a>
 							</li>
 						</ul>
 					</li>

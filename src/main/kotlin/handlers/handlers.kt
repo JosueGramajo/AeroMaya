@@ -146,6 +146,85 @@ object FlightsHandler{
         }
         return result
     }
+
+    fun createFlight(arrivalDate: String, arrivalTime : String, departureDate : String, departureTime : String, origin : String, destination : String, description : String, plane : String, price : Float){
+        val planeObj = FirestoreUtils.getObjectWithId<Plane>(FirestoreUtils.PLANES_COLLECTION, plane)
+
+        val seats = arrayListOf<FlightSeat>()
+        planeObj!!.seats.forEach {
+            seats.add(FlightSeat("", it.classType, it.name, false, it.seat))
+        }
+
+        val count = FirestoreUtils.amountOfDocumentsWithQuery(FirestoreUtils.FLIGHTS_COLLECTION)
+
+        val flight = Flight(
+            "",
+            arrivalDate, arrivalTime,
+            departureDate, departureTime,
+            description,
+            destination.lowercase(),
+            origin.lowercase(),
+            count+1,
+            plane,
+            price,
+            true,
+            seats,
+            null
+        )
+
+        FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.FLIGHTS_COLLECTION, flight)
+    }
+
+    fun editFlight(id : String, arrivalDate: String, arrivalTime : String, departureDate : String, departureTime : String, origin : String, destination : String, description : String, plane : String, price : Float, status : Boolean) : Boolean{
+        val amountTicket = FirestoreUtils.amountOfDocumentsWithQuery(FirestoreUtils.TICKETS_COLLECTION, FirestoreQuery("flight", id))
+        if (amountTicket > 0){
+            return false
+        }
+
+        val originalFlight = FirestoreUtils.getObjectWithId<Flight>(FirestoreUtils.FLIGHTS_COLLECTION, id)
+
+        var seats : ArrayList<FlightSeat> = ArrayList(originalFlight!!.seats)
+
+        if (originalFlight.plane != plane){
+            val planeObj = FirestoreUtils.getObjectWithId<Plane>(FirestoreUtils.PLANES_COLLECTION, plane)
+
+            seats = arrayListOf()
+
+            planeObj!!.seats.forEach {
+                seats.add(FlightSeat("", it.classType, it.name, false, it.seat))
+            }
+        }
+
+        val flight = Flight(
+            "",
+            arrivalDate, arrivalTime,
+            departureDate, departureTime,
+            description,
+            destination,
+            origin,
+            originalFlight.flightNumber,
+            plane,
+            price,
+            status,
+            seats,
+            null
+        )
+
+        FirestoreUtils.updateDocumentWithObject(FirestoreUtils.FLIGHTS_COLLECTION, id, flight)
+
+        return true
+    }
+
+    fun deleteFlight(id : String) : Boolean{
+        val amountTicket = FirestoreUtils.amountOfDocumentsWithQuery(FirestoreUtils.TICKETS_COLLECTION, FirestoreQuery("flight", id))
+        if (amountTicket > 0){
+            return false
+        }
+
+        FirestoreUtils.deleteDocumentWithId(FirestoreUtils.FLIGHTS_COLLECTION, id)
+
+        return true
+    }
 }
 
 object TicketHandler{

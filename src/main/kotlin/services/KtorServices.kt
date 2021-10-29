@@ -11,6 +11,7 @@ import io.ktor.jackson.jackson
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import objects.Flight
 import objects.Plane
 import objects.User
 import utils.Companion
@@ -287,6 +288,87 @@ fun Application.main() {
             }else{
                 call.response.status(HttpStatusCode.Conflict)
                 call.respondText { "Esta aerolinea ya se encuentra asignado a uno o mas aviones, por lo tanto no se puede eliminar" }
+            }
+        }
+        //======
+
+        //=====Flights====
+        post("/createFlight"){
+            val params = call.receiveParameters()
+            val arrivalDate = params["arrivalDate"] ?: ""
+            val arrivalTime = params["arrivalTime"] ?: ""
+            val departureDate = params["departureDate"] ?: ""
+            val departureTime = params["departureTime"] ?: ""
+            val origin = params["origin"] ?: ""
+            val destination = params["destination"] ?: ""
+            val description = params["description"] ?: ""
+            val plane = params["plane"] ?: ""
+            val price = params["price"]?.toFloatOrNull() ?: -1f
+
+            if (arrivalDate.isEmpty() || arrivalTime.isEmpty() || departureDate.isEmpty() || departureTime.isEmpty() || origin.isEmpty()
+                || description.isEmpty() || destination.isEmpty() || plane.isEmpty() || price == -1f){
+                call.response.status(HttpStatusCode.BadRequest)
+                call.respondText { "Datos erroneos" }
+                return@post
+            }
+
+            FlightsHandler.createFlight(arrivalDate, arrivalTime, departureDate, departureTime, origin, destination, description, plane, price)
+
+            call.respondText { "Vuelo creado exitosamente" }
+        }
+
+        get("/getFlight") {
+            val id = call.request.queryParameters["id"] ?: ""
+            val flight = FirestoreUtils.getObjectWithId<Flight>(FirestoreUtils.FLIGHTS_COLLECTION, id)
+            flight?.let {
+                call.respondText { Gson().toJson(it) }
+            } ?: kotlin.run {
+                call.response.status(HttpStatusCode.BadRequest)
+                call.respondText { "Vuelo no encontrado" }
+                return@get
+            }
+        }
+        put("/updateFlight"){
+            val params = call.receiveParameters()
+            val id = params["id"] ?: ""
+            val arrivalDate = params["arrivalDate"] ?: ""
+            val arrivalTime = params["arrivalTime"] ?: ""
+            val departureDate = params["departureDate"] ?: ""
+            val departureTime = params["departureTime"] ?: ""
+            val origin = params["origin"] ?: ""
+            val destination = params["destination"] ?: ""
+            val description = params["description"] ?: ""
+            val plane = params["plane"] ?: ""
+            val price = params["price"]?.toFloatOrNull() ?: -1f
+            val status = params["status"]?.toBooleanStrictOrNull() ?: false
+
+            if (id.isEmpty() || arrivalDate.isEmpty() || arrivalTime.isEmpty() || departureDate.isEmpty() || departureTime.isEmpty() || origin.isEmpty()
+                || description.isEmpty() || destination.isEmpty() || plane.isEmpty() || price == -1f){
+                call.response.status(HttpStatusCode.BadRequest)
+                call.respondText { "Datos erroneos" }
+                return@put
+            }
+
+            val result = FlightsHandler.editFlight(id, arrivalDate, arrivalTime, departureDate, departureTime, origin, destination, description, plane, price, status)
+
+            if (result){
+                call.response.status(HttpStatusCode.OK)
+                call.respondText { "Aerolinea editado exitosamente" }
+            }else{
+                call.response.status(HttpStatusCode.Forbidden)
+                call.respondText { "Ya existen uno o mas tickets comprados para este vuelo, por lo que no puede ser editado" }
+            }
+        }
+
+        delete("/deleteFlight") {
+            val id = call.receiveParameters()["id"] ?: ""
+            val result = FlightsHandler.deleteFlight(id)
+            if (result){
+                call.response.status(HttpStatusCode.OK)
+                call.respondText { "Vuelo eliminado exitosamente" }
+            }else{
+                call.response.status(HttpStatusCode.Conflict)
+                call.respondText { "Ya existen uno o mas tickets comprados para este vuelo, por lo que no puede ser editado" }
             }
         }
         //======

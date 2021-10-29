@@ -44,6 +44,23 @@
 	<!-- Main CSS-->
 	<link href="../../assets/css/admin/theme.css" rel="stylesheet" media="all">
 
+	<!-- Jquery JS-->
+	<script src="../../assets/vendor/jquery-3.2.1.min.js"></script>
+
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+	<link rel="stylesheet" href="../../assets/vendor/air-datepicker/datepicker.css">
+	<script src="../../assets/vendor/air-datepicker/datepicker.js"></script>
+	<script src="../../assets/vendor/air-datepicker/datepicker.es.js"></script>
+
+	<style>
+        .datepicker {
+            z-index: 1800 !important; /* has to be larger than 1050 */
+        }
+	</style>
+
 </head>
 
 <body class="animsition">
@@ -228,14 +245,14 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="overview-wrap">
-								<h2 class="title-1">Manejo de usuarios</h2>
+								<h2 class="title-1">Manejo de vuelos</h2>
 							</div>
 						</div>
 					</div>
 					<br>
 					<div class="row">
 						<div class="col-md-12">
-							<button class="btn btn-success" id="addUserButton"><i class="fas fa-plus"></i> Agregar usuario</button>
+							<button class="btn btn-success" id="addFlightButton"><i class="fas fa-plus"></i> Agregar vuelo</button>
 						</div>
 					</div>
 					<hr>
@@ -245,33 +262,37 @@
 								<div class="card-header">
 									<div class="row justify-content-end">
 										<div class="col-sm">
-											Usuarios existentes
+											Vuelos existentes
 										</div>
 									</div>
 
 								</div>
 								<div class="card-body">
 									<div class="container">
-										<table id="userTable" class="table table-striped">
+										<table id="flightsTable" class="table table-striped">
 											<thead>
 											<tr>
 												<th scope="col">ID</th>
-												<th scope="col">Nombre</th>
-												<th scope="col">Correo</th>
-												<th scope="col">Rol</th>
+												<th scope="col">Origen</th>
+												<th scope="col">Destino</th>
+												<th scope="col">Salida</th>
+												<th scope="col">Retorno</th>
+												<th scope="col">Precio</th>
 												<th></th>
 												<th></th>
 											</tr>
 											</thead>
 											<tbody>
-												<c:forEach items="${users}" var="item">
+												<c:forEach items="${flights}" var="item">
 													<tr>
 														<td>${item.id}</td>
-														<td>${item.name}</td>
-														<td>${item.email}</td>
-														<td>${item.role}</td>
-														<td><button class="btn btn-info editUser" data-id="${item.id}"><i class="fas fa-edit"></i></button></td>
-														<td><button class="btn btn-danger deleteUser" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button></td>
+														<td>${item.origin}</td>
+														<td>${item.destination}</td>
+														<td>${item.departureDate}</td>
+														<td>${item.arrivalDate}</td>
+														<td>${item.price}</td>
+														<td><button class="btn btn-info editFlight" data-id="${item.id}"><i class="fas fa-edit"></i></button></td>
+														<td><button class="btn btn-danger deleteFlight" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button></td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -301,23 +322,30 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Eliminar usuario</h5>
+				<h5 class="modal-title">Eliminar vuelo</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<p>Esta seguro que desea eliminar a este usuario?</p>
+				<p>Esta seguro que desea eliminar a este vuelo?</p>
 			</div>
+			<div id="errorLabelContainer-Confirmation" class="form-group">
+				<label id="errorLabel-Confirmation" style="color: red;"></label>
+			</div>
+			<script>
+				$("#errorLabelContainer").hide();
+			</script>
+
 			<div class="modal-footer">
-				<button id="deleteUserConfirmation" type="button" class="btn btn-primary">Aceptar</button>
+				<button id="deleteFlightConfirmation" type="button" class="btn btn-primary">Aceptar</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div id="userCreationModal" class="modal" tabindex="-1" role="dialog">
+<div id="flightCreationModal" class="modal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -328,24 +356,67 @@
 			<div class="modal-body">
 				<div id="login-form" class="login-form">
 					<div class="form-group">
-						<label>Nombre</label>
-						<input id="nameInput" class="au-input au-input--full" type="text" placeholder="Nombre">
-					</div>
-					<div class="form-group">
-						<label>Email</label>
-						<input id="emailInput" class="au-input au-input--full" type="email" name="email" placeholder="Correo Electrónico">
-					</div>
-					<div class="form-group">
-						<label>Contraseña</label>
-						<input id="passwordInput" class="au-input au-input--full" type="password" name="password" placeholder="Contraseña">
-					</div>
-					<div class="form-group">
-						<label for="rolSelect">Rol</label>
-						<select id="rolSelect" class="form-control">
-							<option value="2" selected>Operador</option>
-							<option value="1">Administrador</option>
+						<label>Origen</label>
+						<select id="originSelect" class="form-control" disabled>
+							<option value="Guatemala">Guatemala</option>
 						</select>
 					</div>
+
+					<div class="form-group">
+						<label for="destinySelect">Destino</label>
+						<select id="destinySelect" class="form-control">
+							<c:forEach items="${countries}" var="item">
+								<option value="${item}">${item}</option>
+							</c:forEach>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label>Fecha de salida</label>
+						<input id="startDate" type="text" class="form-control" autocomplete="off">
+					</div>
+
+					<div class="form-group">
+						<label for="startTime">Hora de salida</label>
+						<input id="startTime" class="au-input au-input--full" type="text" placeholder="Hora de salida">
+					</div>
+
+					<div class="form-group">
+						<label>Fecha de regreso</label>
+						<input id="endDate" type="text" class="form-control" autocomplete="off">
+					</div>
+
+					<div class="form-group">
+						<label for="endTime">Hora de regreso</label>
+						<input id="endTime" class="au-input au-input--full" type="text" placeholder="Hora de regreso">
+					</div>
+
+					<div class="form-group">
+						<label for="priceInput">Precio</label>
+						<input id="priceInput" class="au-input au-input--full" type="number" placeholder="Precio">
+					</div>
+
+					<div class="form-group">
+						<label for="planeSelect">Avion</label>
+						<select id="planeSelect" class="form-control">
+							<c:forEach items="${planes}" var="item">
+								<option value="${item.id}">${item.airlineName} - ${item.name}</option>
+							</c:forEach>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="descriptionInput">Descripcion</label>
+						<input id="descriptionInput" class="au-input au-input--full" type="text" placeholder="Descripcion">
+					</div>
+
+					<div id="statusContainer" class="custom-control custom-switch">
+						<input type="checkbox" class="custom-control-input" id="statusSwitch">
+						<label class="custom-control-label" for="statusSwitch">Activo</label>
+					</div>
+					<script>
+						$("#statusContainer").hide();
+					</script>
 
 					<br>
 					<div id="errorLabelContainer" class="form-group">
@@ -357,8 +428,8 @@
 				</div>
 			</div>
 			<div id="creationOptions" class="modal-footer">
-				<button id="userCreationAccept" type="button" class="btn btn-primary">Aceptar</button>
-				<button id="userCreationCancel" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				<button id="flightCreationAccept" type="button" class="btn btn-primary">Aceptar</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 
 			</div>
 			<div class="row justify-content-md-center">
@@ -375,8 +446,7 @@
 	</div>
 </div>
 
-<!-- Jquery JS-->
-<script src="../../assets/vendor/jquery-3.2.1.min.js"></script>
+
 <!-- Bootstrap JS-->
 <script src="../../assets/vendor/bootstrap-4.1/popper.min.js"></script>
 <script src="../../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
@@ -402,7 +472,7 @@
 <!-- Main JS-->
 <script src="../../assets/js/main.js"></script>
 
-<script src="../../assets/js/admin/userManagement.js"></script>
+<script src="../../assets/js/admin/flightsManagement.js"></script>
 
 </body>
 
