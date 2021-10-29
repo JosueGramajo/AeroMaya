@@ -250,55 +250,49 @@ fun Application.main() {
                 return@post
             }
 
-
+            AirlinesHandler.createAirline(name)
 
             call.respondText { "Aerolinea creado exitosamente" }
         }
 
-        get("/getPlane") {
+        get("/getAirline") {
             val id = call.request.queryParameters["id"] ?: ""
-            val plane = FirestoreUtils.getObjectWithId<Plane>(FirestoreUtils.PLANES_COLLECTION, id)
+            val plane = AirlinesHandler.getAirline(id)
             plane?.let {
                 call.respondText { Gson().toJson(it) }
             } ?: kotlin.run {
                 call.response.status(HttpStatusCode.BadRequest)
-                call.respondText { "Avion no encontrado" }
+                call.respondText { "Aerolinea no encontrado" }
                 return@get
             }
         }
-        put("/updatePlane"){
+        put("/updateAirline"){
             val params = call.receiveParameters()
             val id = params["id"] ?: ""
             val name = params["name"] ?: ""
-            val airline = params["airline"] ?: ""
-            val capacity = params["capacity"]?.toIntOrNull() ?: -1
+            val status = params["status"]?.toBooleanStrictOrNull() ?: false
 
-            if (id.isEmpty() || name.isEmpty() || airline.isEmpty() || capacity == -1){
+            if (id.isEmpty() || name.isEmpty()){
                 call.response.status(HttpStatusCode.BadRequest)
                 call.respondText { "Datos erroneos" }
                 return@put
             }
 
-            val result = PlaneHandler.updatePlane(id, name, airline, capacity)
+            AirlinesHandler.updateAirline(id, name, status)
 
-            if (result){
-                call.response.status(HttpStatusCode.OK)
-                call.respondText { "Avion editado exitosamente" }
-            }else{
-                call.response.status(HttpStatusCode.Conflict)
-                call.respondText { "Este avion ya se encuentra asignado a un vuelo y no se puede editar" }
-            }
+            call.response.status(HttpStatusCode.OK)
+            call.respondText { "Aerolinea editado exitosamente" }
         }
 
-        delete("/deletePlane") {
+        delete("/deleteAirline") {
             val id = call.receiveParameters()["id"] ?: ""
-            val result = PlaneHandler.deletePlane(id)
+            val result = AirlinesHandler.deleteAirline(id)
             if (result){
                 call.response.status(HttpStatusCode.OK)
-                call.respondText { "Avion eliminado exitosamente" }
+                call.respondText { "Aerolinea eliminado exitosamente" }
             }else{
                 call.response.status(HttpStatusCode.Conflict)
-                call.respondText { "Este avion ya se encuentra asignado a un vuelo y no se puede eliminar" }
+                call.respondText { "Esta aerolinea ya se encuentra asignado a uno o mas aviones, por lo tanto no se puede eliminar" }
             }
         }
         //======

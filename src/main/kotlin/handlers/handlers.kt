@@ -227,7 +227,7 @@ object AirlinesHandler{
     fun getAirlinesPrintData() : List<AirlinePrintData> {
         val result = arrayListOf<AirlinePrintData>()
 
-        var planeFlights = listOf<Flight>()
+        var planeFlights = 0
         var airlinePlanes = listOf<Plane>()
 
         val airlines = FirestoreUtils.getObjectList<Airline>(FirestoreUtils.AIRLINES_COLLECTION)
@@ -237,12 +237,14 @@ object AirlinesHandler{
             )
 
             airlinePlanes.forEach { plane ->
-                planeFlights = FirestoreUtils.getObjectListWithQuery<Flight>(
+                planeFlights += FirestoreUtils.amountOfDocumentsWithQuery(
                     FirestoreUtils.FLIGHTS_COLLECTION, FirestoreQuery("plane", plane.id)
                 )
             }
 
-            result.add(AirlinePrintData(airline.id, airline.name, planeFlights.size, airlinePlanes.size))
+            result.add(AirlinePrintData(airline.id, airline.name, planeFlights, airlinePlanes.size))
+
+            planeFlights = 0
         }
 
         return result
@@ -271,7 +273,9 @@ object AirlinesHandler{
         FirestoreUtils.updateDocumentWithObject(FirestoreUtils.AIRLINES_COLLECTION, id, airline)
     }
 
-
+    fun getAirline(id : String) : Airline?{
+        return FirestoreUtils.getObjectWithId(FirestoreUtils.AIRLINES_COLLECTION, id)
+    }
 }
 
 object CountryHandler{

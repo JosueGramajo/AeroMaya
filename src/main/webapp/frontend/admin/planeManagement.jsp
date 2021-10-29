@@ -103,7 +103,7 @@
 								<a href="/countryManagement">Paises</a>
 							</li>
 							<li>
-								<a href="crudAerolineas.php">Aerolineas</a>
+								<a href="/airlineManagement">Aerolineas</a>
 							</li>
 							<li>
 								<a href="/planeManagement">Aviones</a>
@@ -160,7 +160,7 @@
 								<a href="/countryManagement">Paises</a>
 							</li>
 							<li>
-								<a href="crudAerolineas.php">Aerolineas</a>
+								<a href="/airlineManagement">Aerolineas</a>
 							</li>
 							<li>
 								<a href="/planeManagement">Aviones</a>

@@ -19,7 +19,9 @@ import java.io.FileOutputStream
 
 
 fun main() {
+    val resp = AirlinesHandler.getAirlinesPrintData()
 
+    println("")
 }
 
 fun startLocalServer(){

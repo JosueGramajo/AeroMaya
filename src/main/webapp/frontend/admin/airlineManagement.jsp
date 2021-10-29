@@ -44,6 +44,8 @@
 	<!-- Main CSS-->
 	<link href="../../assets/css/admin/theme.css" rel="stylesheet" media="all">
 
+	<!-- Jquery JS-->
+	<script src="../../assets/vendor/jquery-3.2.1.min.js"></script>
 </head>
 
 <body class="animsition">
@@ -101,7 +103,7 @@
 								<a href="/countryManagement">Paises</a>
 							</li>
 							<li>
-								<a href="crudAerolineas.php">Aerolineas</a>
+								<a href="/airlineManagement">Aerolineas</a>
 							</li>
 							<li>
 								<a href="/planeManagement">Aviones</a>
@@ -158,7 +160,7 @@
 								<a href="/countryManagement">Paises</a>
 							</li>
 							<li>
-								<a href="crudAerolineas.php">Aerolineas</a>
+								<a href="/airlineManagement">Aerolineas</a>
 							</li>
 							<li>
 								<a href="/planeManagement">Aviones</a>
@@ -258,7 +260,7 @@
 											</tr>
 											</thead>
 											<tbody>
-												<c:forEach items="${users}" var="item">
+												<c:forEach items="${airlines}" var="item">
 													<tr>
 														<td>
 															<img src="../../assets/images/airlines/${item.id}.png" style="max-height: 100px; max-width: 100px">
@@ -306,16 +308,23 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Eliminar usuario</h5>
+				<h5 class="modal-title">Eliminar aerolinea</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<p>Esta seguro que desea eliminar a este usuario?</p>
+				<p>Esta seguro que desea eliminar a esta aerolinea?</p>
 			</div>
+			<div id="errorLabelContainer-Confirmation" class="form-group">
+				<label id="errorLabel-Confirmation" style="color: red;"></label>
+			</div>
+			<script>
+				$("#errorLabelContainer").hide();
+			</script>
+
 			<div class="modal-footer">
-				<button id="deleteUserConfirmation" type="button" class="btn btn-primary">Aceptar</button>
+				<button id="deleteAirlineConfirmation" type="button" class="btn btn-primary">Aceptar</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 			</div>
 		</div>
@@ -336,6 +345,14 @@
 						<label>Nombre</label>
 						<input id="nameInput" class="au-input au-input--full" type="text" placeholder="Nombre">
 					</div>
+
+					<div id="statusContainer" class="custom-control custom-switch">
+						<input type="checkbox" class="custom-control-input" id="statusSwitch">
+						<label class="custom-control-label" for="statusSwitch">Activo</label>
+					</div>
+					<script>
+						$("#statusContainer").hide();
+					</script>
 
 					<br>
 					<div id="errorLabelContainer" class="form-group">
@@ -365,8 +382,7 @@
 	</div>
 </div>
 
-<!-- Jquery JS-->
-<script src="../../assets/vendor/jquery-3.2.1.min.js"></script>
+
 <!-- Bootstrap JS-->
 <script src="../../assets/vendor/bootstrap-4.1/popper.min.js"></script>
 <script src="../../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>

@@ -7,8 +7,7 @@ $(document).ready(function () {
 
     $("#addAirlineButton").click(function () {
         $("#nameInput").val("");
-        $("#airlineSelect").val("");
-        $("#capacitySelect").val("");
+        $("#statusContainer").hide();
 
         editionMode = false;
 
@@ -25,15 +24,15 @@ $(document).ready(function () {
         currentId = id;
 
         $.ajax({
-            url: "/getPlane",
+            url: "/getAirline",
             method: "GET",
             data: { id },
             success: function (data) {
                 let obj = $.parseJSON(data);
 
                 $("#nameInput").val(obj.name);
-                $("#airlineSelect").val(obj.airline);
-                $("#capacitySelect").val(obj.capacity);
+                $("#statusSwitch").prop('checked', obj.status);
+                $("#statusContainer").show();
 
                 editionMode = true;
 
@@ -42,22 +41,24 @@ $(document).ready(function () {
         });
     });
 
-    $("#deleteUserConfirmation").click(function () {
+    $("#deleteAirlineConfirmation").click(function () {
         $.ajax({
-            url: "/deleteUser",
+            url: "/deleteAirline",
             method: "DELETE",
             data: { id : currentId },
             success: function (data) {
-                window.location.href = "/planeManagement";
+                window.location.href = "/airlineManagement";
             },
             error: function (xhr) {
-
+                $("#errorLabel-Confirmation").html(xhr.responseText);
+                $("#errorLabelContainer-Confirmation").show();
             }
         });
     });
 
     $("#airlineCreationAccept").click(function () {
         let name = $("#nameInput").val();
+        let status = $("#statusSwitch").prop('checked');
 
         if (name == ""){
             $("#errorLabel").html("Favor complete todos los campos");
@@ -70,11 +71,11 @@ $(document).ready(function () {
 
         if (editionMode){
             $.ajax({
-                url: "/updatePlane",
+                url: "/updateAirline",
                 method: "PUT",
-                data: {id:currentId, name, airline, capacity},
+                data: {id:currentId, name, status },
                 success: function (data) {
-                    window.location.href = "/planeManagement";
+                    window.location.href = "/airlineManagement";
                 },
                 error: function (xhr) {
                     $("#creationOptions").show();
@@ -86,11 +87,11 @@ $(document).ready(function () {
             });
         }else{
             $.ajax({
-                url: "/createPlane",
+                url: "/createAirline",
                 method: "POST",
-                data: {name, airline, capacity},
+                data: { name },
                 success: function (data) {
-                    window.location.href = "/planeManagement";
+                    window.location.href = "/airlineManagement";
                 },
                 error: function (xhr) {
                     $("#creationOptions").show();

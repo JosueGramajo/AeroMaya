@@ -1,6 +1,7 @@
 package firestore
 
 import com.google.auth.oauth2.GoogleCredentials
+import com.google.cloud.firestore.CollectionReference
 import com.google.cloud.firestore.Firestore
 import com.google.cloud.firestore.Query
 import com.google.firebase.FirebaseApp
@@ -67,20 +68,7 @@ object FirestoreUtils {
 
     inline fun <reified T : Any> getObjectListWithQuery(collectionId: String, vararg queryList : FirestoreQuery) : List<T>{
         val result = arrayListOf<T>()
-        var collection : Query = db.collection(collectionId)
-        queryList.forEach { query ->
-            query.expectedStringValue?.let {
-                collection = collection.whereEqualTo(query.firestoreKey, it)
-            }
-
-            query.expectedBooleanValue?.let {
-                collection = collection.whereEqualTo(query.firestoreKey, it)
-            }
-
-            query.expectedNumericValue?.let {
-                collection = collection.whereEqualTo(query.firestoreKey, it)
-            }
-        }
+        val collection : Query = getCollectionWithQueries(collectionId, *queryList)
         collection.get().get().documents.map {
             result.add(it.toObject(T::class.java))
         }
@@ -88,6 +76,19 @@ object FirestoreUtils {
     }
 
     inline fun <reified T : Any> getObjectWithQuery(collectionId  : String, vararg queryList : FirestoreQuery) : T?{
+        val collection : Query = getCollectionWithQueries(collectionId, *queryList)
+        return collection.get().get().documents.firstOrNull()?.toObject(T::class.java)
+    }
+
+    fun amountOfDocumentsWithQuery(collectionId: String, vararg queryList : FirestoreQuery) : Int{
+        val collection : Query = getCollectionWithQueries(collectionId, *queryList)
+        return collection.get().get().documents.size
+    }
+
+    fun updateDocumentWithObject(collection: String, documentId: String, obj : Any) = db.collection(collection).document(documentId).set(obj)
+
+    @PublishedApi
+    internal fun getCollectionWithQueries(collectionId: String, vararg queryList : FirestoreQuery) : Query{
         var collection : Query = db.collection(collectionId)
         queryList.forEach { query ->
             query.expectedStringValue?.let {
@@ -102,8 +103,6 @@ object FirestoreUtils {
                 collection = collection.whereEqualTo(query.firestoreKey, it)
             }
         }
-        return collection.get().get().documents.firstOrNull()?.toObject(T::class.java)
+        return collection
     }
-
-    fun updateDocumentWithObject(collection: String, documentId: String, obj : Any) = db.collection(collection).document(documentId).set(obj)
 }

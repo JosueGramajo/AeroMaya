@@ -142,6 +142,15 @@
         <url-pattern>/countryManagement</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AirlinesManagementServlet</servlet-name>
+        <servlet-class>servlets.AirlinesManagementServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AirlinesManagementServlet</servlet-name>
+        <url-pattern>/airlineManagement</url-pattern>
+    </servlet-mapping>
+
     <!-- OPERATIONS -->
     <servlet>
         <servlet-name>DownloadPdfServlet</servlet-name>
