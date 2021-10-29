@@ -105,6 +105,33 @@
         <url-pattern>/myTickets</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AboutUsServlet</servlet-name>
+        <servlet-class>servlets.AboutUsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AboutUsServlet</servlet-name>
+        <url-pattern>/aboutUs</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>QuestionsServlet</servlet-name>
+        <servlet-class>servlets.QuestionsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QuestionsServlet</servlet-name>
+        <url-pattern>/questions</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CalendarServlet</servlet-name>
+        <servlet-class>servlets.CalendarServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CalendarServlet</servlet-name>
+        <url-pattern>/calendar</url-pattern>
+    </servlet-mapping>
+
     <!-- ADMIN -->
     <servlet>
         <servlet-name>AdminDashboardServlet</servlet-name>

@@ -29,47 +29,50 @@
 <body class="animsition">
 <t:base-page>
     <div class="main-content">
-    <div class="section__content section__content--p30">
-        <div class="container-fluid">
-
-            <div class="row m-t-25">
-                <div class="col-sm-6 col-lg-3 col-xl-12">
-                    <div class="card">
-                        <div class="card-header">
-                            Aerolineas Afiliadas
-                        </div>
-                        <div class="card-body card-block">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Vuelos activos</th>
-                                    <th scope="col">Aviones activos</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${airlines}" var="item" varStatus="loop">
-                                    <tr>
-                                        <th scope="row">${loop.index}</th>
-                                        <td>${item.name}</td>
-                                        <td>${item.flightsNumber}</td>
-                                        <td>${item.planesNumber}</td>
-                                        <td><input type="button" class="btn btn-info select-airline" value="Vuelos disponibles" data-id="${item.id}"></td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="copyright">
-                        <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                <div class="row m-t-25">
+                    <!--AVISO COVID-->
+                    <div class="card bg-primary">
+                        <strong style="color:#FFFFFF";><i class="fas fa-exclamation-circle" style="color:#FFFFFF";></i> ¡ADVERTENCIA!</strong>
+                        <p style="color:#FFFFFF";>Debido a la Pandemia Mundial de COVID-19 se le recomienda investigar
+                            sus destinos y la seguridad en los países que visitará. Mantenga la
+                            distancia social y no salga o viaje si no es necesario. Para más información,
+                            clic en el enlace de la OMG: <a style="color:#FFFF00"; href="https://www.who.int/es">Clic Aquí</a> </p>
                     </div>
+                    <div class="col-sm-6 col-lg-3 col-xl-12">
+
+                        <div class="overview-wrap">
+
+
+                            <h2 class="title-1">Aerolineas Afiliadas</h2>
+
+                        </div>
+                    </div>
+
+                    <c:forEach items="${airlines}" var="item" varStatus="loop">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img class="card-img-top" src="../assets/images/airlines/badges/${item.id}.png" alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title mb-3">${item.name}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+
+                    <!--FOOTER-->
+                    <footer class="footer">
+                        <div class="container-fluid">
+                            <div class="copyright">
+                                <p><a href="privacidad.php">Política de Privacidad</a></p>
+                                <p>Copyright © 2021 Aero Maya. Todos Los Derechos Reservados.</p>
+                            </div>
+                        </div>
+                    </footer>
+
                 </div>
             </div>
         </div>

@@ -69,9 +69,9 @@
 					<ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
 						<li class="nav-item"><a class="nav-link me-lg-3" href="/dashboard">Home</a></li>
 						<li class="nav-item"><a class="nav-link me-lg-3" href="/airlines">Aerolineas</a></li>
-						<li class="nav-item"><a class="nav-link me-lg-3" href="">Calendario</a></li>
-						<li class="nav-item"><a class="nav-link me-lg-3" href="">Preguntas</a></li>
-						<li class="nav-item"><a class="nav-link me-lg-3" href="">Sobre Nosotros</a></li>
+						<li class="nav-item"><a class="nav-link me-lg-3" href="/calendar">Calendario</a></li>
+						<li class="nav-item"><a class="nav-link me-lg-3" href="/questions">Preguntas</a></li>
+						<li class="nav-item"><a class="nav-link me-lg-3" href="/aboutUs">Sobre Nosotros</a></li>
 					</ul>
 
 					<c:choose>
