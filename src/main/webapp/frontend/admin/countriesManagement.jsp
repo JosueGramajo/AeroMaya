@@ -86,7 +86,7 @@
 						</ul>
 					</li>
 					<li>
-						<a href="cancelacionBoletos.php">
+						<a href="/ticketCancellationSearch">
 							<i class="fas fa-minus-circle"></i>Cancelación de Boletos</a>
 					</li>
 					<li class="has-sub">
@@ -146,7 +146,7 @@
 						</ul>
 					</li>
 					<li>
-						<a href="cancelacionBoletos.php">
+						<a href="/ticketCancellationSearch">
 							<i class="fas fa-minus-circle"></i>Cancelación de Boletos</a>
 					</li>
 					<li class="has-sub">

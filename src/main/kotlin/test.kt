@@ -1,3 +1,4 @@
+import com.google.gson.Gson
 import com.itextpdf.html2pdf.HtmlConverter
 import firestore.FirestoreUtils
 import io.ktor.application.*
@@ -19,9 +20,9 @@ import java.io.FileOutputStream
 
 
 fun main() {
-    val resp = AirlinesHandler.getAirlinesPrintData()
+    val wata = TicketHandler.getTicketCancellationObject("BVk8ix6Zzk8qnqwAnOWf")
 
-    println("")
+    print("")
 }
 
 fun startLocalServer(){

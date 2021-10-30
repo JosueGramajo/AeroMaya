@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: promerica
@@ -223,9 +225,102 @@
 		<div class="main-content">
 			<div class="section__content section__content--p30">
 				<div class="container-fluid">
-					<div class="row">
+					<div class="row m-t-30">
 						<div class="col-md-12">
+							<!-- DATA BOLETO-->
 
+							<div class="card">
+								<div class="card-header">Cancelación de Boleto</div>
+								<div class="card-body">
+									<div class="card-title">
+										<h3 class="text-center title-1">INFORMACIÓN DE BOLETO</h3>
+									</div>
+									<hr>
+									<form action="" method="GET" novalidate="novalidate">
+										<div class="form-group">
+											<h3 class="title-2">Información de Pasajero</h3>
+											<hr>
+										</div>
+										<div class="row">
+											<div class="col-6">
+												<div class="form-group">
+													<label for="name" class="control-label mb-1">Nombre Completo</label>
+													<input id="name" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false" value="${info.user.name}" disabled>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="form-group">
+													<label for="email" class="control-label mb-1">Correo</label>
+													<input id="email" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false" value="${info.user.email}" disabled>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<hr>
+											<h3 class="title-2">Información de Boleto</h3>
+											<hr>
+										</div>
+										<div class="table-responsive m-b-40">
+											<table class="table table-borderless table-data2">
+												<thead>
+												<tr>
+													<th>No. Boleto</th>
+													<th>Tipo Boleto</th>
+													<th>Número de Asiento</th>
+													<th>Precio</th>
+												</tr>
+												</thead>
+												<tbody>
+												<c:forEach items="${info.tickets}" var="item">
+													<tr>
+														<td>${item.id}</td>
+														<td>${item.classType}</td>
+														<td>${item.seat}</td>
+														<td>$ ${info.flight.price}</td>
+													</tr>
+												</c:forEach>
+
+												</tbody>
+											</table>
+										</div>
+										<div class="form-group">
+											<hr>
+											<h3 class="title-2">Información de Vuelo</h3>
+											<hr>
+										</div>
+										<div class="table-responsive m-b-40">
+											<table class="table table-borderless table-data2">
+												<thead>
+												<tr>
+													<th>No. Vuelo</th>
+													<th>Fecha Salida</th>
+													<th>Fecha Llegada</th>
+													<th>País Origen</th>
+													<th>País Destino</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr>
+													<td>${info.flight.flightNumber}</td>
+													<td>${info.flight.departureDate}</td>
+													<td>${info.flight.arrivalDate}</td>
+													<td>${info.flight.origin}</td>
+													<td>${info.flight.destination}</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+										<div>
+											<button id="cancellation-button" type="button" class="btn btn-lg btn-info btn-block">
+												<i class="fa fa-minus-circle fa-lg"></i>&nbsp;
+												<span id="payment-button-amount">Cancelar Boleto</span>
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- END DATA BOLETO-->
 						</div>
 					</div>
 					<div class="row">
@@ -242,6 +337,26 @@
 		<!-- END PAGE CONTAINER-->
 	</div>
 
+</div>
+
+<div id="confirmationModal" class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Cancelar boleto</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>Esta seguro que desea cancelar a este boleto?</p>
+			</div>
+			<div class="modal-footer">
+				<button id="cancelConfirmation" type="button" class="btn btn-primary">Aceptar</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Jquery JS-->
@@ -265,8 +380,19 @@
 <script src="../../assets/vendor/select2/select2.min.js">
 </script>
 
+<link rel="stylesheet" type="text/css" href="../../assets/vendor/data-tables/datatables.min.css"/>
+<script type="text/javascript" src="../../assets/vendor/data-tables/datatables.min.js"></script>
+
+<script>
+	let confirmation = "${id}";
+</script>
+
+<script src="../../assets/vendor/jquery-redirect.js"></script>
+
 <!-- Main JS-->
 <script src="../../assets/js/main.js"></script>
+
+<script src="../../assets/js/admin/ticketCancellation.js"></script>
 
 </body>
 

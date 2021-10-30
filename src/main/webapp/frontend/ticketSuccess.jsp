@@ -32,6 +32,9 @@
 								<br>
 								<a id="pdfVisualizationButton" href="/downloadPdf?confirmation=${confirmation}" type="submit" class="btn btn-danger"><i class="far fa-file-pdf"></i>&nbsp;Descargar PDF</a>
 
+								<c:if test="${groupTicket.status eq false}">
+									<h1 style="color: red;">ESTE BOLETO SE ENCUENTRA CANCELADO</h1>
+								</c:if>
 
 								<c:forEach items="${groupTicket.seats}" var="item">
 									<div class="ticket">

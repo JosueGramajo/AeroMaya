@@ -131,3 +131,82 @@ class FlightsManagementServlet : HttpServlet(){
         }
     }
 }
+
+class TicketCancellationSearchServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        if (Companion.currentUser.loggedIn){
+            if (Companion.currentUser.role != 1){
+                resp!!.contentType = "text/html"
+                val out: PrintWriter = resp.getWriter()
+                out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+                return
+            }
+
+            req!!.getRequestDispatcher("/frontend/admin/ticketCancellationSearch.jsp").forward(req, resp)
+        }else{
+            resp!!.contentType = "text/html"
+            val out: PrintWriter = resp.getWriter()
+            out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+        }
+    }
+}
+
+class TicketCancellationServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        if (Companion.currentUser.loggedIn){
+            if (Companion.currentUser.role != 1){
+                resp!!.contentType = "text/html"
+                val out: PrintWriter = resp.getWriter()
+                out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+                return
+            }
+
+            val id = req!!.getParameter("id")
+
+            val info = TicketHandler.getTicketCancellationObject(id)
+
+            req.setAttribute("info", info)
+            req.setAttribute("id", id)
+            req.getRequestDispatcher("/frontend/admin/ticketCancellation.jsp").forward(req, resp)
+        }else{
+            resp!!.contentType = "text/html"
+            val out: PrintWriter = resp.getWriter()
+            out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+        }
+    }
+
+    override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        doGet(req, resp)
+    }
+}
+
+class TicketCancellationSuccessServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        if (Companion.currentUser.loggedIn){
+            if (Companion.currentUser.role != 1){
+                resp!!.contentType = "text/html"
+                val out: PrintWriter = resp.getWriter()
+                out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+                return
+            }
+
+            val id = req!!.getParameter("id")
+
+            val groupTicket = TicketHandler.getTicketInfo(id)
+
+            req.setAttribute("confirmation", id)
+            req.setAttribute("groupTicket", groupTicket)
+            req.getRequestDispatcher("/frontend/admin/ticketCancellationSuccess.jsp").forward(req, resp)
+        }else{
+            resp!!.contentType = "text/html"
+            val out: PrintWriter = resp.getWriter()
+            out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+        }
+
+
+    }
+
+    override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        doGet(req, resp)
+    }
+}

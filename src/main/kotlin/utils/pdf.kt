@@ -11,9 +11,16 @@ object PdfUtilities {
         val groupTicketInfo = TicketHandler.getTicketInfo(id)
 
         var html = htmlHeader
+
+        if (!groupTicketInfo.status){
+            html += cancelled
+        }
+
         groupTicketInfo.seats.map { t ->
             html += generateItem(groupTicketInfo, t.seat, id)
         }
+
+
         html += htmlFooter
 
         HtmlConverter.convertToPdf(html, out)
@@ -276,6 +283,8 @@ object PdfUtilities {
             "</head>" +
             "<body>" +
             "    <div class=\"map-data m-b-40\">"
+
+    val cancelled = "<h1 style=\"color: red;\">ESTE BOLETO SE ENCUENTRA CANCELADO</h1>\n"
 
     val htmlFooter = "    </div>" +
             "</body>" +

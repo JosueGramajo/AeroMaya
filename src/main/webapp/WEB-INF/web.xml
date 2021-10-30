@@ -196,6 +196,33 @@
         <url-pattern>/flightsManagement</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>TicketCancellationSearchServlet</servlet-name>
+        <servlet-class>servlets.TicketCancellationSearchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TicketCancellationSearchServlet</servlet-name>
+        <url-pattern>/ticketCancellationSearch</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TicketCancellationServlet</servlet-name>
+        <servlet-class>servlets.TicketCancellationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TicketCancellationServlet</servlet-name>
+        <url-pattern>/ticketCancellation</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TicketCancellationSuccessServlet</servlet-name>
+        <servlet-class>servlets.TicketCancellationSuccessServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TicketCancellationSuccessServlet</servlet-name>
+        <url-pattern>/ticketCancellationSuccess</url-pattern>
+    </servlet-mapping>
+
     <!-- OPERATIONS -->
     <servlet>
         <servlet-name>DownloadPdfServlet</servlet-name>

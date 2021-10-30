@@ -248,7 +248,7 @@ object TicketHandler{
             FirestoreUtils.updateDocumentWithObject(FirestoreUtils.FLIGHTS_COLLECTION, flight, originalFlight)
         }
 
-        val buyId = FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.GROUP_TICKET_BUY, GroupTicketBuy("", response, Companion.currentUser.id))
+        val buyId = FirestoreUtils.insertObjectWithRandomDocumentID(FirestoreUtils.GROUP_TICKET_BUY, GroupTicketBuy("", response, Companion.currentUser.id, true))
 
         return buyId
     }
@@ -258,7 +258,13 @@ object TicketHandler{
         var user : User? = null
         var flight : Flight? = null
 
-        FirestoreUtils.getObjectWithId<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, groupId)?.let { it.tickets.map { s->
+        var status = false
+
+        FirestoreUtils.getObjectWithId<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, groupId)?.let {
+            status = it.status
+
+            it.tickets.map { s->
+
             FirestoreUtils.getObjectWithId<Ticket>(FirestoreUtils.TICKETS_COLLECTION, s)?.let { ticket ->
                 tickets.add(ticket)
 
@@ -271,13 +277,53 @@ object TicketHandler{
             }
         } }
 
-        return TicketPrintObject(user!!, flight!!, tickets)
+        return TicketPrintObject(user!!, flight!!, tickets, status)
     }
 
     fun getCurrentUserTickets() : List<TicketGroupResume>{
+        return getGroupTicketsForUser(Companion.currentUser.id)
+    }
+
+    fun getUserTickets(email: String) : List<TicketGroupResume>{
+        val user = FirestoreUtils.getObjectWithQuery<User>(FirestoreUtils.USER_COLLECTION, FirestoreQuery("email", email))
+        user?.let {
+            return getGroupTicketsForUser(it.id)
+        } ?: kotlin.run {
+            return arrayListOf()
+        }
+    }
+
+    fun getTicketCancellationObject(id : String) : TicketCancellation{
+        val group = FirestoreUtils.getObjectWithId<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, id)!!
+
+        val tickets = arrayListOf<Ticket>()
+        group.tickets.forEach { ticketId ->
+            val ticket = FirestoreUtils.getObjectWithId<Ticket>(FirestoreUtils.TICKETS_COLLECTION, ticketId)!!
+
+            tickets.add(ticket)
+        }
+
+        var user = User()
+        var flight = Flight()
+        tickets.forEach { ticket ->
+            user = FirestoreUtils.getObjectWithId(FirestoreUtils.USER_COLLECTION, ticket.user)!!
+            flight = FirestoreUtils.getObjectWithId(FirestoreUtils.FLIGHTS_COLLECTION, ticket.flight)!!
+        }
+
+        return TicketCancellation(user, flight, tickets)
+    }
+
+    fun cancelTicket(id : String){
+        val ticket = FirestoreUtils.getObjectWithId<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, id)!!
+        ticket.status = false
+
+        FirestoreUtils.updateDocumentWithObject(FirestoreUtils.GROUP_TICKET_BUY, id, ticket)
+    }
+
+    private fun getGroupTicketsForUser(id : String) : ArrayList<TicketGroupResume>{
         val response = arrayListOf<TicketGroupResume>()
 
-        FirestoreUtils.getObjectListWithQuery<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, FirestoreQuery("userId", Companion.currentUser.id)).map { group ->
+        FirestoreUtils.getObjectListWithQuery<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, FirestoreQuery("userId", id)).map { group ->
             val current = TicketGroupResume()
             current.amount = group.tickets.size
             current.id = group.id

@@ -99,6 +99,26 @@ fun Application.main() {
             call.respondRedirect("/login")
         }
 
+        get("/searchTicketsForUser") {
+            val email = call.request.queryParameters["email"] ?: ""
+            if (email.isEmpty()){
+                call.response.status(HttpStatusCode.BadRequest)
+                call.respondText { "Datos erroneos" }
+                return@get
+            }
+
+            val tickets = TicketHandler.getUserTickets(email);
+
+            call.respondText { Gson().toJson(tickets) }
+        }
+
+        post("/cancelTicket"){
+            val id = call.receiveParameters()["id"] ?: ""
+            TicketHandler.cancelTicket(id)
+
+            call.respondText { "Ticket cancelado exitosamente" }
+        }
+
         //=======USER CRUD=======
         post("/createUser"){
             val params = call.receiveParameters()

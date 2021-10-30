@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: promerica
@@ -42,6 +44,10 @@
 	<!-- Main CSS-->
 	<link href="../../assets/css/admin/theme.css" rel="stylesheet" media="all">
 
+	<!-- Jquery JS-->
+	<script src="../../assets/vendor/jquery-3.2.1.min.js"></script>
+
+	<link href="../../assets/css/loader.css" rel="stylesheet" media="all">
 </head>
 
 <body class="animsition">
@@ -225,13 +231,70 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12">
-
+							<div class="overview-wrap">
+								<h2>Busqueda por usuario</h2>
+							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="copyright">
-								<p>Copyright © 2021 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+					<br>
+					<div class="row m-t-25">
+						<div class="col-10">
+							<div class="card">
+								<div class="card-body">
+									<div class="container">
+										<div class="row">
+											<div class="col">
+												<div class="form-group">
+													<label for="emailSearchInput">Correo del usuario</label>
+													<input type="email" class="form-control" id="emailSearchInput" aria-describedby="emailHelp" placeholder="Ingrese el correo del usuario">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col">
+												<input type="button" class="btn btn-primary" id="searchButton" value="Buscar">
+											</div>
+										</div>
+										<div class="row">
+											<div id="loader" class="col-xs-6">
+												<svg class="spinner" width="45px" height="45px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;">
+													<circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+												</svg>
+											</div>
+											<script>
+                                                $("#loader").hide();
+											</script>
+										</div>
+										<div class="row m-t-30" id="resultDiv">
+											<div class="col-md-12">
+												<table class="table table-striped" id="tableResult">
+													<thead>
+													<tr>
+														<th scope="col">#</th>
+														<th scope="col">Vuelo</th>
+														<th scope="col">Cantidad boletos</th>
+														<th scope="col">Precio</th>
+														<th></th>
+													</tr>
+													</thead>
+													<tbody>
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<script>
+                                            $("#resultDiv").hide();
+										</script>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="copyright">
+									<p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -244,8 +307,6 @@
 
 </div>
 
-<!-- Jquery JS-->
-<script src="../../assets/vendor/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap JS-->
 <script src="../../assets/vendor/bootstrap-4.1/popper.min.js"></script>
 <script src="../../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
@@ -265,8 +326,15 @@
 <script src="../../assets/vendor/select2/select2.min.js">
 </script>
 
+<link rel="stylesheet" type="text/css" href="../../assets/vendor/data-tables/datatables.min.css"/>
+<script type="text/javascript" src="../../assets/vendor/data-tables/datatables.min.js"></script>
+
+<script src="../../assets/vendor/jquery-redirect.js"></script>
+
 <!-- Main JS-->
 <script src="../../assets/js/main.js"></script>
+
+<script src="../../assets/js/admin/ticketCancellationSearch.js"></script>
 
 </body>
 
