@@ -134,6 +134,25 @@ object FlightsHandler{
         return flights
     }
 
+    fun searchForAirline(airline: String) : List<Flight>{
+        val airlineObj = FirestoreUtils.getObjectWithId<Airline>(FirestoreUtils.AIRLINES_COLLECTION, airline)!!
+
+        val planesOfAirline = FirestoreUtils.getObjectListWithQuery<Plane>(FirestoreUtils.PLANES_COLLECTION, FirestoreQuery("airline", airline))
+
+        val resp = arrayListOf<Flight>()
+
+        planesOfAirline.forEach { plane ->
+            val flighstForPlane = FirestoreUtils.getObjectListWithQuery<Flight>(FirestoreUtils.FLIGHTS_COLLECTION, FirestoreQuery("plane", plane.id))
+
+            flighstForPlane.map {
+                it.airlineName = airlineObj.name
+                resp.add(it)
+            }
+        }
+
+        return resp
+    }
+
     fun getFlightSeats(id : String) : List<List<FlightSeat>>{
         val result = arrayListOf<List<FlightSeat>>()
 

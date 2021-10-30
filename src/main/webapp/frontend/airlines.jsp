@@ -40,7 +40,7 @@
                         <p style="color:#FFFFFF";>Debido a la Pandemia Mundial de COVID-19 se le recomienda investigar
                             sus destinos y la seguridad en los países que visitará. Mantenga la
                             distancia social y no salga o viaje si no es necesario. Para más información,
-                            clic en el enlace de la OMG: <a style="color:#FFFF00"; href="https://www.who.int/es">Clic Aquí</a> </p>
+                            clic en el enlace de la OMG: <a target="_blank" style="color:#FFFF00"; href="https://www.who.int/es">Clic Aquí</a> </p>
                     </div>
                     <div class="col-sm-6 col-lg-3 col-xl-12">
 
@@ -54,7 +54,7 @@
 
                     <c:forEach items="${airlines}" var="item" varStatus="loop">
                         <div class="col-md-4">
-                            <div class="card">
+                            <div class="card select-airline" data-id="${item.id}">
                                 <img class="card-img-top" src="../assets/images/airlines/badges/${item.id}.png" alt="Card image cap">
                                 <div class="card-body">
                                     <h4 class="card-title mb-3">${item.name}</h4>
@@ -78,6 +78,9 @@
         </div>
     </div>
 </t:base-page>
+<script src="../assets/vendor/jquery-redirect.js"></script>
+
+<script src="../assets/js/airlines.js"></script>
 
 </body>
 

@@ -20,7 +20,7 @@ import java.io.FileOutputStream
 
 
 fun main() {
-    val wata = TicketHandler.getTicketCancellationObject("BVk8ix6Zzk8qnqwAnOWf")
+    val wata = FlightsHandler.searchForAirline("NWPUZTECdRJ5OCXIBefq")
 
     print("")
 }

@@ -38,7 +38,7 @@
 						<p style="color:#FFFFFF";>Debido a la Pandemia Mundial de COVID-19 se le recomienda investigar
 							sus destinos y la seguridad en los países que visitará. Mantenga la
 							distancia social y no salga o viaje si no es necesario. Para más información,
-							clic en el enlace de la OMG: <a style="color:#FFFF00"; href="https://www.who.int/es">Clic Aquí</a> </p>
+							clic en el enlace de la OMG: <a target="_blank" style="color:#FFFF00"; href="https://www.who.int/es">Clic Aquí</a> </p>
 					</div>
 
 

@@ -64,6 +64,22 @@ class FlightsSevlet : HttpServlet(){
     }
 }
 
+class FlightsForAirlineSevlet : HttpServlet(){
+    override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        val id = req!!.getParameter("id")
+
+        val list = FlightsHandler.searchForAirline(id)
+
+        req.setAttribute("flights", list)
+        req.setAttribute("user", Companion.currentUser)
+        req.getRequestDispatcher("/frontend/flights.jsp").forward(req, resp)
+    }
+
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        doPost(req, resp)
+    }
+}
+
 class SeatSelectorServlet : HttpServlet(){
     override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
         val id = req!!.getParameter("id")
