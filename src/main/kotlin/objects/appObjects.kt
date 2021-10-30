@@ -178,3 +178,38 @@ data class TicketCancellation(
         val flight : Flight,
         val tickets: List<Ticket>
 )
+
+//Reportes
+/*
+<th scope="col">ID</th>
+<th scope="col">Destino</th>
+<th scope="col">Asientos</th>
+<th scope="col">Precio</th>
+<th>Estado</th>
+* */
+
+data class TicketReport(
+        val id: String,
+        val trip : String,
+        val seats : String,
+        val price : Float,
+        val status : Boolean
+)
+
+data class FlightReport(
+        val id : String,
+        val departureDate : String,
+        val arrivalDate : String,
+        val destination : String,
+        val origin : String,
+        val freeSeats : Int,
+        val occupiedSeats : Int
+)
+
+data class UserReport(
+        val id : String,
+        val name : String,
+        val email : String,
+        val amountBuys : Int,
+        val totalSpent : Float,
+)

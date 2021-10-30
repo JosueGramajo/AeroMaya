@@ -76,13 +76,13 @@
 							<i class="fas fa-copy"></i>Reportes</a>
 						<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
 							<li>
-								<a href="reporteBoletos.php">Reporte de Boletos</a>
+								<a href="/ticketReport">Reporte de Boletos</a>
 							</li>
 							<li>
-								<a href="reporteVuelos.php">Reporte de Vuelos</a>
+								<a href="/flightReport">Reporte de Vuelos</a>
 							</li>
 							<li>
-								<a href="reporteUsuarios.php">Reporte de Usuarios</a>
+								<a href="/userReport">Reporte de Usuarios</a>
 							</li>
 						</ul>
 					</li>
@@ -136,13 +136,13 @@
 							<i class="fas fa-copy"></i>Reportes</a>
 						<ul class="list-unstyled navbar__sub-list js-sub-list">
 							<li>
-								<a href="reporteBoletos.php">Reporte de Boletos</a>
+								<a href="/ticketReport">Reporte de Boletos</a>
 							</li>
 							<li>
-								<a href="reporteVuelos.php">Reporte de Vuelos</a>
+								<a href="/flightReport">Reporte de Vuelos</a>
 							</li>
 							<li>
-								<a href="reporteUsuarios.php">Reporte de Usuarios</a>
+								<a href="/userReport">Reporte de Usuarios</a>
 							</li>
 						</ul>
 					</li>

@@ -210,3 +210,99 @@ class TicketCancellationSuccessServlet : HttpServlet(){
         doGet(req, resp)
     }
 }
+
+class ReportTicketServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        if (Companion.currentUser.loggedIn){
+            if (Companion.currentUser.role != 1){
+                resp!!.contentType = "text/html"
+                val out: PrintWriter = resp.getWriter()
+                out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+                return
+            }
+
+            val report = ReportHandlers.getTicketReports()
+
+            req!!.setAttribute("report", report)
+            req.setAttribute("title", "Reporte de boletos")
+            req.getRequestDispatcher("/frontend/admin/reportTickets.jsp").forward(req, resp)
+        }else{
+            resp!!.contentType = "text/html"
+            val out: PrintWriter = resp.getWriter()
+            out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+        }
+    }
+}
+
+class ReportFlightsServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        if (Companion.currentUser.loggedIn){
+            if (Companion.currentUser.role != 1){
+                resp!!.contentType = "text/html"
+                val out: PrintWriter = resp.getWriter()
+                out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+                return
+            }
+
+            val report = ReportHandlers.getFlightReport()
+
+            req!!.setAttribute("report", report)
+            req.getRequestDispatcher("/frontend/admin/reportFlights.jsp").forward(req, resp)
+        }else{
+            resp!!.contentType = "text/html"
+            val out: PrintWriter = resp.getWriter()
+            out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+        }
+    }
+}
+
+class ReportUserServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        if (Companion.currentUser.loggedIn){
+            if (Companion.currentUser.role != 1){
+                resp!!.contentType = "text/html"
+                val out: PrintWriter = resp.getWriter()
+                out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+                return
+            }
+
+            val report = ReportHandlers.getUserReport()
+
+            req!!.setAttribute("report", report)
+            req.getRequestDispatcher("/frontend/admin/reportUsers.jsp").forward(req, resp)
+        }else{
+            resp!!.contentType = "text/html"
+            val out: PrintWriter = resp.getWriter()
+            out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+        }
+    }
+}
+
+class ReportTicketForUserServlet : HttpServlet(){
+    override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        if (Companion.currentUser.loggedIn){
+            if (Companion.currentUser.role != 1){
+                resp!!.contentType = "text/html"
+                val out: PrintWriter = resp.getWriter()
+                out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+                return
+            }
+            val id = req!!.getParameter("id")
+            val email = req.getParameter("email")
+
+            val report = ReportHandlers.getTicketReportsForUser(id)
+
+            req.setAttribute("report", report)
+            req.setAttribute("title", "Reporte de boletos para el usuario $email")
+            req.getRequestDispatcher("/frontend/admin/reportTickets.jsp").forward(req, resp)
+        }else{
+            resp!!.contentType = "text/html"
+            val out: PrintWriter = resp.getWriter()
+            out.println("<html><head><title>Error</title></head><body bgcolor=\"white\"><h1>Usuario no autorizado</h1></body></html>")
+        }
+    }
+
+    override fun doPost(req: HttpServletRequest?, resp: HttpServletResponse?) {
+        doGet(req, resp)
+    }
+}

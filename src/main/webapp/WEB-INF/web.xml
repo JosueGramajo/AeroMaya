@@ -232,6 +232,42 @@
         <url-pattern>/ticketCancellationSuccess</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ReportTicketServlet</servlet-name>
+        <servlet-class>servlets.ReportTicketServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportTicketServlet</servlet-name>
+        <url-pattern>/ticketReport</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ReportFlightsServlet</servlet-name>
+        <servlet-class>servlets.ReportFlightsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportFlightsServlet</servlet-name>
+        <url-pattern>/flightReport</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ReportUserServlet</servlet-name>
+        <servlet-class>servlets.ReportUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportUserServlet</servlet-name>
+        <url-pattern>/userReport</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ReportTicketForUserServlet</servlet-name>
+        <servlet-class>servlets.ReportTicketForUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportTicketForUserServlet</servlet-name>
+        <url-pattern>/ticketReportForUser</url-pattern>
+    </servlet-mapping>
+
     <!-- OPERATIONS -->
     <servlet>
         <servlet-name>DownloadPdfServlet</servlet-name>

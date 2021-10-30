@@ -44,7 +44,6 @@
 	<!-- Main CSS-->
 	<link href="../../assets/css/admin/theme.css" rel="stylesheet" media="all">
 
-	<link href="../../assets/css/ticket.css" rel="stylesheet" media="all">
 </head>
 
 <body class="animsition">
@@ -228,66 +227,66 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12">
-							<!-- MAP DATA-->
-							<div class="map-data m-b-40">
-								<h3 class="title-3 m-b-30">Ticket cancelado exitosamente</h3>
-								<br>
-								<a id="pdfVisualizationButton" href="/downloadPdf?confirmation=${confirmation}" type="submit" class="btn btn-danger"><i class="far fa-file-pdf"></i>&nbsp;Descargar PDF</a>
-
-								<h1 style="color: red;">ESTE BOLETO SE ENCUENTRA CANCELADO</h1>
-
-								<c:forEach items="${groupTicket.seats}" var="item">
-									<div class="ticket">
-										<div class="ticket--start">
-											<img src="https://i.ibb.co/W3cK42J/image-1.png"/>
-										</div>
-										<div class="ticket--center">
-											<div class="ticket--center--row">
-												<div class="ticket--center--col">
-													<span>Tu boleto para el vuelo</span>
-													<strong>${groupTicket.flight.origin} -> ${groupTicket.flight.destination}</strong>
-												</div>
-
-												<div class="ticket--center--col">
-													<span>Numero de boleto</span>
-													<strong>${item.seat}</strong>
-												</div>
-											</div>
-											<div class="ticket--center--row">
-												<div class="ticket--center--col">
-													<span class="ticket--info--title">Fecha y hora</span>
-													<span class="ticket--info--content">${groupTicket.flight.departureDate}</span>
-													<span class="ticket--info--content">${groupTicket.flight.departureTime}</span>
-												</div>
-												<div class="ticket--center--col">
-													<span class="ticket--info--title">Destino</span>
-													<span class="ticket--info--content">${groupTicket.flight.destination}</span>
-												</div>
-											</div>
-											<div class="ticket--center--row">
-												<div class="ticket--center--col">
-													<span class="ticket--info--title">Tipo de boleto</span>
-													<span class="ticket--info--content">Event category</span>
-												</div>
-												<div class="ticket--center--col">
-													<span class="ticket--info--title">Informacion</span>
-													<span  class="ticket--info--content">Orden #${confirmation}. Ordenado por ${groupTicket.user.name}</span>
-												</div>
-											</div>
-										</div>
-										<div class="ticket--end">
-											<div><img id='barcode' src="https://api.qrserver.com/v1/create-qr-code/?data=https:%2f%2faeromaya.appspot.com/generateTicket?confirmation=${confirmation}&amp;size=100x100" alt="" title="HELLO" width="50" height="50" /></div>
-											<div><img class="ticket-logo" src="../assets/images/icon/logo.png"/></div>
+							<div class="overview-wrap">
+								<h2 class="title-1">Reporte boletos</h2>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="row m-t-25">
+						<div class="col-10">
+							<div class="card">
+								<div class="card-header">
+									<div class="row justify-content-end">
+										<div class="col-sm">
+											Reporte boletos
 										</div>
 									</div>
-								</c:forEach>
 
-								<br/><br/><br/>
-								<div class="d-flex justify-content-center">
-									<a class="btn btn-info" href="/dashboard" role="button">Finalizar</a>
+								</div>
+								<div class="card-body">
+									<div class="container">
+										<table id="reportTable" class="table table-striped">
+											<thead>
+											<tr>
+												<th scope="col">ID</th>
+												<th scope="col">Viaje</th>
+												<th scope="col">Asientos</th>
+												<th scope="col">Precio</th>
+												<th>Estado</th>
+											</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${report}" var="item">
+													<tr>
+														<td>${item.id}</td>
+														<td>${item.trip}</td>
+														<td>${item.seats}</td>
+														<td>$ ${item.price}</td>
+														<td>
+															<c:choose>
+																<c:when test="${item.status eq true}">
+																	Activo
+																</c:when>
+																<c:otherwise>
+																	Inactivo
+																</c:otherwise>
+															</c:choose>
+														</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
-							<!-- END MAP DATA-->
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="copyright">
+									<p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -297,26 +296,6 @@
 		<!-- END PAGE CONTAINER-->
 	</div>
 
-</div>
-
-<div id="confirmationModal" class="modal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Cancelar boleto</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<p>Esta seguro que desea cancelar a este boleto?</p>
-			</div>
-			<div class="modal-footer">
-				<button id="cancelConfirmation" type="button" class="btn btn-primary">Aceptar</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-			</div>
-		</div>
-	</div>
 </div>
 
 <!-- Jquery JS-->
@@ -342,15 +321,21 @@
 
 <link rel="stylesheet" type="text/css" href="../../assets/vendor/data-tables/datatables.min.css"/>
 <script type="text/javascript" src="../../assets/vendor/data-tables/datatables.min.js"></script>
-
-<script>
-	let confirmation = "${id}";
-</script>
+<script type="text/javascript" src="../../assets/vendor/data-tables/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="../../assets/vendor/data-tables/jszip.min.js"></script>
+<script type="text/javascript" src="../../assets/vendor/data-tables/buttons.html5.min.js"></script>
 
 <!-- Main JS-->
 <script src="../../assets/js/main.js"></script>
 
-<script src="../../assets/js/admin/ticketCancellation.js"></script>
+<script>
+	$("#reportTable").DataTable({
+		dom: 'Bfrtip',
+		buttons: [
+			'excelHtml5'
+		]
+	} );
+</script>
 
 </body>
 

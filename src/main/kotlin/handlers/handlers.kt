@@ -458,3 +458,128 @@ object CountryHandler{
         FirestoreUtils.updateDocumentWithObject(FirestoreUtils.COUNTRIES_COLLECTION, id, country)
     }
 }
+
+object ReportHandlers{
+    fun getTicketReports() : List<TicketReport> {
+        val response = arrayListOf<TicketReport>()
+
+        val groupObj = FirestoreUtils.getObjectList<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY)
+
+        groupObj.forEach { group ->
+            var flight : Flight? = null
+            var seats = ""
+            var amountTickets = 0
+            group.tickets.forEach { ticketId ->
+                val ticket = FirestoreUtils.getObjectWithId<Ticket>(FirestoreUtils.TICKETS_COLLECTION, ticketId)!!
+
+                if (flight == null){
+                    flight = FirestoreUtils.getObjectWithId<Flight>(FirestoreUtils.FLIGHTS_COLLECTION, ticket.flight)!!
+                }
+
+                seats += ticket.seat + ", "
+                amountTickets++
+            }
+
+            val rep = TicketReport(
+                group.id,
+                "${flight!!.origin} -> ${flight!!.destination}",
+                seats,
+                (amountTickets * flight!!.price),
+                group.status
+            )
+
+            response.add(rep)
+
+            seats = ""
+            amountTickets = 0
+        }
+
+        return response
+    }
+
+    fun getTicketReportsForUser(id : String) : List<TicketReport> {
+        val response = arrayListOf<TicketReport>()
+
+        val groupObj = FirestoreUtils.getObjectListWithQuery<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, FirestoreQuery("userId",id))
+
+        groupObj.forEach { group ->
+            var flight : Flight? = null
+            var seats = ""
+            var amountTickets = 0
+            group.tickets.forEach { ticketId ->
+                val ticket = FirestoreUtils.getObjectWithId<Ticket>(FirestoreUtils.TICKETS_COLLECTION, ticketId)!!
+
+                if (flight == null){
+                    flight = FirestoreUtils.getObjectWithId<Flight>(FirestoreUtils.FLIGHTS_COLLECTION, ticket.flight)!!
+                }
+
+                seats += ticket.seat + ", "
+                amountTickets++
+            }
+
+            val rep = TicketReport(
+                group.id,
+                "${flight!!.origin} -> ${flight!!.destination}",
+                seats,
+                (amountTickets * flight!!.price),
+                group.status
+            )
+
+            response.add(rep)
+
+            seats = ""
+            amountTickets = 0
+        }
+
+        return response
+    }
+
+    fun getFlightReport() : List<FlightReport>{
+        val response = arrayListOf<FlightReport>()
+
+        val flights = FirestoreUtils.getObjectList<Flight>(FirestoreUtils.FLIGHTS_COLLECTION)
+        flights.forEach { flight ->
+            val free = flight.seats.count { !it.occupied }
+            val occupied = flight.seats.count { it.occupied }
+
+            val rep = FlightReport(
+                flight.id,
+                flight.departureDate,
+                flight.arrivalDate,
+                flight.destination,
+                flight.origin,
+                free,
+                occupied
+            )
+
+            response.add(rep)
+        }
+
+        return response
+    }
+
+    fun getUserReport() : List<UserReport>{
+        val response = arrayListOf<UserReport>()
+
+        val users = FirestoreUtils.getObjectList<User>(FirestoreUtils.USER_COLLECTION)
+        users.forEach { user ->
+            val ticketsForUser = FirestoreUtils.getObjectListWithQuery<Ticket>(FirestoreUtils.TICKETS_COLLECTION, FirestoreQuery("user", user.id))
+
+            var totalSpent = 0f
+            ticketsForUser.forEach { ticket ->
+                val flight = FirestoreUtils.getObjectWithId<Flight>(FirestoreUtils.FLIGHTS_COLLECTION, ticket.flight)
+                totalSpent += flight!!.price
+            }
+
+            response.add(UserReport(
+                user.id,
+                user.name,
+                user.email,
+                ticketsForUser.size,
+                totalSpent
+            ))
+        }
+
+        return response
+    }
+}
