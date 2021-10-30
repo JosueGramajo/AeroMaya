@@ -107,7 +107,7 @@ fun Application.main() {
                 return@get
             }
 
-            val tickets = TicketHandler.getUserTickets(email);
+            val tickets = TicketHandler.getUserActiveTickets(email);
 
             call.respondText { Gson().toJson(tickets) }
         }

@@ -46,6 +46,7 @@
 									<th scope="col">Vuelo</th>
 									<th scope="col">Cantidad boletos</th>
 									<th scope="col">Precio</th>
+									<th scope="col">Estado</th>
 									<th></th>
 								</tr>
 								</thead>
@@ -56,6 +57,16 @@
 										<td>${item.flightDesc}</td>
 										<td>${item.amount}</td>
 										<td>${item.price}</td>
+										<td>
+											<c:choose>
+												<c:when test="${item.status eq true}">
+													<span class="badge badge-success">Activo</span>
+												</c:when>
+												<c:otherwise>
+													<span class="badge badge-danger">Cancelado</span>
+												</c:otherwise>
+											</c:choose>
+										</td>
 										<td><input type="button" class="btn btn-info select-buy" value="Ver boletos" data-id="${item.id}"></td>
 									</tr>
 								</c:forEach>

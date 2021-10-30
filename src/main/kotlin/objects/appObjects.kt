@@ -167,9 +167,10 @@ data class TicketGroupResume(
         var flightDesc : String,
         var amount : Int,
         var price : Float,
-        var id : String
+        var id : String,
+        var status : Boolean
 ){
-        constructor() : this("", 0, 0f, "")
+        constructor() : this("", 0, 0f, "", false)
 }
 
 data class TicketCancellation(

@@ -281,13 +281,13 @@ object TicketHandler{
     }
 
     fun getCurrentUserTickets() : List<TicketGroupResume>{
-        return getGroupTicketsForUser(Companion.currentUser.id)
+        return getGroupTicketsForUser(Companion.currentUser.id, false)
     }
 
-    fun getUserTickets(email: String) : List<TicketGroupResume>{
+    fun getUserActiveTickets(email: String) : List<TicketGroupResume>{
         val user = FirestoreUtils.getObjectWithQuery<User>(FirestoreUtils.USER_COLLECTION, FirestoreQuery("email", email))
         user?.let {
-            return getGroupTicketsForUser(it.id)
+            return getGroupTicketsForUser(it.id, true)
         } ?: kotlin.run {
             return arrayListOf()
         }
@@ -320,13 +320,19 @@ object TicketHandler{
         FirestoreUtils.updateDocumentWithObject(FirestoreUtils.GROUP_TICKET_BUY, id, ticket)
     }
 
-    private fun getGroupTicketsForUser(id : String) : ArrayList<TicketGroupResume>{
+    private fun getGroupTicketsForUser(id : String, searchActiveOnly : Boolean) : ArrayList<TicketGroupResume>{
         val response = arrayListOf<TicketGroupResume>()
 
-        FirestoreUtils.getObjectListWithQuery<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, FirestoreQuery("userId", id)).map { group ->
+        val queries = arrayListOf(FirestoreQuery("userId", id))
+        if (searchActiveOnly){
+            queries.add(FirestoreQuery("status", true))
+        }
+
+        FirestoreUtils.getObjectListWithQuery<GroupTicketBuy>(FirestoreUtils.GROUP_TICKET_BUY, *queries.toTypedArray()).map { group ->
             val current = TicketGroupResume()
             current.amount = group.tickets.size
             current.id = group.id
+            current.status = group.status
 
             var currentFlight : Flight? = null
 
