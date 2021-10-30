@@ -173,19 +173,22 @@ class ReprintTicketServlet : HttpServlet(){
 
 class AboutUsServlet : HttpServlet(){
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        req!!.getRequestDispatcher("/frontend/aboutUs.jsp").forward(req, resp)
+        req!!.setAttribute("user", Companion.currentUser)
+        req.getRequestDispatcher("/frontend/aboutUs.jsp").forward(req, resp)
     }
 }
 
 class QuestionsServlet : HttpServlet(){
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        req!!.getRequestDispatcher("/frontend/quetions.jsp").forward(req, resp)
+        req!!.setAttribute("user", Companion.currentUser)
+        req.getRequestDispatcher("/frontend/quetions.jsp").forward(req, resp)
     }
 }
 
 class CalendarServlet : HttpServlet(){
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        req!!.getRequestDispatcher("/frontend/calendar.jsp").forward(req, resp)
+        req!!.setAttribute("user", Companion.currentUser)
+        req.getRequestDispatcher("/frontend/calendar.jsp").forward(req, resp)
     }
 }
 
